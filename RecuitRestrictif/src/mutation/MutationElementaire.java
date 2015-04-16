@@ -44,12 +44,12 @@ public class MutationElementaire {
 	 * @return
 	 * True si this.elt est différent des éléments contenus dans interdictions, false sinon
 	 */
-	public boolean estAutorisee(ArrayList<Element> interdictions){
+	public boolean estAutorisee(Etat e, ArrayList<Element> interdictions){
 		int n = interdictions.size();
 		int cpt = 0;
 		boolean estAutorisee = true;
 		while ((cpt < n) && (estAutorisee)){
-			estAutorisee = !this.elt.equals(interdictions.get(cpt));
+			estAutorisee = !e.getListe().get(this.indice).equals(interdictions.get(cpt));
 			cpt++;
 		}
 		return estAutorisee;

@@ -1,6 +1,7 @@
 package mutation;
 import java.util.ArrayList;
 
+import modele.Element;
 import modele.Etat;
 import modele.Probleme;
 
@@ -64,4 +65,15 @@ public abstract double calculerdeltaSpins(Probleme p, Etat e);
  * L'utilisateur devra implémenter cette méthode dans la classe fille adaptée. Elle sera équivalente au constructeur a priori.
  */
 public abstract void maj(Probleme p, Etat e);
+
+public boolean estAutorisee(Etat e, ArrayList<Element> interdictions){
+	int nbMutations = this.listeMutations.size();
+	boolean estAutorisee = true;
+	int cpt = 0;
+	while ((cpt < nbMutations) && (estAutorisee)){
+		estAutorisee = this.listeMutations.get(cpt).estAutorisee(e,interdictions);
+		cpt++;
+	}
+	return estAutorisee;
+}
 }

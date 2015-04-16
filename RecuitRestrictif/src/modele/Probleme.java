@@ -1,7 +1,6 @@
 package modele;
 import java.util.ArrayList;
 
-import mutation.IMutation;
 import parametres.ParametreGamma;
 import parametres.Temperature;
 /**
@@ -31,17 +30,19 @@ public abstract class Probleme extends Particule{
 	private int seed;
 	// Fonctions Ã©lÃ©mentaires de calcul de l'energie de la particule
 	private ParametreGamma gamma;
+	double freq;
+	
 
 	
 	public Probleme(){
 		
 	}
 	
-	public Probleme(ArrayList<Etat> etat,Temperature T,int seed,ParametreGamma gamma){
+	public Probleme(ArrayList<Etat> etat,Temperature T,int seed,ParametreGamma gamma,double freq){
 		super(etat, T);
 		this.seed=seed;
 		this.gamma=gamma;
-		
+		this.freq = freq;
 	}
 
 
@@ -121,6 +122,12 @@ public abstract class Probleme extends Particule{
 	public void setGamma(ParametreGamma gamma){
 		this.gamma=gamma;
 	}
+	public double getFreq(){
+		return this.freq;
+	}
+	public void setFreq(double f){
+		this.freq = f;
+	}
 	
 
 	/**
@@ -128,6 +135,12 @@ public abstract class Probleme extends Particule{
 	 *@return un etat créé aléatoirement
 	 */
 	public abstract Etat creeEtatAleatoire();
+	
+	//--------------------------------RESTRICTIONS DES ELEMENTS------------------------//
+	
+	public abstract ArrayList<Element> elementsFrequents();
+	
+	
 	
 }
 

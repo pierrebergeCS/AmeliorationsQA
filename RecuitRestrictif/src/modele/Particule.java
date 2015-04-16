@@ -121,7 +121,5 @@ public class Particule {
 		}
 	}
 	
-	//--------------------------------RESTRICTIONS DES ELEMENTS------------------------//
-	
 	
 }
