@@ -1,4 +1,4 @@
-package parametrage;
+package parametres;
 
 public class ParametreGamma {
 
