@@ -81,6 +81,7 @@ public class Recuit
 		p.setGamma(gamma);
 		Probleme pBest = p.clone();
 		
+		RedondancesParticuleGeneral red = p.elementsFrequents();
 		
 		p.setT(temperatureDepart);
 		ArrayList<Etat> e = p.getEtat();
@@ -105,7 +106,11 @@ public class Recuit
 				
 				for(int k=0; k<M; k++){
 					
+					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
 					m.maj(p,r2);
+					while (!m.estAutorisee(r2, red.getElementsFrequents())) m.maj(p,r2);
+					
+					
 					deltapot =  m.calculerdeltaEp(p,r2);
 					
 					double deltaEp = deltapot/nombreEtat;
@@ -114,8 +119,10 @@ public class Recuit
 					double pr=probaAcceptation(delta,deltapot,p.getT());
 					
 					if(pr>Math.random()){
+						m.majRedondance(p,red,r2);
 						energie = r2.getEnergie();
 						m.faire(r2);
+						
 						compteurSpinique += m.calculerdeltaSpins(p,r2);
 						
 						e.set(j, r2);

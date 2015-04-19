@@ -138,7 +138,77 @@ public abstract class Probleme extends Particule{
 	
 	//--------------------------------RESTRICTIONS DES ELEMENTS------------------------//
 	
-	public abstract ArrayList<Element> elementsFrequents();
+	/**
+	 * Methode qui renvoie un objet de type RedondancesParticules, relatif au probleme traité.
+	 * 
+	 * Attention : nous conseillons fortement à l'utilisateur d'overrider cette méthode, surtout si le cardinal de l'univers n'est pas très grand (en n² pour TSP par exemple)
+	 * 
+	 * Cette méthode est universelle mais assez coûteuse, même si elle ne sera effectué qu'au début du recuit.
+	 * On est obligé de regarder tous les éléments de la particule et (surtout) de vérifier s'ils se répètent.
+	 * Lorsque la fréquence d'apparition de l'élément est supérieure à f0, on le met de côté.
+	 * De plus, elle retourne un objet de type Redondances
+	 * @return
+	 * Les éléments de la particule qui reviennent à une fréquence supérieure à freq (f0)
+	 */
+	public RedondancesParticuleGeneral elementsFrequents(){
+		int p = this.nombreEtat();
+		
+		//Contient tous les éléments de la particule
+		//L'argument nbApparitions, fournit, pour ces éléments, le nombre d'éléments dans la particule
+		ArrayList<Element> elementsParticule = new ArrayList<Element>();
+		
+		
+		//Retient les éléments fréquents de la particule si f0*P > 1. Sinon, elle ne retient rien.
+		//Si cette condition n'est pas vérifiée (f0*P < 1 ou f0 < 1/P), il suffit de renvoyer elementsParticule.
+		//C'est le cas extrême où tous les éléments sont jugés fréquents. Jamais utilisé en pratique bien sûr.
+		ArrayList<Element> elementsFrequents =  new ArrayList<Element>();
+		
+		//On inspecte maintenant chaque élément.
+		for (int replique = 0; replique < p; replique++){
+			Etat e = this.getEtat().get(replique);
+			for (int elt = 0; elt < e.getListe().size(); elt++){
+				
+				//On va vérifier si l'élément traité a déjà été repéré dans les éléments  fréquents.
+				int cpt = 0;
+				boolean estFrequent = false;
+				while ((cpt < elementsFrequents.size()) && !estFrequent){
+					estFrequent = e.getListe().get(elt).equals(elementsFrequents.get(cpt));
+					cpt++;
+				}
+				//Si l'élément est déjà présent dans la liste des éléments fréquents, on ajoute une apparition.
+				if (cpt < elementsFrequents.size() || estFrequent) elementsFrequents.get(cpt-1).addApparition();
+				
+				
+				//On va vérifier si l'élément traité a déjà été repéré dans la particule.
+				cpt = 0;
+				boolean existeDeja = false;
+				while ((cpt < elementsParticule.size()) && !existeDeja){
+					existeDeja = e.getListe().get(elt).equals(elementsParticule.get(cpt));
+					cpt++;
+				}
+				
+				if ((cpt == elementsParticule.size()) && !existeDeja){
+					//Cas où l'élément n'a jamais été vu jusqu'alors. On l'ajoute à elementsParticule.
+					elementsParticule.add(e.getListe().get(elt));
+					elementsParticule.get(elementsParticule.size()-1).setNbApparitions(1);
+				} else {
+					//Cas où l'élément a déjà été observé. On l'ajoute à elementsFrequents dans le cas où on dépasse f0
+					int previous = elementsParticule.get(cpt-1).getNbApparitions();
+					elementsParticule.get(cpt-1).addApparition();
+					if ((previous <= this.freq*p) && ((previous+1) > this.freq*p)){
+						elementsFrequents.add(e.getListe().get(elt));
+						elementsFrequents.get(elementsFrequents.size()-1).addApparition();
+					}
+				}
+			}
+		}
+		if (this.freq*p <= 1.0) return new RedondancesParticuleGeneral(elementsParticule,elementsParticule);
+		return new RedondancesParticuleGeneral(elementsParticule,elementsFrequents);
+	}
+	
+	
+	
+	
 	
 	
 	

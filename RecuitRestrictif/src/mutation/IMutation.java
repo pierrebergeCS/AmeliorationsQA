@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import modele.Element;
 import modele.Etat;
 import modele.Probleme;
+import modele.RedondancesParticuleGeneral;
 
 /**
  * Une mutation est une succession de mutations élémentaires
@@ -66,14 +67,30 @@ public abstract double calculerdeltaSpins(Probleme p, Etat e);
  */
 public abstract void maj(Probleme p, Etat e);
 
-public boolean estAutorisee(Etat e, ArrayList<Element> interdictions){
+public boolean estAutorisee(Etat e, ArrayList<Element> elementsFrequents){
 	int nbMutations = this.listeMutations.size();
 	boolean estAutorisee = true;
 	int cpt = 0;
 	while ((cpt < nbMutations) && (estAutorisee)){
-		estAutorisee = this.listeMutations.get(cpt).estAutorisee(e,interdictions);
+		estAutorisee = this.listeMutations.get(cpt).estAutorisee(e,elementsFrequents);
 		cpt++;
 	}
 	return estAutorisee;
+}
+
+/**
+ * Application de la méthode majRedondance pour toutes les mutations élémentaires de listeMutations
+ * @param p
+ * Probleme traité
+ * @param r
+ * Redondances de la particule
+ * @param e
+ * Etat traité, appartient au problème
+ */
+public void majRedondance(Probleme p,RedondancesParticuleGeneral r, Etat e){
+	int n = this.listeMutations.size();
+	for (int i = 0; i < n; i++){
+		this.listeMutations.get(i).majRedondance(p, r, e);
+	}
 }
 }
