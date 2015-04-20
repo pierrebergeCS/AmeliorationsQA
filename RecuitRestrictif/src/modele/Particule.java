@@ -8,7 +8,7 @@ import parametres.Temperature;
  *
  */
 public class Particule {
-	ArrayList<Etat> etat;
+	public ArrayList<Etat> etat;
 	Temperature T;
 	
 

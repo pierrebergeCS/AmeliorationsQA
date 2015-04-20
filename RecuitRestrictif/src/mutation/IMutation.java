@@ -67,12 +67,12 @@ public abstract double calculerdeltaSpins(Probleme p, Etat e);
  */
 public abstract void maj(Probleme p, Etat e);
 
-public boolean estAutorisee(Etat e, RedondancesParticuleGeneral red){
+public boolean estAutorisee(Probleme p,Etat e, RedondancesParticuleGeneral red){
 	int nbMutations = this.listeMutations.size();
 	boolean estAutorisee = true;
 	int cpt = 0;
 	while ((cpt < nbMutations) && (estAutorisee)){
-		estAutorisee = this.listeMutations.get(cpt).estAutorisee(e,red);
+		estAutorisee = this.listeMutations.get(cpt).estAutorisee(p,e,red);
 		cpt++;
 	}
 	return estAutorisee;
