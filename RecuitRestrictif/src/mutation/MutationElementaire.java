@@ -11,7 +11,7 @@ import modele.RedondancesParticuleGeneral;
  * La mutation élémentaire est un "élément" d'une mutation quelconque.
  * Une mutation consiste à modifier des éléments de l'état que l'on traite.
  * Une mutation élémentaire modifie un seul élément de l'état.
- * L'utilisateur devra implémenter la classe fille. Seule la méthode majRedondance devra être implémentée.
+ * L'utilisateur devra implémenter la classe fille.
  * @author Pierre
  *
  */
@@ -42,17 +42,18 @@ public class MutationElementaire {
 	
 	/**
 	 * Determine si une mutation élémentaire est autorisée lorsque les éléments contenus dans interdictions sont bloqués
+	 * Doit être overridé avec la classe fille de RedondancesParticuleGeneral
 	 * @param interdictions
 	 * Liste d'éléments bloqués
 	 * @return
 	 * True si this.elt est différent des éléments contenus dans interdictions, false sinon
 	 */
-	public boolean estAutorisee(Etat e, ArrayList<Element> interdictions){
-		int n = interdictions.size();
+	public boolean estAutorisee(Etat e, RedondancesParticuleGeneral red){
+		int n = red.getElementsFrequents().size();
 		int cpt = 0;
 		boolean estAutorisee = true;
 		while ((cpt < n) && (estAutorisee)){
-			estAutorisee = !e.getListe().get(this.indice).equals(interdictions.get(cpt));
+			estAutorisee = !e.getListe().get(this.indice).equals(red.getElementsFrequents().get(cpt));
 			cpt++;
 		}
 		return estAutorisee;

@@ -108,7 +108,7 @@ public class Recuit
 					
 					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
 					m.maj(p,r2);
-					while (!m.estAutorisee(r2, red.getElementsFrequents())) m.maj(p,r2);
+					while (!m.estAutorisee(r2, red)) m.maj(p,r2);
 					
 					
 					deltapot =  m.calculerdeltaEp(p,r2);
