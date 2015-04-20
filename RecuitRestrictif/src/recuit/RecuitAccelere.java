@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 
- * @author Pierre
+ * @author La groupie du Pianiste
  *
  */
 public class RecuitAccelere 

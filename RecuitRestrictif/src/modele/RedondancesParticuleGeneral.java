@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Ces deux instances sont nécessaires s'il on veut s'éviter le fait de manipuler des objets de taille card(oméga), qui peut être très grand.
  * L'utilisateur peut utiliser ce type d'objet lorsqu'il initialise son recuit mais, si card(oméga) n'est pas si grand, on lui conseille de créer sa propre classe.
  * 
- * @author Pierre
+ * @author La Groupie du Pianiste
  *
  */
 public class RedondancesParticuleGeneral {
