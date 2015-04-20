@@ -11,11 +11,15 @@ public abstract class Etat {
 	
 	Etat previous;
 	Etat next;
-	ArrayList<Element> listeElements;
+	public ArrayList<Element> listeElements;
 	
 	
 	public ArrayList<Element> getListe(){
 		return this.listeElements;
+	}
+	
+	public void setListe(ArrayList<Element> liste){
+		this.listeElements = liste;
 	}
 
 	public void setprevious(Etat etat) {

@@ -41,14 +41,14 @@ public class MutationElementaire {
 	}
 	
 	/**
-	 * Determine si une mutation élémentaire est autorisée lorsque les éléments contenus dans interdictions sont bloqués
+	 * Determine si une mutation élémentaire est autorisée lorsque les éléments contenus dans red.getElementsFrequents() sont bloqués
 	 * Doit être overridé avec la classe fille de RedondancesParticuleGeneral
 	 * @param interdictions
 	 * Liste d'éléments bloqués
 	 * @return
 	 * True si this.elt est différent des éléments contenus dans interdictions, false sinon
 	 */
-	public boolean estAutorisee(Etat e, RedondancesParticuleGeneral red){
+	public boolean estAutorisee(Probleme p, Etat e, RedondancesParticuleGeneral red){
 		int n = red.getElementsFrequents().size();
 		int cpt = 0;
 		boolean estAutorisee = true;
