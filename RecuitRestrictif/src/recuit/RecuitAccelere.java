@@ -4,7 +4,6 @@ import modele.*;
 import parametres.*;
 import mutation.*;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -81,6 +80,8 @@ public class RecuitAccelere
 		p.setGamma(gamma);
 		Probleme pBest = p.clone();
 		
+		RedondancesParticuleGeneral red = p.elementsFrequents();
+		
 		
 		p.setT(temperatureDepart);
 		ArrayList<Etat> e = p.getEtat();
@@ -105,7 +106,7 @@ public class RecuitAccelere
 				
 				for(int k=0; k<M; k++){
 					
-					m.maj(p,r2);
+					while (!m.estAutorisee(r2, red)) m.maj(p,r2);
 					deltapot =  m.calculerdeltaEp(p,r2);
 					
 					double deltaEp = deltapot/nombreEtat;
@@ -118,6 +119,7 @@ public class RecuitAccelere
 						double delta = deltaEp + deltaEc;
 						double pr=probaAcceptation(delta,deltapot,p.getT());
 						if(pr>Math.random()){
+						m.majRedondance(p,red,r2);
 						energie = r2.getEnergie();
 						m.faire(r2);
 						compteurSpinique += m.calculerdeltaSpins(p,r2);

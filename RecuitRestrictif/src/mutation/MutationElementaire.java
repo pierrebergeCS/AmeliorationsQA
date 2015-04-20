@@ -63,6 +63,7 @@ public class MutationElementaire {
 	 * Cette méthode met à jour la liste des éléments dans la particule et la liste des éléments fréquents après mutation élémentaire
 	 * 
 	 * On suppose que la mutation est autorisée ("l'ancien" élément ne faisait pas partie des éléments fréquents)
+	 * L'utilisateur devra implémenter la méthode adaptée, celle-ci étant une méthode par défaut donc lente.
 	 * 
 	 * @param r
 	 * Liste des éléments dans la particule et liste des éléments fréquents
@@ -97,7 +98,7 @@ public class MutationElementaire {
 		
 		placeOfNext = r.getElementsFrequents().indexOf(this.elt);
 		if (placeOfNext == -1){
-			if (apparitionsOfNext <= p.getFreq()*p.nombreEtat() && apparitionsOfNext+1 > p.getFreq()*p.nombreEtat()){
+			if ((apparitionsOfNext <= p.getFreq()*p.nombreEtat()) && (apparitionsOfNext+1 > p.getFreq()*p.nombreEtat())){
 				r.getElementsFrequents().add(this.elt);
 				r.getElementsFrequents().get(r.getElementsFrequents().size()-1).setNbApparitions(apparitionsOfNext+1);
 			}
