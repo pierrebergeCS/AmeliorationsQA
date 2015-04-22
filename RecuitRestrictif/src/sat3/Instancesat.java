@@ -18,5 +18,19 @@ public int[][] getSat(){
 public int getNbvar(){
 	return this.nbvar;
 }
+public String toString(){
+	String s= new String();
+	s=s+"[ ";
+	for(int i =0;i<nbclauses;i++){
+		s+="[ ";
+		for(int j =0;j<2;j++){
+			s+=tab[i][j]+"; ";
+		}
+		
+		s+=tab[i][2] +" ]";
+	}
+	return s+" ]";
+	
+}
 
 }

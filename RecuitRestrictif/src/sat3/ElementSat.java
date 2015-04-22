@@ -18,11 +18,11 @@ public class ElementSat extends Element {
 		return ((a.getxi()==this.xi)&&(a.getassignation()==this.assignation));
 	}
 	
-	private int getxi() {
+	public int getxi() {
 		// TODO Auto-generated method stub
 		return this.xi;
 	}
-	private boolean getassignation() {
+	public boolean getassignation() {
 		return this.assignation;
 	}
 

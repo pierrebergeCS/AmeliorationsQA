@@ -43,9 +43,11 @@ public class Translator {
 			while ((thisLine = br.readLine()) != null) {
 				if(thisLine.startsWith("c")){
 				}else if(thisLine.startsWith("p")){
-					Scanner s = new Scanner(thisLine);
+					Scanner s = new Scanner(thisLine.replace("p cnf", ""));
+					if(s.hasNextInt()){
 					nbvar=s.nextInt();
 					nbclauses=s.nextInt();
+					}
 					s.close();
 				}
 				else{
