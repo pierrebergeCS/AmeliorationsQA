@@ -73,7 +73,7 @@ public class Routage extends Etat {
 		ArrayList<Element> l = new ArrayList<Element>(n);
 		for (int index = 0; index < n; index++){
 			Arete a = (Arete) this.getListe().get(index);
-			l.set(index, a.clone());
+			l.add(a.clone());
 		}
 		ArrayList<Integer> ord = new ArrayList<Integer>();
 		for (int i = 0; i < g.nombreDeNoeuds(); i++){

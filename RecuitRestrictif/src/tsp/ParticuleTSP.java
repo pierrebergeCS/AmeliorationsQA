@@ -8,12 +8,14 @@ import java.util.ArrayList;
 
 
 
+
 import parametres.ParametreGamma;
-import parametres.Ponderation;
 import parametres.Temperature;
 import modele.Etat;
+import tsp.ParticuleTSP;
 import modele.Probleme;
-import mutation.IMutation;
+import tsp.Routage;
+
 
 
 
@@ -97,5 +99,22 @@ public class ParticuleTSP extends Probleme {
 	}
 	public Etat creeEtatAleatoire(){
 		return new Routage(this.g);
+	}
+	
+	public static ParticuleTSP initialise(int nombreEtat, Graphe g){
+		ArrayList<Etat> r = new ArrayList<Etat>(nombreEtat);
+		for(int indice=0; indice<nombreEtat; indice++){
+			r.add(new Routage(g));
+		}
+		for(int id=1; id<r.size()-1; id++){
+			r.get(id).setprevious(r.get(id-1));
+			r.get(id).setnext(r.get(id+1));
+		}
+		r.get(r.size()-1).setprevious( r.get(r.size()-2));
+		r.get(r.size()-1).setnext( r.get(0));
+		r.get(0).setprevious( r.get(r.size()-1));
+		r.get(0).setnext(r.get(1));
+		ParticuleTSP p=new ParticuleTSP(g,r);
+		return p;
 	}
 }

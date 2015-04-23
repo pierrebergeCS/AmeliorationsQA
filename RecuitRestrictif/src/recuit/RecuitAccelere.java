@@ -106,7 +106,7 @@ public class RecuitAccelere
 				
 				for(int k=0; k<M; k++){
 					
-					while (!m.estAutorisee(r2, red)) m.maj(p,r2);
+					while (!m.estAutorisee(p, r2, red)) m.maj(p,r2);
 					deltapot =  m.calculerdeltaEp(p,r2);
 					
 					double deltaEp = deltapot/nombreEtat;

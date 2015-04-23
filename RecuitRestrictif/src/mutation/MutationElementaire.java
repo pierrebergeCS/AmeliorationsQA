@@ -29,6 +29,10 @@ public class MutationElementaire {
 		return this.elt;
 	}
 	
+	public int getIndice(){
+		return this.indice;
+	}
+	
 	/**
 	 * Remplace l'élément situé à la i-ème place dans l'état e par this.elt
 	 * @param e

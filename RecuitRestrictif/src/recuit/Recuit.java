@@ -69,14 +69,14 @@ public class Recuit
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public  double solution(Probleme p,IMutation m,int nombreIterations, int seed, int M) throws IOException, InterruptedException
+	public static double solution(Probleme p,IMutation m,int nombreIterations, int seed, int M) throws IOException, InterruptedException
 	{	
 		
 		int nombreEtat=p.nombreEtat();
 		List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(/*listeDelta.get(50)/nombreEtat*/0.5);
-		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
-		ParametreGamma gamma = new ParametreGamma(0.5,0.5/(nombreIterations+1),0.01);
+		Temperature temperatureDepart = new Temperature(listeDelta.get(30)/nombreEtat);
+		ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
+		//ParametreGamma gamma = new ParametreGamma(0.5,0.5/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
 		p.setGamma(gamma);
 		Probleme pBest = p.clone();
@@ -108,7 +108,7 @@ public class Recuit
 					
 					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
 					m.maj(p,r2);
-					while (!m.estAutorisee(r2, red)) m.maj(p,r2);
+					while (!m.estAutorisee(p,r2, red)) m.maj(p,r2);
 					
 					
 					deltapot =  m.calculerdeltaEp(p,r2);

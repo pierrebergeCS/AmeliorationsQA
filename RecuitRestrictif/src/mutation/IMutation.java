@@ -16,7 +16,7 @@ import modele.RedondancesParticuleGeneral;
  *
  */
 public abstract class IMutation {
-	ArrayList<MutationElementaire> listeMutations;
+	public ArrayList<MutationElementaire> listeMutations;
 	static double borneEc;
 	
 	public double getBorne(){
