@@ -20,6 +20,16 @@ public class Arete extends Element{
 		return this.noeud2;
 	}
 	
+	public void setNoeud1(int n1){
+		this.noeud1 = n1;
+	}
+	
+	public void setNoeud2(int n2){
+		this.noeud1 = n2;
+	}
+	
+	
+	
 	public boolean equals(Element autre){
 		Arete autreArete = (Arete) autre;
 		return ((this.getNoeud1()==autreArete.getNoeud1()) && (this.getNoeud2()==autreArete.getNoeud2()));
@@ -35,5 +45,12 @@ public class Arete extends Element{
 	
 	public double longueur(Graphe g){
 		return g.getdists()[this.noeud1][this.noeud2];
+	}
+	
+	public void reverse(){
+		int temp1 = this.getNoeud1();
+		int temp2 = this.getNoeud2();
+		this.setNoeud1(temp2);
+		this.setNoeud2(temp1);
 	}
 }

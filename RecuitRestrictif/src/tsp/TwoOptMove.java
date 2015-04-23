@@ -1,9 +1,11 @@
 package tsp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import modele.*;
 import mutation.IMutation;
+import mutation.MutationElementaire;
 
 /**
  * Mutation 2-opt pour TSP
@@ -11,8 +13,6 @@ import mutation.IMutation;
  */
 public class TwoOptMove extends IMutation {
 	int taille;
-	int i;
-	int j;
 
 	/**
 	 * Construit une mutation 2-opt aléatoire
@@ -21,31 +21,26 @@ public class TwoOptMove extends IMutation {
 	 */
 	public TwoOptMove(Routage r){
 		this.taille = r.getTaille();
-		int randIndex1 = 0;//Indice du noeud c2
-		int randIndex2 = 0;//Indice du noeud c1'
-		//  On recalcule les indices de c2 et c1' jusqu'Ã  ce que c2 soit diffÃ©rent de c1'.Notons que le cas c2=c1' ne change pas la route.
-		while (randIndex1 == randIndex2){
-			randIndex1 = (int) (this.taille * Math.random()); //c1'
-			randIndex2 = (int) (this.taille * Math.random()); //c2
+		int randIndex1 = 0;
+		int randIndex2 = 0;
+		//On choisit deux arêtes différentes, au hasard.
+		while ((r.getNextIndex(randIndex1) == randIndex2) || (randIndex1 == randIndex2)){
+			randIndex1 = (int) (this.taille * Math.random()); 
+			randIndex2 = (int) (this.taille * Math.random());
 		}
-		this.i = randIndex1;
-		this.j = randIndex2;
-	}
-
-	/**
-	 * @return
-	 * Retourne l'indice I du 2-opt
-	 */
-	public int getI(){
-		return this.i;
-	}
-
-	/**
-	 * @return
-	 * Retourne l'indice J du 2-opt
-	 */
-	public int getJ(){
-		return this.j;
+		
+		//Indices mutations élémentaires
+		int indice1 = randIndex1;
+		int indice2 = randIndex2;
+		
+		//Elements
+		Arete a1 = new Arete(((Arete)r.getListe().get(indice1)).getNoeud1(),((Arete)r.getListe().get(indice2)).getNoeud1());
+		Arete a2 = new Arete(((Arete)r.getListe().get(indice1)).getNoeud2(),((Arete)r.getListe().get(indice2)).getNoeud2());
+		
+		ArrayList<MutationElementaire> l = new ArrayList<MutationElementaire>();
+		l.add(new TwoOptMoveElementaire(a1,indice1));
+		l.add(new TwoOptMoveElementaire(a2,indice2));
+		this.listeMutations = l;
 	}
 
 	/**
@@ -60,33 +55,44 @@ public class TwoOptMove extends IMutation {
 	public void faire(Probleme p, Etat e) {
 
 		Routage routage = (Routage) e;
+		int indice1 = this.listeMutations.get(0).getIndice();
+		int indice2 = this.listeMutations.get(1).getIndice();
 		//Mise à jour d'Ising
-		int NodeI  = routage.getRoute().get(this.i);
-		int NodeBeforeI = routage.getRoute().get(routage.getPreviousIndex(this.i));
-		int NodeJ = routage.getRoute().get(this.j);
-		int NodeAfterJ = routage.getRoute().get(routage.getNextIndex(this.j));
+		int NodeI  = ((Arete)routage.getListe().get(indice1)).getNoeud2();
+		int NodeBeforeI = ((Arete)routage.getListe().get(indice1)).getNoeud1();
+		int NodeJ = ((Arete)routage.getListe().get(indice2)).getNoeud1();
+		int NodeAfterJ = ((Arete)routage.getListe().get(indice2)).getNoeud2();
 
-		//On modifie les spins concernes. La condition elimine un cas où twoOptMove ne modifie rien.
-		if(routage.getNextIndex(this.j)!=this.i){
-			routage.disconnect(NodeBeforeI, NodeI);
-			routage.disconnect(NodeAfterJ, NodeJ);
-			routage.connect(NodeBeforeI, NodeJ);
-			routage.connect(NodeAfterJ, NodeI);
-		}
+		//On modifie les spins concernes.
+		
+		routage.disconnect(NodeBeforeI, NodeI);
+		routage.disconnect(NodeAfterJ, NodeJ);
+		routage.connect(NodeBeforeI, NodeJ);
+		routage.connect(NodeAfterJ, NodeI);
+		
 
 		//Mutation sur la liste de noeuds
-		int k = this.i;
-		int l = this.j;
+		this.listeMutations.get(0).faire(routage);
+		this.listeMutations.get(1).faire(routage);
+		
+		//On inverse les arêtes entre indice1 et indice2
+		int cpt = routage.getNextIndex(indice1);
+		
+		while (cpt != indice2){
+			((Arete)routage.getListe().get(cpt)).reverse();
+			cpt = routage.getNextIndex(cpt);
+		}
+		
+		//On swape les aretes pour obtenir la nouvelle route
+		int k = routage.getNextIndex(indice1);
+		int l = routage.getPreviousIndex(indice2);
 
-		Swap.faire(routage,k,l);
-
-
-		//On itÃ¨re ensuite pour effectuer tous les Ã©changes du twoOptMove
 		while (k!=l && routage.getNextIndex(k)!=l ) {
-
+			
+			Collections.swap(routage.getListe(),k,l);
 			k=routage.getNextIndex(k);
 			l=routage.getPreviousIndex(l);
-			Swap.faire(routage,k,l);
+			
 		}
 		//routage.updateIsing();
 		
@@ -98,48 +104,63 @@ public class TwoOptMove extends IMutation {
 
 
 
-	public double calculer(Probleme p, Etat e) {
-		// Cette méthode va calculer le delta potentiel engendré par la mutation
+	public double calculerdeltaEp(Probleme p, Etat e) {
+		// Cette méthode va calculer le delta potentiel engendré par la mutation, qui n'a pas encore eu lieu.
 
 		Graphe g = ((ParticuleTSP)p).getGraphe();
 		Routage r = (Routage) e;
-		ArrayList<Integer> l = r.getRoute();
-		double cpt =0;
-		if (r.getPreviousIndex(this.i)!=this.j){
-			cpt-=g.getdists()[ l.get(this.i)][ l.get(r.getPreviousIndex(this.i))];
-			cpt-=g.getdists()[ l.get(this.j)][ l.get(r.getNextIndex(this.j))];
-			cpt+=g.getdists()[ l.get(this.i)][ l.get(r.getNextIndex(this.j))];
-			cpt+=g.getdists()[ l.get(this.j)][ l.get(r.getPreviousIndex(this.i))];
-			return cpt;
-		}
+		double cpt = 0;
+		cpt += ((Arete)this.listeMutations.get(0).getElement()).longueur(g);
+		cpt += ((Arete)this.listeMutations.get(1).getElement()).longueur(g);
+		cpt -= ((Arete)r.getListe().get(this.listeMutations.get(0).getIndice())).longueur(g);
+		cpt -= ((Arete)r.getListe().get(this.listeMutations.get(1).getIndice())).longueur(g);
 		return cpt;
+	}
+	
+	public double calculerdeltaSpins(Probleme p, Etat e){
+		double cptspin = 0;
+		Routage r = (Routage) e;
+		Arete ap1 = (Arete) this.listeMutations.get(0).getElement();
+		Arete ap2 = (Arete) this.listeMutations.get(1).getElement();
+		Arete av1 = (Arete) r.getListe().get(this.listeMutations.get(0).getIndice());
+		Arete av2 = (Arete) r.getListe().get(this.listeMutations.get(1).getIndice());
+		
+		Routage left = (Routage) e.getPrevious();
+		Routage right = (Routage) e.getNext();
+		
+		cptspin -= left.valueIsing(av1.getNoeud1(),av1.getNoeud2()) + right.valueIsing(av1.getNoeud1(),av1.getNoeud2());
+		cptspin -= left.valueIsing(av2.getNoeud1(),av2.getNoeud2()) + right.valueIsing(av2.getNoeud1(),av2.getNoeud2());
+		cptspin += left.valueIsing(ap1.getNoeud1(),ap1.getNoeud2()) + right.valueIsing(ap1.getNoeud1(),ap1.getNoeud2());
+		cptspin += left.valueIsing(ap2.getNoeud1(),ap2.getNoeud2()) + right.valueIsing(ap2.getNoeud1(),ap2.getNoeud2());
+		
+		return (2*cptspin);
 	}
 
 
 	///// POUR CETTE MUTATION ON NE S'INTERESSE QU'A UNE MUTATION ETATIQUE
 
-	@Override
-	public double calculer(Probleme p) {
-		// TODO Auto-generated method stub
-		return Double.MAX_VALUE;
-	}
-
-
-	@Override
-	public void faire(Probleme p) {
-		// TODO Auto-generated method stub
-
-	}
-	public void maj(){
-		int randIndex1 = 0;//Indice du noeud c2
-		int randIndex2 = 0;//Indice du noeud c1'
-		//  On recalcule les indices de c2 et c1' jusqu'Ã  ce que c2 soit diffÃ©rent de c1'.Notons que le cas c2=c1' ne change pas la route.
-		while (randIndex1 == randIndex2){
-			randIndex1 = (int) (this.taille * Math.random()); //c1'
-			randIndex2 = (int) (this.taille * Math.random()); //c2
+	public void maj(Probleme p, Etat e){
+		Routage r = (Routage) e;
+		int randIndex1 = 0;
+		int randIndex2 = 0;
+		//On choisit deux arêtes différentes, au hasard.
+		while ((r.getNextIndex(randIndex1) == randIndex2) || (randIndex1 == randIndex2)){
+			randIndex1 = (int) (this.taille * Math.random()); 
+			randIndex2 = (int) (this.taille * Math.random());
 		}
-		this.i = randIndex1;
-		this.j = randIndex2;
+		
+		//Indices mutations élémentaires
+		int indice1 = randIndex1;
+		int indice2 = randIndex2;
+		
+		//Elements
+		Arete a1 = new Arete(((Arete)r.getListe().get(indice1)).getNoeud1(),((Arete)r.getListe().get(indice2)).getNoeud1());
+		Arete a2 = new Arete(((Arete)r.getListe().get(indice1)).getNoeud2(),((Arete)r.getListe().get(indice2)).getNoeud2());
+		
+		ArrayList<MutationElementaire> l = new ArrayList<MutationElementaire>();
+		l.add(new TwoOptMoveElementaire(a1,indice1));
+		l.add(new TwoOptMoveElementaire(a2,indice2));
+		this.listeMutations = l;
 	}
 }
 

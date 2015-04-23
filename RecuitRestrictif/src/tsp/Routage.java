@@ -11,7 +11,7 @@ import mutation.IMutation;
 
 public class Routage extends Etat {
 
-	
+	ArrayList<Integer> ordre; // Les éléments dans listeElements ne sont pas forcément dans le bon ordre. Cet argument donne un ordre possible dans lequel suivre les éléments pour construire la route.
 	Graphe g;
 	int[][] ising;
 	
@@ -19,6 +19,11 @@ public class Routage extends Etat {
 		this.g = g;
 		this.setListe(routeInitiale());
 		this.updateIsing();
+		ArrayList<Integer> ord = new ArrayList<Integer>();
+		for (int i = 0 ; i < g.nombreDeNoeuds(); i++){
+			ord.add(i);
+		}
+		this.ordre = ord;
 	}
 	public void setIsing(int[][] ising){
 		this.ising =ising ;
@@ -27,12 +32,20 @@ public class Routage extends Etat {
 	public int[][] getIsing(){
 		return this.ising;
 	}
+	
+	public ArrayList<Integer> getOrdre(){
+		return this.ordre;
+	}
 
+	public void setOrdre(ArrayList<Integer> ord){
+		this.ordre = ord;
+	}
 
-	public Routage (Graphe g, ArrayList<Element> liste){
+	public Routage (Graphe g, ArrayList<Element> liste, ArrayList<Integer> ord){
 		this.g=g;
 		this.setListe(liste);
 		this.updateIsing();
+		this.ordre = ord;
 	}
 	
 	public ArrayList<Element> routeInitiale() {
@@ -56,12 +69,18 @@ public class Routage extends Etat {
 	public Routage clone()
 	{
 		int n = this.g.nombreDeNoeuds();
+		
 		ArrayList<Element> l = new ArrayList<Element>(n);
 		for (int index = 0; index < n; index++){
 			Arete a = (Arete) this.getListe().get(index);
 			l.set(index, a.clone());
 		}
-		Routage clone = new Routage(this.g,l);
+		ArrayList<Integer> ord = new ArrayList<Integer>();
+		for (int i = 0; i < g.nombreDeNoeuds(); i++){
+			ord.add(this.ordre.get(i));
+		}
+		
+		Routage clone = new Routage(this.g,l,ord);
 		return clone;
 	}
 
