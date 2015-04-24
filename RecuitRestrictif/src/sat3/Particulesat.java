@@ -3,6 +3,8 @@ import modele.Etat;
 import modele.Probleme;
 public class Particulesat extends Probleme{
 
+	private Instancesat instance;
+
 	@Override
 	public Probleme clone() {
 		// TODO Auto-generated method stub
@@ -24,6 +26,11 @@ public class Particulesat extends Probleme{
 	public int getnombreXi() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public Instancesat getInstance() {
+		// TODO Auto-generated method stub
+		return this.instance;
 	}
 
 }
