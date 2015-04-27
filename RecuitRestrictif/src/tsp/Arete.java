@@ -44,13 +44,13 @@ public class Arete extends Element{
 	}
 	
 	public double longueur(Graphe g){
-		return g.getdists()[this.noeud1][this.noeud2];
+		if (this.noeud1 < this.noeud2) return g.getdists()[this.noeud1][this.noeud2];
+		return g.getdists()[this.noeud2][this.noeud1];
 	}
 	
-	public void reverse(){
+	public Arete reverse(){
 		int temp1 = this.getNoeud1();
 		int temp2 = this.getNoeud2();
-		this.setNoeud1(temp2);
-		this.setNoeud2(temp1);
+		return new Arete(temp2,temp1);
 	}
 }

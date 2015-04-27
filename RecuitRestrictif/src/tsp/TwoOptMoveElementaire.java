@@ -2,6 +2,7 @@ package tsp;
 
 import java.util.ArrayList;
 
+import modele.Element;
 import modele.Etat;
 import modele.Probleme;
 import modele.RedondancesParticuleGeneral;
@@ -15,17 +16,11 @@ public class TwoOptMoveElementaire extends MutationElementaire {
 	
 	@Override
 	public boolean estAutorisee(Probleme p,Etat e, RedondancesParticuleGeneral red){
+		Arete a = (Arete) this.getElement();
 		RedondancesParticuleTSP r = (RedondancesParticuleTSP) red;
-		Routage route = (Routage) e;
-		int indice = this.getIndice();
-		ArrayList<Arete> liste = r.getElementsFrequents((int) p.getFreq()*p.nombreEtat());
-		int cpt = 0;
-		boolean estAutorisee = true;
-		while ((cpt < liste.size()) && estAutorisee){
-			estAutorisee = !route.getListe().get(indice).equals(liste.get(cpt));
-			cpt++;
-		}
-		return estAutorisee;
+		int i = Math.min(a.getNoeud1(),a.getNoeud2());
+		int j = Math.max(a.getNoeud1(),a.getNoeud2());
+		return (r.getTab()[i][j] <= p.getFreq()*p.nombreEtat());
 	}
 	
 	@Override
@@ -34,13 +29,11 @@ public class TwoOptMoveElementaire extends MutationElementaire {
 		RedondancesParticuleTSP r = (RedondancesParticuleTSP) red;
 		Arete old = (Arete) route.getListe().get(this.getIndice());
 		Arete next = (Arete) this.getElement();
-		int old1 = old.getNoeud1();
-		int old2 = old.getNoeud2();
-		int next1 = next.getNoeud1();
-		int next2 = next.getNoeud2();
-		if (old1 < old2) r.getTab()[old1][old2]--;
-		if (old2 < old1) r.getTab()[old2][old1]--;
-		if (next1 < next2) r.getTab()[next1][next2]++;
-		if (next2 < next1) r.getTab()[next2][next1]++;
+		int old1 = Math.min(old.getNoeud1(),old.getNoeud2());
+		int old2 = Math.max(old.getNoeud1(),old.getNoeud2());
+		int next1 = Math.min(next.getNoeud1(),next.getNoeud2());
+		int next2 = Math.max(next.getNoeud1(),next.getNoeud2());
+		r.getTab()[old1][old2]--;
+		r.getTab()[next1][next2]++;
 	}
 }

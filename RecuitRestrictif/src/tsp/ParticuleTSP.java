@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 
 
+
 import parametres.ParametreGamma;
 import parametres.Temperature;
 import modele.Etat;
+import modele.RedondancesParticuleGeneral;
 import tsp.ParticuleTSP;
 import modele.Probleme;
 import tsp.Routage;
@@ -22,12 +24,13 @@ import tsp.Routage;
 public class ParticuleTSP extends Probleme {
 	Graphe g;
 	
-	public ParticuleTSP(Graphe g, ArrayList<Etat> etat){
+	public ParticuleTSP(Graphe g, ArrayList<Etat> etat,double freq){
 		/**
 		 * le constructeur initial les autres valeurs sont "setables"
 		 **/
 	this.g=g;
 	this.etat=etat;
+	this.freq = freq;
 	}
 	
 	public ParticuleTSP(Graphe g, ArrayList<Etat> etat,Temperature T,int seed,ParametreGamma gamma, double freq){
@@ -101,7 +104,7 @@ public class ParticuleTSP extends Probleme {
 		return new Routage(this.g);
 	}
 	
-	public static ParticuleTSP initialise(int nombreEtat, Graphe g){
+	public static ParticuleTSP initialise(int nombreEtat, Graphe g, double freq){
 		ArrayList<Etat> r = new ArrayList<Etat>(nombreEtat);
 		for(int indice=0; indice<nombreEtat; indice++){
 			r.add(new Routage(g));
@@ -114,7 +117,8 @@ public class ParticuleTSP extends Probleme {
 		r.get(r.size()-1).setnext( r.get(0));
 		r.get(0).setprevious( r.get(r.size()-1));
 		r.get(0).setnext(r.get(1));
-		ParticuleTSP p=new ParticuleTSP(g,r);
+		ParticuleTSP p=new ParticuleTSP(g,r,freq);
 		return p;
 	}
+	
 }

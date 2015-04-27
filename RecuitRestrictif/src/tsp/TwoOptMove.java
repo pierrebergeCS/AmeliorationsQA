@@ -52,6 +52,7 @@ public class TwoOptMove extends IMutation {
 	 * @return 
 	 * Nouvel état après mutation 2-opt
 	 */
+	@Override
 	public void faire(Probleme p, Etat e) {
 
 		Routage routage = (Routage) e;
@@ -79,7 +80,9 @@ public class TwoOptMove extends IMutation {
 		int cpt = routage.getNextIndex(indice1);
 		
 		while (cpt != indice2){
-			((Arete)routage.getListe().get(cpt)).reverse();
+			Arete a1 = (Arete)routage.getListe().get(cpt);
+			Arete a2 = a1.reverse();
+			routage.getListe().set(cpt,a2);
 			cpt = routage.getNextIndex(cpt);
 		}
 		
@@ -87,13 +90,15 @@ public class TwoOptMove extends IMutation {
 		int k = routage.getNextIndex(indice1);
 		int l = routage.getPreviousIndex(indice2);
 
-		while (k!=l && routage.getNextIndex(k)!=l ) {
+		while (k!=l && routage.getPreviousIndex(k)!=l ) {
 			
 			Collections.swap(routage.getListe(),k,l);
 			k=routage.getNextIndex(k);
 			l=routage.getPreviousIndex(l);
 			
 		}
+		
+		
 		//routage.updateIsing();
 		
 	}
