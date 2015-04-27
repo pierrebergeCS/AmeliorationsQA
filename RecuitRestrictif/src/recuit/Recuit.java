@@ -2,8 +2,9 @@
 package recuit;
 import modele.*;
 import parametres.*;
+import tsp.RedondancesParticuleTSP;
+import tsp.Routage;
 import mutation.*;
-
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -69,19 +70,17 @@ public class Recuit
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static double solution(Probleme p,IMutation m,int nombreIterations, int seed, int M) throws IOException, InterruptedException
+	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M) throws IOException, InterruptedException
 	{	
 		
 		int nombreEtat=p.nombreEtat();
 		List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(listeDelta.get(30)/nombreEtat);
-		ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
-		//ParametreGamma gamma = new ParametreGamma(0.5,0.5/(nombreIterations+1),0.01);
+		Temperature temperatureDepart = new Temperature(0.02);
+		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
+		ParametreGamma gamma = new ParametreGamma(1.0,1.0/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
 		p.setGamma(gamma);
 		Probleme pBest = p.clone();
-		
-		RedondancesParticuleGeneral red = p.elementsFrequents();
 		
 		p.setT(temperatureDepart);
 		ArrayList<Etat> e = p.getEtat();
@@ -94,6 +93,8 @@ public class Recuit
 		double energieBest = energie;
 		double valueJ = 0;
 		
+		int MutationsRefusees = 0;
+		
 		for(int i =0; i<nombreIterations;i++){
 			
 			 valueJ = J.calcul(p.getT(), nombreEtat);
@@ -105,10 +106,12 @@ public class Recuit
 				Etat r2 = e.get(j);
 				
 				for(int k=0; k<M; k++){
-					
 					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
 					m.maj(p,r2);
-					while (!m.estAutorisee(p,r2, red)) m.maj(p,r2);
+					while (!m.estAutorisee(p,r2, red)){
+						m.maj(p,r2);
+						MutationsRefusees++;
+					}
 					
 					
 					deltapot =  m.calculerdeltaEp(p,r2);
@@ -121,7 +124,7 @@ public class Recuit
 					if(pr>Math.random()){
 						m.majRedondance(p,red,r2);
 						energie = r2.getEnergie();
-						m.faire(r2);
+						m.faire(p,r2);
 						
 						compteurSpinique += m.calculerdeltaSpins(p,r2);
 						
@@ -149,7 +152,8 @@ public class Recuit
 			
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-		System.out.println(energieBest);
+		System.out.println("result :" + energieBest);
+		System.out.println("refus mutations :"+MutationsRefusees);
 		
 		return energieBest;
 
