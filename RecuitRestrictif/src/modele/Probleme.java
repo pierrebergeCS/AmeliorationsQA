@@ -30,7 +30,7 @@ public abstract class Probleme extends Particule{
 	private int seed;
 	// Fonctions élémentaires de calcul de l'energie de la particule
 	private ParametreGamma gamma;
-	double freq;
+	public double freq;
 	
 
 	

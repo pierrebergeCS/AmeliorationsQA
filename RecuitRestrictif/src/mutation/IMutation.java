@@ -25,10 +25,11 @@ public abstract class IMutation {
 	
 	/**
 	 * C'est la méthode qui effectue toutes les mutations élémentaires de la liste
+	 * L'utilisateur pourra overrider cette méthode s'il le souhaite
 	 * @param e
 	 * Etat de la particule sur lequel on effectue les mutations
 	 */
-public void faire(Etat e){
+public void faire(Probleme p, Etat e){
 	int n = this.listeMutations.size();
 	for (int i = 0; i < n; i++){
 		this.listeMutations.get(i).faire(e);
