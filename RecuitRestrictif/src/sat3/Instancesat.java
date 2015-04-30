@@ -15,6 +15,9 @@ public Instancesat(int var,int clauses){
 public int[][] getSat(){
 	return this.tab;
 }
+public int getNombreClauses(){
+	return this.nbclauses;
+}
 public int getNbvar(){
 	return this.nbvar;
 }
