@@ -1,14 +1,18 @@
 package sat3;
+import java.util.ArrayList;
+
 import modele.Element;
 public class ElementSat extends Element {
 	private int xi;
 	private boolean assignation;
-	
+	ArrayList<Minterme> clauses;
 	public ElementSat(int i, boolean b){
 		this.xi=i;
 		this.assignation=b;
 	}
-	
+	public void ajouteClause(Minterme m){
+		this.clauses.add(m);
+	}
 	
 	@Override
 	public boolean equals(Element autre) {
