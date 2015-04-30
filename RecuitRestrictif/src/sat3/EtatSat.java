@@ -91,8 +91,26 @@ public class EtatSat extends Etat {
 
 	@Override
 	public int distanceIsing(Etat e) {
-		// TODO Auto-generated method stub
-		return 0;
+		int cpt=0;
+		ArrayList<Element> l1=this.getListe();
+		ArrayList<Element> l2=e.getListe();
+		for(Element i :l1){
+			int j =0;
+			int xi1=((ElementSat) i).getxi();
+			boolean b1=((ElementSat) i).getassignation();
+			
+			while(((ElementSat) l2.get(j)).getxi()!=xi1){
+				j++;
+			}
+			if(((ElementSat) l2.get(j)).getassignation()!=b1){
+				cpt++;
+			}
+		}
+		
+		
+		
+		
+		return cpt;
 	}
 
 }

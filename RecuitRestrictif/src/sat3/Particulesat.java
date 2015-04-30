@@ -25,7 +25,7 @@ public class Particulesat extends Probleme{
 
 	public int getnombreXi() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.instance.getNbvar();
 	}
 
 	public Instancesat getInstance() {
