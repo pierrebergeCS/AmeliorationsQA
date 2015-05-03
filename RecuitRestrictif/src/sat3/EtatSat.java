@@ -48,6 +48,9 @@ public class EtatSat extends Etat {
 		
 	}
 	
+	public int getNbxi(){
+		return this.nbxi;
+	}
 	
 	
 	
