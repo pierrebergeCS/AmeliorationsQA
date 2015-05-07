@@ -48,5 +48,10 @@ public class Minterme {
 			return true;}
 	}
 
+	public int getIndex(ElementSat e){
+		if (this.tab[0].getxi()==e.getxi()) return 0;
+		if (this.tab[1].getxi()==e.getxi()) return 1;
+		return 2;
+	}
 
 }
