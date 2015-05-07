@@ -18,10 +18,10 @@ public class MutationSatElementaire extends mutation.MutationElementaire {
 		ElementSat elt = (ElementSat) this.getElement();
 		int x = elt.getxi();
 		boolean b = elt.getassignation();
-		int k = 0;
-		if (b) k=1;
-		int[][] m = red.getTab();
-		return (m[x][k] <= p.getFreq()*p.nombreEtat());
+		int[] m = red.getTab();
+		int value = m[x];
+		if (!b) value=p.nombreEtat()-m[x];
+		return (value <= p.getFreq()*p.nombreEtat());
 	}
 	
 	@Override
@@ -29,14 +29,13 @@ public class MutationSatElementaire extends mutation.MutationElementaire {
 		RedondancesParticuleSAT r = (RedondancesParticuleSAT) red;
 		ElementSat esat = (ElementSat) this.getElement();
 		ElementSat prev = (ElementSat) e.getListe().get(this.getIndice());
-		int old1 = prev.getxi();
-		int old2 = 0;
-		if (prev.getassignation()) old2=1;
-		int next1 = esat.getxi();
-		int next2 = 0;
-		if (esat.getassignation()) next2 = 1;
-		r.getTab()[old1][old2]--;
-		r.getTab()[next1][next2]++;
+		int old = prev.getxi();
+		if (prev.getassignation()) r.getTab()[old]--;
+		if (!prev.getassignation()) r.getTab()[old]++;;
+		int next = esat.getxi();
+		if (esat.getassignation()) r.getTab()[next]++;
+		if (!esat.getassignation()) r.getTab()[next]--;
+		;
 	}
 
 }

@@ -12,8 +12,8 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		int nombreEtat = 20;
-		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/Pierre/Desktop/benchmark/a280.tsp"));
+		int nombreEtat = 10;
+		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/Pierre/Desktop/benchmark/brazil58.tsp"));
 		int n = g.nombreDeNoeuds();
 		int nombreIterations = 10*n*n;
 		
@@ -24,8 +24,8 @@ public class Main {
 		int cpt = 0;
 		
 		try {
-			for (int i = 0; i < 100; i++){
-				ParticuleTSP p = ParticuleTSP.initialise(nombreEtat,g,0.80);
+			for (int i = 0; i < 10; i++){
+				ParticuleTSP p = ParticuleTSP.initialise(nombreEtat,g,0.9);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
 				RedondancesParticuleTSP red = new RedondancesParticuleTSP(p);
 				Recuit.solution(p,m,red,nombreIterations,1,1);

@@ -75,9 +75,9 @@ public class Recuit
 		
 		int nombreEtat=p.nombreEtat();
 		List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(0.02);
+		Temperature temperatureDepart = new Temperature(1.0);
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
-		ParametreGamma gamma = new ParametreGamma(1.0,1.0/(nombreIterations+1),0.01);
+		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
 		p.setGamma(gamma);
 		Probleme pBest = p.clone();
@@ -107,10 +107,12 @@ public class Recuit
 				
 				for(int k=0; k<M; k++){
 					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
+					int nbTentatives = 0;
 					m.maj(p,r2);
-					while (!m.estAutorisee(p,r2, red)){
+					while (!m.estAutorisee(p,r2, red) && nbTentatives < 100){
 						m.maj(p,r2);
 						MutationsRefusees++;
+						nbTentatives++;
 					}
 					
 					

@@ -36,11 +36,10 @@ public class ParametreurT {
 			m.maj(p,r1);
 			}
 			l.add((deltaE));
-			//On vient de générer une liste de 400 échantillons deltaE du graphe g.
+			//On vient de générer une liste de 1000 échantillons deltaE du graphe g.
 		}
 		Collections.sort(l);
 		//Ici, on choisit de se baser autour du 5e centile des échantillons générés précédemment.
-		//Temperature temp = new Temperature(l.get(30));
 		return l;
 	}
 }

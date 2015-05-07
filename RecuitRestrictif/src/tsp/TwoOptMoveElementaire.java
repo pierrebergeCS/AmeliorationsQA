@@ -16,7 +16,7 @@ public class TwoOptMoveElementaire extends MutationElementaire {
 	
 	@Override
 	public boolean estAutorisee(Probleme p,Etat e, RedondancesParticuleGeneral red){
-		Arete a = (Arete) this.getElement();
+		Arete a = (Arete) e.getListe().get(this.getIndice());
 		RedondancesParticuleTSP r = (RedondancesParticuleTSP) red;
 		int i = Math.min(a.getNoeud1(),a.getNoeud2());
 		int j = Math.max(a.getNoeud1(),a.getNoeud2());

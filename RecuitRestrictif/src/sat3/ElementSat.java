@@ -26,6 +26,11 @@ public class ElementSat extends Element {
 		// TODO Auto-generated method stub
 		return this.xi;
 	}
+	
+	public ArrayList<Minterme> getMintermes(){
+		return this.clauses;
+	}
+	
 	public boolean getassignation() {
 		return this.assignation;
 	}

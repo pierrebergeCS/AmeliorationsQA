@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class RedondancesParticuleGeneral {
 	
 	ArrayList<Element> elementsParticule;
-	ArrayList<Element> elementsFrequents;
+	protected ArrayList<Element> elementsFrequents;
 	
 	public RedondancesParticuleGeneral(ArrayList<Element> elementsParticule, ArrayList<Element> elementsFrequents){
 		this.elementsParticule = elementsParticule;
@@ -48,5 +48,9 @@ public class RedondancesParticuleGeneral {
 		return this.elementsFrequents;
 	}
 	
+	//Ajoute l'élément à elementsFrequents
+	public void ajouterElement(Element element){
+		this.elementsFrequents.add(element);
+	}
 
 }
