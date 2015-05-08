@@ -25,7 +25,7 @@ public class Main {
 		
 		try {
 			for (int i = 0; i < 10; i++){
-				ParticuleTSP p = ParticuleTSP.initialise(nombreEtat,g,0.9);
+				ParticuleTSP p = ParticuleTSP.initialise(nombreEtat,g,0.8);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
 				RedondancesParticuleTSP red = new RedondancesParticuleTSP(p);
 				Recuit.solution(p,m,red,nombreIterations,1,1);

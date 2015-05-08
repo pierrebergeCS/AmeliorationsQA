@@ -39,8 +39,7 @@ public class EtatSat extends Etat {
 				e.ajouteClause(m);
 				clauses.add(m);
 			}
-			
-			
+				
 		}
 	}
 	

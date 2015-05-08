@@ -2,6 +2,7 @@ package sat3;
 
 import java.util.ArrayList;
 
+import tsp.Routage;
 import modele.Etat;
 import modele.Probleme;
 import mutation.IMutation;
@@ -42,8 +43,20 @@ public class MutationSat extends IMutation{
 
 	@Override
 	public double calculerdeltaSpins(Probleme p, Etat e) {
-		// TODO Auto-generated method stub
-		return 0;
+		double cptspin = 0;
+		EtatSat esat = (EtatSat) e;
+		
+		ElementSat ap = (ElementSat) this.listeMutations.get(0).getElement();
+		ElementSat av = (ElementSat) esat.getListe().get(this.listeMutations.get(0).getIndice());
+		
+		ElementSat leftElt = (ElementSat) esat.getPrevious().getListe().get(this.listeMutations.get(0).getIndice());
+		ElementSat rightElt = (ElementSat) esat.getNext().getListe().get(this.listeMutations.get(0).getIndice());
+		
+		if (leftElt.getassignation()==ap.getassignation()) cptspin++;
+		if (leftElt.getassignation()==av.getassignation()) cptspin--;
+		if (rightElt.getassignation()==ap.getassignation()) cptspin++;
+		if (rightElt.getassignation()==av.getassignation()) cptspin--;
+		return (2*cptspin);
 	}
 
 	@Override
