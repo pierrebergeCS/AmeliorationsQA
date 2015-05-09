@@ -9,7 +9,6 @@ public class EtatSat extends Etat {
 	
 	private int nbxi;
 	private Instancesat instance;
-	private ArrayList<Minterme> clauses;
 	
 	/**
 	 * Cree un etat random utile pour l'initialisation
@@ -19,25 +18,26 @@ public class EtatSat extends Etat {
 	public EtatSat(Particulesat p){
 		int n = p.getnombreXi();
 		this.nbxi=n;
+		ArrayList<Element> l=new ArrayList<Element>();
 		for(int i=1;i<=n;i++){
 			boolean b;
 			b= Math.random()>0.5;
 			ElementSat elemi= new ElementSat(i,b);
-			this.getListe().add(elemi);
+			l.add(elemi);
 		}
 		
 		this.instance=p.getInstance();
 		int[][] representation=this.instance.getSat();
-		ArrayList<Element> l=this.getListe();
+		this.setListe(l);
 		for(int i=0;i<this.instance.getNombreClauses();i++){
 			Minterme m = new Minterme();
 			for(int j=0;j<3;j++){
 				int xi=Math.abs(representation[i][j]);
 				int rienornot=(int) Math.signum(representation[i][j]);
-				ElementSat e= (ElementSat) l.get(xi);
+				ElementSat e= (ElementSat) l.get(xi-1);
 				m.addElem(e, j, rienornot);
 				e.ajouteClause(m);
-				clauses.add(m);
+				
 			}
 				
 		}
@@ -47,6 +47,35 @@ public class EtatSat extends Etat {
 		
 	}
 	
+	public EtatSat(Instancesat ins) {
+		int n = ins.getNbvar();
+		this.nbxi=n;
+		ArrayList<Element> l=new ArrayList<Element>();
+		for(int i=1;i<=n;i++){
+			boolean b;
+			b= Math.random()>0.5;
+			ElementSat elemi= new ElementSat(i,b);
+			l.add(elemi);
+		}
+		
+		this.instance=ins;
+		int[][] representation=this.instance.getSat();
+		this.setListe(l);
+		l=this.getListe();
+		for(int i=0;i<this.instance.getNombreClauses();i++){
+			Minterme m = new Minterme();
+			for(int j=0;j<3;j++){
+				int xi=Math.abs(representation[i][j]);
+				int rienornot=(int) Math.signum(representation[i][j]);
+				ElementSat e= (ElementSat) l.get(xi-1);
+				m.addElem(e, j, rienornot);
+				e.ajouteClause(m);
+				
+			}
+				
+		}
+	}
+
 	public int getNbxi(){
 		return this.nbxi;
 	}

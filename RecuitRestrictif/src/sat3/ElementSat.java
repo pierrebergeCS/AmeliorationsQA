@@ -5,7 +5,7 @@ import modele.Element;
 public class ElementSat extends Element {
 	private int xi;
 	private boolean assignation;
-	ArrayList<Minterme> clauses;
+	ArrayList<Minterme> clauses=new ArrayList<Minterme>();
 	public ElementSat(int i, boolean b){
 		this.xi=i;
 		this.assignation=b;
