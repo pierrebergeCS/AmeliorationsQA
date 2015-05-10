@@ -129,8 +129,10 @@ public class Recuit
 						
 						m.majRedondance(p,red,r2);
 						energie = r2.getEnergie();
+						System.out.println("Energie before:"+energie);
 						m.faire(p,r2);
-						
+						System.out.println("Energie after :" + r2.getEnergie());
+						System.out.println("delta pot: "+deltapot);
 						compteurSpinique += m.calculerdeltaSpins(p,r2);
 						
 						e.set(j, r2);
@@ -144,6 +146,7 @@ public class Recuit
 					
 						if (energie < energieBest){
 						energieBest = energie;
+						
 						}
 					
 				}

@@ -37,5 +37,9 @@ public class MutationSatElementaire extends mutation.MutationElementaire {
 		if (!esat.getassignation()) r.getTab()[next]--;
 		;
 	}
+	@Override
+	public void faire(Etat e){
+		((ElementSat) e.getListe().get(this.getIndice())).change();;
+	}
 
 }

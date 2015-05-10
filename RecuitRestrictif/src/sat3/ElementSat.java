@@ -38,5 +38,9 @@ public class ElementSat extends Element {
 
 		this.clauses=mintermes;
 	}
+	public void change() {
+		this.assignation= !(this.assignation);
+		
+	}
 
 }

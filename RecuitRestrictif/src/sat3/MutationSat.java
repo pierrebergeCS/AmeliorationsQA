@@ -28,9 +28,10 @@ public class MutationSat extends IMutation{
 		for(Integer i : elt.getMintermes() ){
 			Minterme m =((EtatSat) e).clauses.get(i);
 			boolean preced=m.is();
+			
 			int j =m.getIndex(elt);
 			m.calque[j]=-m.calque[j];
-			if(m.is()&&(preced==false)){
+			if(m.is()&&(preced==false)){				
 				cpt--;
 				
 			}
