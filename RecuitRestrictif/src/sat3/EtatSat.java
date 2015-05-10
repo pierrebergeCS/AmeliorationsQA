@@ -9,7 +9,7 @@ public class EtatSat extends Etat {
 	
 	private int nbxi;
 	private Instancesat instance;
-	ArrayList<Minterme> clauses=new ArrayList<Minterme>();
+	ArrayList<Minterme> clauses;
 	
 	/**
 	 * Cree un etat random utile pour l'initialisation
@@ -20,6 +20,7 @@ public class EtatSat extends Etat {
 		int n = p.getnombreXi();
 		this.nbxi=n;
 		ArrayList<Element> l=new ArrayList<Element>();
+		this.clauses=new ArrayList<Minterme>();
 		for(int i=1;i<=n;i++){
 			boolean b;
 			b= Math.random()>0.5;
@@ -47,9 +48,11 @@ public class EtatSat extends Etat {
 	
 	public EtatSat(){
 		this.setListe(new ArrayList<Element>());
+		this.clauses=new ArrayList<Minterme>();
 	}
 	
 	public EtatSat(Instancesat ins) {
+		this.clauses=new ArrayList<Minterme>();
 		int n = ins.getNbvar();
 		this.nbxi=n;
 		ArrayList<Element> l=new ArrayList<Element>();
@@ -105,27 +108,11 @@ public class EtatSat extends Etat {
 	@Override
 	public double getEnergie() {
 		double cpt=0;
-		int[][]t=instance.getSat();
-		int n1=t.length;
-		boolean[][] t2=new boolean[n1][3];
-		for(int i=0;i<this.nbxi;i++){
-			ElementSat ei=(ElementSat) (this.getListe().get(i));
-			int xi = ei.getxi();
-			boolean b=ei.getassignation();
-			for(int j=0;j<n1;j++){
-				for(int l =0;l<3;l++){
-					if(t[j][l]==xi){
-						t2[j][l]=b;
-					}if((t[j][l]==-xi)){
-						t2[j][l]=not(b);
-					}
-				}
-			}
-		}
-		for(int j=0;j<n1;j++){
-			if(not(t2[j][1]&&t2[j][0]&&t2[j][2])){
+		for(Minterme m :this.clauses){
+			if(!m.is()){
 				cpt++;
 			}
+			
 		}
 		return cpt;
 	}

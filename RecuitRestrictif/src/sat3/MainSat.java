@@ -24,7 +24,7 @@ public class MainSat {
 		}
 		int n = ins.getNombreClauses() ;
 		System.out.println(n);
-		int nombreIterations = 10*n*n;//on est des fous pas tarés non plus
+		int nombreIterations = 10*n;//on est des fous pas tarés non plus
 		
 		
 		 //       Test Recuit
