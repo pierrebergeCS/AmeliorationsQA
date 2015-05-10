@@ -25,7 +25,7 @@ public class RedondancesParticuleSAT extends RedondancesParticuleGeneral {
 			ArrayList<Element> l=elt.getListe();
 			for(int i=0;i<l.size();i++){
 				if(((ElementSat) l.get(i)).getassignation()){
-					redondances[((ElementSat) l.get(i)).getxi()]+=1;
+					redondances[((ElementSat) l.get(i)).getxi()-1]+=1;
 				}
 			}
 		}

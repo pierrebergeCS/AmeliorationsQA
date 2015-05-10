@@ -11,7 +11,7 @@ public abstract class Etat {
 	
 	Etat previous;
 	Etat next;
-	public ArrayList<Element> listeElements;
+	public ArrayList<Element> listeElements=new ArrayList<Element>();
 	
 	
 	public ArrayList<Element> getListe(){

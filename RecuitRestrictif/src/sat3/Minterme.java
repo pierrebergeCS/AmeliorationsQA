@@ -5,14 +5,16 @@ package sat3;
  *un minterme est un tableau d'élementsat, et un tableau de +1,-1 pour savoir si on considère Xi ou not Xi
  */
 public class Minterme {
+private int number;
 	int[] calque;
 	ElementSat[] tab;
 	/**
 	 * Constructeur du minterme intialise tout a 0 et a null;
 	 */
-	public Minterme(){
+	public Minterme(int nombre){
 		this.calque=new int[3];
 		this.tab=new ElementSat[3];
+		this.number=nombre;
 	}
 	/**
 	 *Ajoute un élément et sa valeur au minterme 
@@ -52,6 +54,10 @@ public class Minterme {
 		if (this.tab[0].getxi()==e.getxi()) return 0;
 		if (this.tab[1].getxi()==e.getxi()) return 1;
 		return 2;
+	}
+	public int getNumber() {
+
+		return this.number;
 	}
 
 }

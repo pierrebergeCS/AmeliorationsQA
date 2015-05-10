@@ -23,7 +23,8 @@ public class MainSat {
 			e1.printStackTrace();
 		}
 		int n = ins.getNombreClauses() ;
-		int nombreIterations = 10*n*n;
+		System.out.println(n);
+		int nombreIterations = 100*n;//on est des fous pas tarés non plus
 		
 		
 		 //       Test Recuit
@@ -33,7 +34,7 @@ public class MainSat {
 		
 		try {
 			for (int i = 0; i < 10; i++){
-				Particulesat p = Particulesat.initialise(nombreIterations,ins,0.8);
+				Particulesat p = Particulesat.initialise(nombreEtat,ins,0.8);
 				MutationSat m = new MutationSat(new EtatSat(ins));
 				RedondancesParticuleSAT red = new RedondancesParticuleSAT(p);
 				Recuit.solution(p,m,red,nombreIterations,1,1);

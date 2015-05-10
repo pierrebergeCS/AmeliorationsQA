@@ -74,8 +74,10 @@ public class Recuit
 	{	
 		
 		int nombreEtat=p.nombreEtat();
-		List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
+		
+		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
 		Temperature temperatureDepart = new Temperature(1.0);
+	
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
 		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
@@ -86,6 +88,7 @@ public class Recuit
 		ArrayList<Etat> e = p.getEtat();
 		Ponderation J = new Ponderation(p.getGamma());
 		double Epot = p.calculerEnergiePotentielle();
+		
 		double compteurSpinique = p.calculerEnergieCinetique();
 		double E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
 		double deltapot  = 0;

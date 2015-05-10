@@ -9,6 +9,7 @@ public class EtatSat extends Etat {
 	
 	private int nbxi;
 	private Instancesat instance;
+	ArrayList<Minterme> clauses=new ArrayList<Minterme>();
 	
 	/**
 	 * Cree un etat random utile pour l'initialisation
@@ -30,7 +31,7 @@ public class EtatSat extends Etat {
 		int[][] representation=this.instance.getSat();
 		this.setListe(l);
 		for(int i=0;i<this.instance.getNombreClauses();i++){
-			Minterme m = new Minterme();
+			Minterme m = new Minterme(i);
 			for(int j=0;j<3;j++){
 				int xi=Math.abs(representation[i][j]);
 				int rienornot=(int) Math.signum(representation[i][j]);
@@ -39,6 +40,7 @@ public class EtatSat extends Etat {
 				e.ajouteClause(m);
 				
 			}
+			this.clauses.add(m);
 				
 		}
 	}
@@ -63,7 +65,7 @@ public class EtatSat extends Etat {
 		this.setListe(l);
 		l=this.getListe();
 		for(int i=0;i<this.instance.getNombreClauses();i++){
-			Minterme m = new Minterme();
+			Minterme m = new Minterme(i);
 			for(int j=0;j<3;j++){
 				int xi=Math.abs(representation[i][j]);
 				int rienornot=(int) Math.signum(representation[i][j]);
@@ -72,7 +74,7 @@ public class EtatSat extends Etat {
 				e.ajouteClause(m);
 				
 			}
-				
+			this.clauses.add(m);	
 		}
 	}
 
@@ -124,8 +126,6 @@ public class EtatSat extends Etat {
 				cpt++;
 			}
 		}
-		
-		
 		return cpt;
 	}
 

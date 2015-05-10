@@ -25,17 +25,18 @@ public class MutationSat extends IMutation{
 		MutationSatElementaire mut= (MutationSatElementaire) this.listeMutations.get(0);
 		ElementSat elt =(ElementSat) mut.getElement();
 		int cpt=0;
-		for(Minterme m : elt.getMintermes() ){
+		for(Integer i : elt.getMintermes() ){
+			Minterme m =((EtatSat) e).clauses.get(i);
 			boolean preced=m.is();
-			int i =m.getIndex(elt);
-			m.calque[i]=-m.calque[i];
+			int j =m.getIndex(elt);
+			m.calque[j]=-m.calque[j];
 			if(m.is()&&(preced==false)){
 				cpt--;
 			}
 			if(preced && (m.is()==false)){
 				cpt++;
 			}
-			m.calque[i]=-m.calque[i];//reset a la valeur initiale du calque
+			m.calque[j]=-m.calque[j];//reset a la valeur initiale du calque
 			
 		}
 		return cpt;

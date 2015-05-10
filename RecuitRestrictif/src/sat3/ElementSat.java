@@ -5,13 +5,13 @@ import modele.Element;
 public class ElementSat extends Element {
 	private int xi;
 	private boolean assignation;
-	ArrayList<Minterme> clauses=new ArrayList<Minterme>();
+	ArrayList<Integer> clauses=new ArrayList<Integer>();
 	public ElementSat(int i, boolean b){
 		this.xi=i;
 		this.assignation=b;
 	}
 	public void ajouteClause(Minterme m){
-		this.clauses.add(m);
+		this.clauses.add(m.getNumber());
 	}
 	
 	@Override
@@ -27,7 +27,7 @@ public class ElementSat extends Element {
 		return this.xi;
 	}
 	
-	public ArrayList<Minterme> getMintermes(){
+	public ArrayList<Integer> getMintermes(){
 		return this.clauses;
 	}
 	
