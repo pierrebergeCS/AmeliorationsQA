@@ -69,6 +69,7 @@ public class MutationSat extends IMutation{
 		int rand = (int) (n * Math.random()); 
 		boolean b = !((ElementSat)esat.getListe().get(rand)).getassignation();//On inverse le booléen
 		ElementSat enext = new ElementSat(((ElementSat)esat.getListe().get(rand)).getxi(),b);
+		enext.setMintermes(((ElementSat)esat.getListe().get(rand)).getMintermes());
 		MutationSatElementaire msat = new MutationSatElementaire(enext,rand);
 		ArrayList<MutationElementaire> l = new ArrayList<MutationElementaire>();
 		l.add(msat);

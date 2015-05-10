@@ -13,9 +13,6 @@ public class ElementSat extends Element {
 	}
 	public void ajouteClause(Minterme m){
 		this.clauses.add(m.getNumber());
-		if(xi==1){
-			System.out.println(this.clauses);
-		}
 	}
 	
 	@Override
@@ -30,12 +27,16 @@ public class ElementSat extends Element {
 		return this.xi;
 	}
 	
-	public ArrayList<Integer> getMintermes(){
+	public ArrayList<Integer> getMintermes(){		
 		return this.clauses;
 	}
 	
 	public boolean getassignation() {
 		return this.assignation;
+	}
+	public void setMintermes(ArrayList<Integer> mintermes) {
+
+		this.clauses=mintermes;
 	}
 
 }

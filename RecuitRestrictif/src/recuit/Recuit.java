@@ -81,7 +81,6 @@ public class Recuit
 		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
 		p.setGamma(gamma);
-		Probleme pBest = p.clone();
 		
 		p.setT(temperatureDepart);
 		ArrayList<Etat> e = p.getEtat();
