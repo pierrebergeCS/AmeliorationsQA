@@ -2,8 +2,7 @@
 package recuit;
 import modele.*;
 import parametres.*;
-import tsp.RedondancesParticuleTSP;
-import tsp.Routage;
+import sat3.*;
 import mutation.*;
 
 import java.io.IOException;
@@ -118,7 +117,8 @@ public class Recuit
 						nbTentatives++;
 					}
 					
-					
+					//Ca fais plaisir aux moutons
+				
 					deltapot =  m.calculerdeltaEp(p,r2);
 					
 					double deltaEp = deltapot/nombreEtat;
@@ -127,6 +127,7 @@ public class Recuit
 					double pr=probaAcceptation(delta,deltapot,p.getT());
 					
 					if(pr>Math.random()){
+						
 						m.majRedondance(p,red,r2);
 						energie = r2.getEnergie();
 						m.faire(p,r2);

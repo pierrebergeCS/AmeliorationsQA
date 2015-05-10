@@ -17,14 +17,14 @@ public class MainSat {
 		int nombreEtat = 10;
 		Instancesat ins = null;
 		try {
-			ins = Translator.donneInstance("C:/Users/Baptiste/Desktop/RecuitQuantique/RTI_k3_n100_m429/RTI_k3_n100_m429_12.cnf");
+			ins = Translator.donneInstance("C:/Users/Baptiste/Desktop/RecuitQuantique/uf20-91/uf20-013.cnf");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		int n = ins.getNombreClauses() ;
 		System.out.println(n);
-		int nombreIterations = 100*n;//on est des fous pas tarés non plus
+		int nombreIterations = 10*n*n;//on est des fous pas tarés non plus
 		
 		
 		 //       Test Recuit
@@ -34,7 +34,7 @@ public class MainSat {
 		
 		try {
 			for (int i = 0; i < 10; i++){
-				Particulesat p = Particulesat.initialise(nombreEtat,ins,0.8);
+				Particulesat p = Particulesat.initialise(nombreEtat,ins,1.0);
 				MutationSat m = new MutationSat(new EtatSat(ins));
 				RedondancesParticuleSAT red = new RedondancesParticuleSAT(p);
 				Recuit.solution(p,m,red,nombreIterations,1,1);

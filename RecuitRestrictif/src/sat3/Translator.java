@@ -49,6 +49,8 @@ public class Translator {
 					nbclauses=s.nextInt();
 					}
 					s.close();
+				}else if(thisLine.startsWith("%")||thisLine.startsWith("0")|| thisLine==""){
+					
 				}
 				else{
 					chaine = chaine + " " +thisLine.substring(0, thisLine.length()-2);

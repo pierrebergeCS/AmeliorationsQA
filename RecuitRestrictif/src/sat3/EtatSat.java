@@ -46,7 +46,7 @@ public class EtatSat extends Etat {
 	}
 	
 	public EtatSat(){
-		
+		this.setListe(new ArrayList<Element>());
 	}
 	
 	public EtatSat(Instancesat ins) {
@@ -64,6 +64,7 @@ public class EtatSat extends Etat {
 		int[][] representation=this.instance.getSat();
 		this.setListe(l);
 		l=this.getListe();
+		System.out.println(l);
 		for(int i=0;i<this.instance.getNombreClauses();i++){
 			Minterme m = new Minterme(i);
 			for(int j=0;j<3;j++){
@@ -72,6 +73,7 @@ public class EtatSat extends Etat {
 				ElementSat e= (ElementSat) l.get(xi-1);
 				m.addElem(e, j, rienornot);
 				e.ajouteClause(m);
+				
 				
 			}
 			this.clauses.add(m);	

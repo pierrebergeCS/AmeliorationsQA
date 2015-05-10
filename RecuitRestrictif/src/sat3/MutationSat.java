@@ -32,10 +32,12 @@ public class MutationSat extends IMutation{
 			m.calque[j]=-m.calque[j];
 			if(m.is()&&(preced==false)){
 				cpt--;
+				
 			}
 			if(preced && (m.is()==false)){
 				cpt++;
 			}
+		
 			m.calque[j]=-m.calque[j];//reset a la valeur initiale du calque
 			
 		}
