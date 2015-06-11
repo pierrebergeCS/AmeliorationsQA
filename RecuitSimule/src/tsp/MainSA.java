@@ -24,11 +24,12 @@ public class MainSA {
 		
 		PrintWriter sortie = new PrintWriter("test.txt");
 		int cpt = 0;
-		Temperature temp = new Temperature(100.0,0.0);
+		double tempDepart = ParametreurT.parametreurRecuit(g, new TwoOptMove(new Routage(g))).get(100);
+		Temperature temp = new Temperature(2*tempDepart,0.0);
 		
 		try {
 	
-			for (int i = 0; i < 1; i++){
+			for (int i = 0; i < 10; i++){
 				Routage r = new Routage(g);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
 				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
