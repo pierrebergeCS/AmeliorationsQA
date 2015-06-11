@@ -86,9 +86,10 @@ public class Routage extends Etat {
 		double cpt=0.0;
 		int L = this.g.nombreDeNoeuds();
 		for(int i=0;i<L-1;i++){
-			cpt+=this.g.longueurEntre(i,i+1);
+			cpt+=this.g.longueurEntre(this.getListe().get(i),this.getListe().get(i+1));
 		}
-		return cpt+this.g.longueurEntre(L-1,0);
+		cpt+=this.g.longueurEntre(this.getListe().get(L-1),this.getListe().get(0));
+		return cpt;
 	}
 
 

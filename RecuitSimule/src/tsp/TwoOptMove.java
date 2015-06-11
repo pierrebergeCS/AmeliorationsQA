@@ -12,9 +12,16 @@ import mutation.IMutation;
  */
 public class TwoOptMove extends IMutation {
 	int taille;
-	int i;
-	int j;
+	public int i;
+	public int j;
 
+	public int getI(){
+		return this.i;
+	}
+	
+	public int getJ(){
+		return this.j;
+	}
 	/**
 	 * Construit une mutation 2-opt aléatoire
 	 * @param r
@@ -85,10 +92,11 @@ public class TwoOptMove extends IMutation {
 				
 
 		double cpt = 0;
+		if (r.getPreviousIndex(this.i)!=this.j){
 		cpt += g.longueurEntre(NodeBeforeI,NodeJ);
 		cpt += g.longueurEntre(NodeI,NodeAfterJ);
 		cpt -= g.longueurEntre(NodeBeforeI,NodeI);
-		cpt -= g.longueurEntre(NodeJ,NodeAfterJ);
+		cpt -= g.longueurEntre(NodeJ,NodeAfterJ);}
 		return cpt;
 	}
 	
@@ -102,7 +110,6 @@ public class TwoOptMove extends IMutation {
 			randIndex1 = (int) (this.taille * Math.random()); 
 			randIndex2 = (int) (this.taille * Math.random());
 		}
-		
 		this.i = randIndex1;
 		this.j = randIndex2;
 	}

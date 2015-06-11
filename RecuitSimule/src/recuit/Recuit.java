@@ -6,10 +6,7 @@ import sat3.*;
 import mutation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 
 
 // Cette classe definit le probleme du recuit. Il se charge d'effectuer les mutations elementaires, de calculer l'energie et de diminuer T...
@@ -81,7 +78,7 @@ public class Recuit
 		
 		for(int i =0; i<nombreIterations;i++){
 	
-					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
+					//Mise à jour de la mutation. 
 					m.maj(e);
 					
 					deltapot =  m.calculerdeltaEp(e);
@@ -96,17 +93,11 @@ public class Recuit
 					if (E < energieBest){
 						energieBest = E;
 					}
-					System.out.println(energieBest);
-					System.out.println(deltapot);
 					if(E==0){
 							System.out.println("result :" + energieBest);
 							return 0;
 					}
 					
-				
-				
-			
-			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
 			temp.maj(i,nombreIterations);
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);

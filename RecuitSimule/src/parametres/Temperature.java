@@ -34,7 +34,7 @@ public class Temperature {
 	}
 	
 	public void maj(int currentIter, int nbIterations){
-		this.value = ((this.start-this.end)*currentIter)/nbIterations;
+		this.setValue(this.start - ((this.start-this.end)*currentIter)/nbIterations);
 	}
 	
 }

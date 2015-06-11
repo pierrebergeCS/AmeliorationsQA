@@ -15,20 +15,20 @@ public class MainSA {
 	
 	public static void main(String[] args) throws FileNotFoundException{
 		
-		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/ameliorationqa/Desktop/benchmark/TSP/bier127.tsp"));
+		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/Pierre/Desktop/benchmark/brazil58.tsp"));
 		int n = g.nombreDeNoeuds();
-		int nombreIterations = 200*n*n;
+		int nombreIterations = 100*n*n;
 		
 		
 		 //       Test Recuit
 		
-		PrintWriter sortie = new PrintWriter("bier127_sa.txt");
+		PrintWriter sortie = new PrintWriter("test.txt");
 		int cpt = 0;
-		Temperature temp = new Temperature(200,0);
+		Temperature temp = new Temperature(100.0,0.0);
 		
 		try {
 	
-			for (int i = 0; i < 200; i++){
+			for (int i = 0; i < 1; i++){
 				Routage r = new Routage(g);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
 				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
