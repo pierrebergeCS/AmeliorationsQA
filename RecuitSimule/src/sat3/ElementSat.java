@@ -1,11 +1,11 @@
 package sat3;
 import java.util.ArrayList;
 
-import modele.Element;
-public class ElementSat extends Element {
+public class ElementSat{
 	private int xi;
 	private boolean assignation;
 	ArrayList<Integer> clauses;
+	
 	public ElementSat(int i, boolean b){
 		this.xi=i;
 		this.assignation=b;
@@ -15,11 +15,8 @@ public class ElementSat extends Element {
 		this.clauses.add(m.getNumber());
 	}
 	
-	@Override
-	public boolean equals(Element autre) {
-		ElementSat a = (ElementSat) autre;
-		
-		return ((a.getxi()==this.xi)&&(a.getassignation()==this.assignation));
+	public boolean equals(ElementSat autre) {
+		return ((autre.getxi()==this.xi)&&(autre.getassignation()==this.assignation));
 	}
 	
 	public int getxi() {
