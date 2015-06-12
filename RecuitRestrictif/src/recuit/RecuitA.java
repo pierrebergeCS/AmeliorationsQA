@@ -19,7 +19,7 @@ import java.util.List;
  * @author Pierre
  *
  */
-public class Recuit 
+public class RecuitA
 {
 	public double solutionNumerique;
 
@@ -110,7 +110,7 @@ public class Recuit
 					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
 					int nbTentatives = 0;
 					m.maj(p,r2);
-					while (!m.estAutorisee(p,r2, red) && nbTentatives < 100){
+					while (i>3*nombreIterations/4&&!m.estAutorisee(p,r2, red) && nbTentatives < 100){
 						m.maj(p,r2);
 						MutationsRefusees++;
 						nbTentatives++;
@@ -163,7 +163,7 @@ public class Recuit
 			
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-		//System.out.println("result :" + energieBest);
+		System.out.println("result :" + energieBest);
 		//System.out.println("refus mutations :"+MutationsRefusees);
 		
 		return energieBest;
