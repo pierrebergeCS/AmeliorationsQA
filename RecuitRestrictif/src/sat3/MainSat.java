@@ -3,6 +3,7 @@ package sat3;
 import java.io.IOException;
 
 import recuit.Recuit;
+import recuit.RecuitA;
 import tsp.Graphe;
 import tsp.ParticuleTSP;
 import tsp.RedondancesParticuleTSP;
@@ -14,32 +15,40 @@ public class MainSat {
 
 	public static void main(String[] args){
 		
-		int nombreEtat = 10;
+		int cpt=0;
+		double rescum=0;
+		int nombreEtat = 20;
 		Instancesat ins = null;
+		
+		for(int inst=127;inst<128;inst++){
+			int cptlocal=0;
+			System.out.println("Instance n° "+ inst);
 		try {
-			ins = Translator.donneInstance("C:/Users/Baptiste/Desktop/RecuitQuantique/uf20-91/uf20-013.cnf");
+			ins = Translator.donneInstance("C:/Users/Baptiste/Desktop/RecuitQuantique/CBS_k3_n100_m449_b90/CBS_k3_n100_m449_b90_"+inst+".cnf");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		int n = ins.getNombreClauses() ;
+		int n = ins.getNbvar() ;
 		System.out.println(n);
-		int nombreIterations = 10*n;//on est des fous pas tarés non plus
+		int nombreIterations = 10*n*n;
 		
 		
 		 //       Test Recuit
-		
-		
-		int cpt = 0;
-		
+
 		try {
-			for (int i = 0; i < 10; i++){
-				Particulesat p = Particulesat.initialise(nombreEtat,ins,1.0);
+			for (int i = 0; i < 100; i++){
+				Particulesat p = Particulesat.initialise(nombreEtat,ins,2.0);
 				MutationSat m = new MutationSat(new EtatSat(ins));
 				RedondancesParticuleSAT red = new RedondancesParticuleSAT(p);
-				Recuit.solution(p,m,red,nombreIterations,1,1);
+				double s=Recuit.solution(p,m,red,nombreIterations,1,1);
+				if(s!=0){
+				cpt++;	
+				rescum+=s;
+				}
+				
 			}
-			System.out.println(cpt);
+			System.out.println("taux d'erreur local :"+((double) cptlocal)/100);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +56,11 @@ public class MainSat {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
+		System.out.println("taux d'erreur :"+((double) cpt)/100);
+		System.out.println("erreurs moyenne :"+rescum/100/1000);	
+	
+	
 	}
 
 }
