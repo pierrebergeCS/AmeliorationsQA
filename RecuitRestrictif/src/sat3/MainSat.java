@@ -17,7 +17,7 @@ public class MainSat {
 		int nombreEtat = 10;
 		Instancesat ins = null;
 		try {
-			ins = Translator.donneInstance("C:/Users/Baptiste/Desktop/RecuitQuantique/uf20-91/uf20-013.cnf");
+			ins = Translator.donneInstance("C:/Users/Pierre/Desktop/benchmark/sat/uf200-010.cnf");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
