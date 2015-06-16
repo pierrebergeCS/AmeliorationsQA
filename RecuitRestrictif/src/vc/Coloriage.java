@@ -40,6 +40,10 @@ public class Coloriage extends Etat {
 		return this.g;
 	}
 	
+	public ArrayList<Noeud> getNoeuds(){
+		return this.listeNoeuds;
+	}
+	
 	@Override
 	public Etat clone() {
 		Graphe g2 = this.g;
