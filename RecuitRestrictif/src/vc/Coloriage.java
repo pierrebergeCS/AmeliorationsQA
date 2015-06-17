@@ -80,7 +80,7 @@ public class Coloriage extends Etat {
 		Coloriage autre = (Coloriage) e;
 		int n = this.listeNoeuds.size();
 		for (int i = 0; i < n; i++){
-			for (int j: this.g.getConnexions()[i]){
+			for (int j = i+1; j < n; j++){
 				Noeud n1 = this.listeNoeuds.get(i);
 				Noeud n2 = this.listeNoeuds.get(j);
 				Noeud othern1 = autre.listeNoeuds.get(i);

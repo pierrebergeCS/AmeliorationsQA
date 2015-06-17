@@ -21,6 +21,10 @@ public class Noeud {
 		return this.colorIndex;
 	}
 	
+	public void setCouleur(int index){
+		this.colorIndex = index;
+	}
+	
 	public Noeud clone(){
 		return new Noeud(this.index,this.colorIndex);
 	}

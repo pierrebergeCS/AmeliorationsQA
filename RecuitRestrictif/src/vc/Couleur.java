@@ -30,6 +30,16 @@ public class Couleur extends Element {
 		return this.noeuds.size();
 	}
 	
+	//Ajoute un noeud à la couleur
+	public void addNode(Integer k){
+		this.noeuds.add(k);
+	}
+	
+	//Retire un noeud de la couleur
+	public void removeNode(Integer k){
+		this.noeuds.remove(k);
+	}
+	
 	@Override
 	public boolean equals(Element autre) {
 		Couleur autrecouleur = (Couleur) autre;
