@@ -24,16 +24,18 @@ public class Coloriage extends Etat {
 		for (int k = 0; k < nbColors; k++){
 			colors.add(new Couleur(k));
 		}
+		this.setListe(colors);
 		
 		//On met chaque noeud dans une couleur de manière aléatoire
 		
 		int nbNoeuds = this.g.getConnexions().length;
 		ArrayList<Noeud> listeNoeuds = new ArrayList<Noeud>();
 		for (int i = 0; i < nbNoeuds; i++){
-			int rand = (int) Math.random()*nbColors;
+			int rand = (int) (Math.random()*nbColors);
 			listeNoeuds.add(new Noeud(i,rand));
-			((Couleur)colors.get(rand)).getNoeuds().add(i);
+			((Couleur)this.getListe().get(rand)).getNoeuds().add(i);
 		}
+		this.listeNoeuds = listeNoeuds;
 	}
 	
 	public Graphe getGraphe(){

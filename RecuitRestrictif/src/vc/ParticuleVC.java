@@ -69,7 +69,6 @@ public class ParticuleVC extends Probleme {
 			Etat e1=l.get(i);
 			Etat e2=e1.getNext();
 			cpt+=e1.distanceIsing(e2);
-			
 		}
 		return cpt;
 	}

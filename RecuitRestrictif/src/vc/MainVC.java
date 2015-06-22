@@ -28,8 +28,8 @@ public static void main(String[] args){
 		int cpt = 0;
 		
 		try {
-			for (int i = 0; i < 10; i++){
-				ParticuleVC p = ParticuleVC.initialise(nombreEtat,2.0,g,28);
+			for (int i = 0; i < 1; i++){
+				ParticuleVC p = ParticuleVC.initialise(nombreEtat,2.0,g,nbColors);
 				MutationVC m = new MutationVC(new Coloriage(g,nbColors));
 				RedondancesParticuleVC red = new RedondancesParticuleVC(p);
 				Recuit.solution(p,m,red,nombreIterations,1,1);

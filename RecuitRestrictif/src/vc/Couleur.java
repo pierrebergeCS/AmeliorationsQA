@@ -48,7 +48,7 @@ public class Couleur extends Element {
 			boolean b2 = true;
 			int k = 0;
 			while(k < this.getTaille() && b2){
-				b2 = this.getNoeuds().get(k)==autrecouleur.getNoeuds().get(k);
+				b2 = autrecouleur.getNoeuds().indexOf(this.getNoeuds().get(k))!=-1;
 				k++;
 			}
 			b = b2;

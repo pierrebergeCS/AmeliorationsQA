@@ -7,10 +7,11 @@ import modele.Etat;
 import modele.Probleme;
 import mutation.IMutation;
 import mutation.MutationElementaire;
+import vc.MutationVCElementaire;
 
 public class MutationVC extends IMutation {
-	int nodeIndex;
-	int newColorIndex;
+	int nodeIndex;//Noeud concerné
+	int newColorIndex;//Nouvelle couleur
 	
 	public MutationVC(Coloriage c){
 		Graphe g = c.getGraphe();
@@ -20,18 +21,16 @@ public class MutationVC extends IMutation {
 		int currentColor = c.getNoeuds().get(randNode).getCouleur();
 		int randColor = -1;
 		while((randColor < 0) || (randColor == currentColor)){
-			randColor = (int) Math.random()*nbCouleurs;
+			randColor = (int) (Math.random()*nbCouleurs);
 		}
 		this.nodeIndex = randNode;
 		this.newColorIndex = randColor;
 		
 		ArrayList<MutationElementaire> liste = new ArrayList<MutationElementaire>();
 		
-		((Couleur)c.getListe().get(currentColor)).removeNode(this.nodeIndex);
 		MutationVCElementaire m1 = new MutationVCElementaire(c.getListe().get(currentColor),currentColor);
 		m1.setNodeIndex(this.nodeIndex);
 		
-		((Couleur)c.getListe().get(this.newColorIndex)).addNode(this.nodeIndex);
 		MutationVCElementaire m2 = new MutationVCElementaire(c.getListe().get(this.newColorIndex),this.newColorIndex);
 		m2.setNodeIndex(this.nodeIndex);
 		
@@ -46,6 +45,8 @@ public class MutationVC extends IMutation {
 		Coloriage c = (Coloriage) e;
 		LinkedList<Integer> connectedNodes = c.getGraphe().getConnexions()[this.nodeIndex];
 		int currentColor = c.getNoeuds().get(this.nodeIndex).getCouleur();
+		// Si les noeuds connectés avec le noeud courant ont la future couleur du noeud courant, on incrémente (+1)
+		// Si les noeuds connectés avec le noeud courant ont la précédente couleur du noeud courant, on décrémente (-1)
 		for (int i: connectedNodes){
 			if (c.getNoeuds().get(i).getCouleur() == currentColor) cpt--;
 			if (c.getNoeuds().get(i).getCouleur() == this.newColorIndex) cpt++;
@@ -97,6 +98,7 @@ public class MutationVC extends IMutation {
 			}
 		return cpt;
 	}
+	
 	@Override
 	public void faire(Probleme p, Etat e){
 		int n = this.listeMutations.size();
@@ -117,18 +119,18 @@ public class MutationVC extends IMutation {
 		int currentColor = c.getNoeuds().get(randNode).getCouleur();
 		int randColor = -1;
 		while((randColor < 0) || (randColor == currentColor)){
-			randColor = (int) Math.random()*nbCouleurs;
+			randColor = (int) (Math.random()*nbCouleurs);
 		}
 		this.nodeIndex = randNode;
 		this.newColorIndex = randColor;
 		
 		ArrayList<MutationElementaire> liste = new ArrayList<MutationElementaire>();
 		
-		((Couleur)c.getListe().get(currentColor)).removeNode(this.nodeIndex);
+		//((Couleur)c.getListe().get(currentColor)).removeNode(this.nodeIndex);
 		MutationVCElementaire m1 = new MutationVCElementaire(c.getListe().get(currentColor),currentColor);
 		m1.setNodeIndex(this.nodeIndex);
 		
-		((Couleur)c.getListe().get(this.newColorIndex)).addNode(this.nodeIndex);
+		//((Couleur)c.getListe().get(this.newColorIndex)).addNode(this.nodeIndex);
 		MutationVCElementaire m2 = new MutationVCElementaire(c.getListe().get(this.newColorIndex),this.newColorIndex);
 		m2.setNodeIndex(this.nodeIndex);
 		
