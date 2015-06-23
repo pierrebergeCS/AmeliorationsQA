@@ -41,5 +41,16 @@ public class RedondancesParticuleVC extends RedondancesParticuleGeneral {
 		}
 		this.redondances = tab;
 	}
+	
+	public void printTab(){
+		int[][] m = this.redondances;
+		int n = m.length;
+		for (int i = 0; i < n; i++){
+			System.out.println(" ");
+			for (int j = 0; j < n; j++){
+				System.out.print(m[i][j] + " ");
+			}
+		}
+	}
 
 }

@@ -8,7 +8,7 @@ public class MainVC {
 	
 public static void main(String[] args){
 		
-		int nombreEtat = 10;
+		int nombreEtat = 20;
 		Graphe g = null;
 		try {
 			g = Traducteur.traduire("C:/Users/Pierre/Desktop/benchmark/vc/dsjc250.5.col");
@@ -20,16 +20,15 @@ public static void main(String[] args){
 		System.out.println(n);
 		int nombreIterations = 10*n*n;//on est des fous pas tarés non plus
 		int nbColors = 28;
-		
-		
-		 //       Test Recuit
+
+		//       Test Recuit
 		
 		
 		int cpt = 0;
 		
 		try {
 			for (int i = 0; i < 1; i++){
-				ParticuleVC p = ParticuleVC.initialise(nombreEtat,2.0,g,nbColors);
+				ParticuleVC p = ParticuleVC.initialise(nombreEtat,0.8,g,nbColors);
 				MutationVC m = new MutationVC(new Coloriage(g,nbColors));
 				RedondancesParticuleVC red = new RedondancesParticuleVC(p);
 				Recuit.solution(p,m,red,nombreIterations,1,1);

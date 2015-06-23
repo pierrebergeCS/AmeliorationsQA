@@ -25,11 +25,9 @@ public class MutationVCElementaire extends MutationElementaire {
 		Couleur c = (Couleur) e.getListe().get(this.getIndice());
 		int taille = c.getTaille();
 		for (int i = 0; i < taille; i++){
-			for (int j = i+1; j < taille; j++){
-				if (redVC.getRedondances()[i][j] <= p.getFreq()*p.nombreEtat()) return true;
-			}
+				if ((redVC.getRedondances()[this.nodeIndex][c.getNoeuds().get(i)] > (p.getFreq()*p.nombreEtat())) && (c.getNoeuds().get(i)!=this.nodeIndex))return false;
 		}
-		return false;
+		return true;
 	}
 	
 	public void majRedondance(Probleme p, RedondancesParticuleGeneral red, Etat e){

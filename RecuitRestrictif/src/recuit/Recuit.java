@@ -75,7 +75,7 @@ public class Recuit
 		int nombreEtat=p.nombreEtat();
 		
 		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(0.00001);
+		Temperature temperatureDepart = new Temperature(0.1/nombreEtat);
 	
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
 		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
@@ -119,7 +119,7 @@ public class Recuit
 					deltapot =  m.calculerdeltaEp(p,r2);
 					
 					double deltaEp = deltapot/nombreEtat;
-					System.out.println("deP " + deltaEp);
+					//System.out.println("deP " + deltaEp);
 					double deltaEc = -valueJ*m.calculerdeltaSpins(p,r2);
 					double delta = deltaEp + deltaEc;
 					double pr=probaAcceptation(delta,deltapot,p.getT());
@@ -152,9 +152,9 @@ public class Recuit
 						}
 						
 						}
-						System.out.println(energie);
 					
 				}
+				//System.out.println(energieBest);
 				
 				
 			}
@@ -165,8 +165,8 @@ public class Recuit
 			
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-		//System.out.println("result :" + energieBest);
-		//System.out.println("refus mutations :"+MutationsRefusees);
+		System.out.println("result :" + energieBest);
+		System.out.println("refus mutations :"+MutationsRefusees);
 		
 		return energieBest;
 

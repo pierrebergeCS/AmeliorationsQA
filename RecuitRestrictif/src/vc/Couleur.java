@@ -64,5 +64,13 @@ public class Couleur extends Element {
 		}
 		return new Couleur(this.index,liste);
 	}
+	
+	public void printNodes(){
+		int n = this.getTaille();
+		System.out.println(" ");
+		for (int i = 0; i < n; i++){
+			System.out.print(this.getNoeuds().get(i) + " ");
+		}
+	}
 
 }
