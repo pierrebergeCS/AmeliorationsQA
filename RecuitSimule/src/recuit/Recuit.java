@@ -93,7 +93,7 @@ public class Recuit
 					if (E < energieBest){
 						energieBest = E;
 					}
-					System.out.println(energieBest);
+					//System.out.println(energieBest);
 					if(E==0){
 							System.out.println("result :" + energieBest);
 							return 0;
