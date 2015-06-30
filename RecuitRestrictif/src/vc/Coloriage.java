@@ -78,7 +78,7 @@ public class Coloriage extends Etat {
 
 	@Override
 	public int distanceIsing(Etat e) {
-		double cpt = 0;
+		int cpt = 0;
 		Coloriage autre = (Coloriage) e;
 		int n = this.listeNoeuds.size();
 		for (int i = 0; i < n; i++){
@@ -93,7 +93,29 @@ public class Coloriage extends Etat {
 				if ((n1.getCouleur() == n2.getCouleur()) && (othern1.getCouleur() != othern2.getCouleur())) cpt--;
 			}
 		}
-		return ((int) cpt/2);
+		return cpt;
+	}
+	
+	public String toString(){
+		String s = "";
+		int col = this.getListe().size();
+		for (int i = 0; i < col; i++){
+			s += "[";
+			Couleur c = (Couleur) this.getListe().get(i);
+			for(int k: c.getNoeuds()){
+				s += k + ",";
+			}
+			s+= "] ";
+		}
+		return s;
+	}
+	
+	public void afficheNoeuds(){
+		int nbNoeuds = this.getNoeuds().size();
+		for (int i = 0; i < nbNoeuds; i++){
+			System.out.print(" (" + this.getNoeuds().get(i).getInt() + "," + this.getNoeuds().get(i).getCouleur() + ")");
+		}
+		System.out.println("");
 	}
 
 }

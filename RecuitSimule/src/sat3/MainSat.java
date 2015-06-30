@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 
 import parametres.Temperature;
 import recuit.Recuit;
-import tsp.parser.TSPParser;
 import tsp.parser.Writer;
 
 public class MainSat {
@@ -27,7 +26,7 @@ public class MainSat {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		int n = ins.getNbvar() ;
+		int n = ins.getNbvar();
 		System.out.println(n);
 		int nombreIterations = 100*n*n;
 		Temperature temp = new Temperature(1.0,0.0);

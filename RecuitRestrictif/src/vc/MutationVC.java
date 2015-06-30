@@ -35,7 +35,7 @@ public class MutationVC extends IMutation {
 		
 		Couleur c2 =  ((Couleur)c.getListe().get(this.newColorIndex)).clone();
 		c2.getNoeuds().add((Integer) this.nodeIndex);
-		MutationVCElementaire m2 = new MutationVCElementaire(c.getListe().get(this.newColorIndex),this.newColorIndex);
+		MutationVCElementaire m2 = new MutationVCElementaire(c2,this.newColorIndex);
 		m2.setNodeIndex(this.nodeIndex);
 		
 		liste.add(m1);
@@ -84,8 +84,8 @@ public class MutationVC extends IMutation {
 	public double calculerdeltaSpins(Probleme p, Etat e) {
 		Coloriage c = (Coloriage) e;
 		double cpt = 0;
-		MutationVCElementaire m1 = (MutationVCElementaire) this.listeMutations.get(0);
-		MutationVCElementaire m2 = (MutationVCElementaire) this.listeMutations.get(1);
+		MutationVCElementaire m1 = (MutationVCElementaire) this.listeMutations.get(0);//On enleve le noeud
+		MutationVCElementaire m2 = (MutationVCElementaire) this.listeMutations.get(1);//On ajoute le noeud
 		Couleur prev = (Couleur) m1.getElement();
 		Couleur next = (Couleur) c.getListe().get(m2.getIndice());
 		
@@ -117,6 +117,39 @@ public class MutationVC extends IMutation {
 				cpt--;
 			}
 			if (colorright == right.getNoeuds().get(j).getCouleur()){
+				cpt++;
+			} else {
+				cpt--;
+			}
+			}
+		return cpt;
+	}
+	
+	//Pour les tests
+	public double calculerdeltaSpins(Etat e, Etat autre) {
+		Coloriage c = (Coloriage) e;
+		double cpt = 0;
+		MutationVCElementaire m1 = (MutationVCElementaire) this.listeMutations.get(0);//On enleve le noeud
+		MutationVCElementaire m2 = (MutationVCElementaire) this.listeMutations.get(1);//On ajoute le noeud
+		Couleur prev = (Couleur) m1.getElement();
+		Couleur next = (Couleur) c.getListe().get(m2.getIndice());
+		
+		Coloriage other = (Coloriage) autre;
+		
+		int colorother = other.getNoeuds().get(this.nodeIndex).getCouleur();
+		
+		for (int i: prev.getNoeuds()){
+		//Le noeud sur lequel se passe la mutation passe en conflit avec cette liste de noeuds
+		if (colorother == other.getNoeuds().get(i).getCouleur()){
+			cpt--;
+		} else {
+			cpt++;
+		}
+		}
+		
+		for (int j: next.getNoeuds()){
+			//Le noeud sur lequel se passe la mutation obtient la même couleur que ces noeuds
+			if (colorother == other.getNoeuds().get(j).getCouleur()){
 				cpt++;
 			} else {
 				cpt--;

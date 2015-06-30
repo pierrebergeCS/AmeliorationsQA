@@ -75,7 +75,7 @@ public class Recuit
 		int nombreEtat=p.nombreEtat();
 		
 		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(0.1/nombreEtat);
+		Temperature temperatureDepart = new Temperature(0.01/nombreEtat);
 	
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
 		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
@@ -104,6 +104,8 @@ public class Recuit
 			 
 			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque particule avant de descendre gamma
 				
+				System.out.println("Ec :" + p.calculerEnergieCinetique());
+				System.out.println("spin :" + compteurSpinique);
 				Etat r2 = e.get(j);
 				
 				for(int k=0; k<M; k++){
@@ -125,7 +127,6 @@ public class Recuit
 					double pr=probaAcceptation(delta,deltapot,p.getT());
 					
 					if(pr>Math.random()){
-						
 						m.majRedondance(p,red,r2);
 						energie = r2.getEnergie();
 						
@@ -154,6 +155,7 @@ public class Recuit
 						}
 					
 				}
+				
 				//System.out.println(energieBest);
 				
 				
@@ -167,6 +169,7 @@ public class Recuit
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		System.out.println("result :" + energieBest);
 		System.out.println("refus mutations :"+MutationsRefusees);
+		System.out.println("etat :" + p.getEtat().get(0).toString());
 		
 		return energieBest;
 

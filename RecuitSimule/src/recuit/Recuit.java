@@ -7,6 +7,8 @@ import mutation.*;
 
 import java.io.IOException;
 
+import LHD.Grille;
+
 
 
 // Cette classe definit le probleme du recuit. Il se charge d'effectuer les mutations elementaires, de calculer l'energie et de diminuer T...
@@ -97,12 +99,12 @@ public class Recuit
 					if(E==0){
 							System.out.println("result :" + energieBest);
 							return 0;
-					}
-					
+					}		
 			temp.maj(i,nombreIterations);
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		System.out.println("result :" + energieBest);
+		System.out.println("D :" + ((Grille)e).getdmin());  //Pour LatinHypercube
 		
 		return energieBest;
 
