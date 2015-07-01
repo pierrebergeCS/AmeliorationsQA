@@ -2,29 +2,34 @@ package LHD;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import parametres.ParametreurT;
 import parametres.Temperature;
 import recuit.Recuit;
+import tsp.parser.Writer;
 
 public class MainSALH {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		int n = 25;
-		int dim = 4;
+		int n = 10;
 		Phi f = new Phi(5);
+		int dim = 9;
 		int nbIterations = 100000*dim;
 		
-		double tempDepart = 0.000000000001;
-		Temperature temp = new Temperature(tempDepart,0.0);
+		PrintWriter sortie = new PrintWriter("LHD_9_10.txt");
 		
 		try {
 			
-			for(int i = 0; i < 1; i++){
+			for(int i = 0; i < 100; i++){
 				Grille g = new Grille(f,n,dim);
 				MutationLH m = new MutationLH(g);
-				Recuit.solution(g,m,nbIterations,temp);
+				Temperature temp = new Temperature(ParametreurT.parametreurRecuit(g, m).get(10),0.0);
+				Writer.ecriture(i,Recuit.solution(g,m,nbIterations,temp),sortie);
 			}
+			sortie.close();
+			System.out.println("taille " + n + " dim " + dim);
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -33,8 +38,6 @@ public class MainSALH {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-		
 	}
 
 }

@@ -21,19 +21,18 @@ public class ParametreurT {
 	 * @return
 	 * Liste tri�e de 1000 deltaEpot
 	 */
-	public static List<Double> parametreurRecuit(Probleme p,IMutation m,int nombreIterations){
+	public static List<Double> parametreurRecuit(Etat r1,IMutation m){
 		
-		Etat r1;
 		double deltaE = -1;
 		List<Double> l = new LinkedList<Double>();
 		for (int i =0; i < 1000; i++){
 			deltaE = -1;
 			while(deltaE<=0){
 		
-			r1=p.creeEtatAleatoire();
+			r1.maj();
 			
-			deltaE=m.calculerdeltaEp(p,r1);
-			m.maj(p,r1);
+			deltaE=m.calculerdeltaEp(r1);
+			m.maj(r1);
 			}
 			l.add((deltaE));
 			//On vient de générer une liste de 1000 échantillons deltaE du graphe g.

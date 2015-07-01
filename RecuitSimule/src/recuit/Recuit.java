@@ -103,10 +103,10 @@ public class Recuit
 			temp.maj(i,nombreIterations);
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-		System.out.println("result :" + energieBest);
+		//System.out.println("result :" + energieBest);
 		System.out.println("D :" + ((Grille)e).getdmin());  //Pour LatinHypercube
 		
-		return energieBest;
+		return ((Grille)e).getdmin();
 
 	}
 	

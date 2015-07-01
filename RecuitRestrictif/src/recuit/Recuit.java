@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import LHD.Grille;
+
 
 // Cette classe definit le probleme du recuit. Il se charge d'effectuer les mutations elementaires, de calculer l'energie et de diminuer T...
 
@@ -69,16 +71,15 @@ public class Recuit
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M) throws IOException, InterruptedException
+	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M, double temp, double GammaDep) throws IOException, InterruptedException
 	{	
-		
 		int nombreEtat=p.nombreEtat();
 		
 		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(0.01/nombreEtat);
+		Temperature temperatureDepart = new Temperature(temp/nombreEtat);
 	
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
-		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
+		ParametreGamma gamma = new ParametreGamma(GammaDep,GammaDep/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
 		p.setGamma(gamma);
 		
@@ -94,6 +95,9 @@ public class Recuit
 		double energieBest = energie;
 		double valueJ = 0;
 		
+		Etat etatBest = e.get(0).clone();
+		
+		
 		int MutationsRefusees = 0;
 		
 		for(int i =0; i<nombreIterations;i++){
@@ -104,8 +108,6 @@ public class Recuit
 			 
 			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque particule avant de descendre gamma
 				
-				System.out.println("Ec :" + p.calculerEnergieCinetique());
-				System.out.println("spin :" + compteurSpinique);
 				Etat r2 = e.get(j);
 				
 				for(int k=0; k<M; k++){
@@ -145,6 +147,7 @@ public class Recuit
 						}
 					
 						if (energie < energieBest){
+						etatBest = p.getEtat().get(j).clone();
 						energieBest = energie;
 						if(energie==0){
 							//System.out.println("result :" + energieBest);
@@ -156,8 +159,6 @@ public class Recuit
 					
 				}
 				
-				//System.out.println(energieBest);
-				
 				
 			}
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
@@ -168,8 +169,8 @@ public class Recuit
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		System.out.println("result :" + energieBest);
+		System.out.println("D :" + ((Grille)etatBest).getdmin());
 		System.out.println("refus mutations :"+MutationsRefusees);
-		System.out.println("etat :" + p.getEtat().get(0).toString());
 		
 		return energieBest;
 

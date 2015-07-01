@@ -21,7 +21,7 @@ public class ParametreurT {
 	 * @return
 	 * Liste triée de 1000 deltaEpot
 	 */
-	public static List<Double> parametreurRecuit(Probleme p,IMutation m,int nombreIterations){
+	public static List<Double> parametreurRecuit(Probleme p,IMutation m){
 		
 		Etat r1;
 		double deltaE = -1;

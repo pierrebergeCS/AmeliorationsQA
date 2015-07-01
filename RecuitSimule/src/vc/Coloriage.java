@@ -79,4 +79,26 @@ public class Coloriage extends Etat {
 		return cpt/2;
 	}
 
+	public void maj(){
+		int nbColors = this.listeCouleurs.size();
+		
+		//On crée la liste des couleurs
+		
+		ArrayList<Couleur> colors = new ArrayList<Couleur>();
+		for (int k = 0; k < nbColors; k++){
+			colors.add(new Couleur(k));
+		}
+		this.listeCouleurs = colors;
+		
+		//On met chaque noeud dans une couleur de manière aléatoire
+		
+		int nbNoeuds = this.g.getConnexions().length;
+		ArrayList<Noeud> listeNoeuds = new ArrayList<Noeud>();
+		for (int i = 0; i < nbNoeuds; i++){
+			int rand = (int) (Math.random()*nbColors);
+			listeNoeuds.add(new Noeud(i,rand));
+			this.getListe().get(rand).getNoeuds().add(i);
+		}
+		this.listeNoeuds = listeNoeuds;
+	}
 }
