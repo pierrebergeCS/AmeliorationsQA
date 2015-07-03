@@ -13,7 +13,9 @@ public class MutationLHElementaire extends MutationElementaire {
 	
 	@Override
 	public boolean estAutorisee(Probleme p,Etat e, RedondancesParticuleGeneral red){
-		if (p.getFreq() > 1.0) return true;
+		if (p.getFreq() > 1.0){
+			return true;
+		}
 		int cpt = 0;
 		Croix c = (Croix) e.getListe().get(this.getIndice());
 		for (int k = 0; k < p.nombreEtat(); k++){

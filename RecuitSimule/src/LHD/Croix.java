@@ -1,7 +1,8 @@
 package LHD;
 
 public class Croix {
-	public int[] coord;
+	public int[] coord; //les coordonnées de la croix
+	//La dimension de la grille correspondra à la longueur de ce tableau
 	
 	public Croix(int[] coord){
 		this.coord = coord;
@@ -12,6 +13,7 @@ public class Croix {
 	}
 	
 	public boolean equals(Croix autre) {
+		//On regarde si les coordonnées de la croix courante sont identiques aux coordonnées de l'autre
 		int i =0;
 		while( (this.coord[i]==autre.coord[i]) && (i<this.coord.length) ){
 			i++;
@@ -24,10 +26,12 @@ public class Croix {
 	}
 	
 	public Croix clone(){
+		//On recopie les anciennes coordonnées dans un nouveau tableau
 		int[] tab = new int[this.getDimension()];
 		for (int i = 0; i < this.getDimension(); i++){
 			tab[i] = this.getCoord()[i];
 		}
+		//A partir de ce tableau, on crée une nouvelle croix
 		return new Croix(tab);
 	}
 	

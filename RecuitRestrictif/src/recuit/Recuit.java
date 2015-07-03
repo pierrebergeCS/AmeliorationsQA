@@ -114,7 +114,7 @@ public class Recuit
 					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
 					int nbTentatives = 0;
 					m.maj(p,r2);
-					while (!m.estAutorisee(p,r2, red) && nbTentatives < 10){
+					while (!m.estAutorisee(p,r2, red) && (nbTentatives < 10)){
 						m.maj(p,r2);
 						MutationsRefusees++;
 						nbTentatives++;
@@ -123,7 +123,6 @@ public class Recuit
 					deltapot =  m.calculerdeltaEp(p,r2);
 					
 					double deltaEp = deltapot/nombreEtat;
-					//System.out.println("deP " + deltaEp);
 					double deltaEc = -valueJ*m.calculerdeltaSpins(p,r2);
 					double delta = deltaEp + deltaEc;
 					double pr=probaAcceptation(delta,deltapot,p.getT());

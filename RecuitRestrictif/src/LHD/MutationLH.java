@@ -37,6 +37,12 @@ public class MutationLH extends IMutation {
 		this.listeMutations = l;
 	}
 	
+	public MutationLH(int index, int criticalIndex, int dimension){
+		this.index = index;
+		this.criticalIndex = criticalIndex;
+		this.dimension = dimension;
+	}
+	
 	public int getIndex(){
 		return this.index;
 	}
@@ -57,7 +63,61 @@ public class MutationLH extends IMutation {
 			this.listeMutations.get(i).faire(e);
 		}
 		
-		g.findCriticalPoints();
+		//Points critiques et dmin actualisés
+		
+				int indexcc0 = -1;
+				int indexcc1 = -1;
+				
+				int dminCC = g.getTaille()*g.getTaille()*((Croix)g.getListe().get(0)).getDimension();
+				int i1 = this.criticalIndex;
+				for (int j1 = i1+1; j1<g.getTaille(); j1++){
+					g.getMatrice()[i1][j1] = FonctionEval.distance(((Croix)g.getListe().get(i1)),((Croix)g.getListe().get(j1)));
+					if (g.getMatrice()[i1][j1] <= dminCC){
+						indexcc0 = i1;
+						indexcc1 = j1;
+						dminCC = g.getMatrice()[i1][j1];
+					}
+				}
+				
+				int j2 = this.criticalIndex;
+				for (int i2 = 0; i2<j2; i2++){
+					g.getMatrice()[i2][j2] = FonctionEval.distance(((Croix)g.getListe().get(i2)),((Croix)g.getListe().get(j2)));
+					if (g.getMatrice()[i2][j2] <= dminCC){
+						indexcc0 = i2;;
+						indexcc1 = j2;
+						dminCC = g.getMatrice()[i2][j2];
+					}
+				}
+				
+				int i3 = this.index;
+				for (int j3 = i3+1; j3<g.getTaille(); j3++){
+					g.getMatrice()[i3][j3] = FonctionEval.distance(((Croix)g.getListe().get(i3)),((Croix)g.getListe().get(j3)));
+					if (g.getMatrice()[i3][j3] <= dminCC){
+						indexcc0 = i3;
+						indexcc1 = j3;
+						dminCC = g.getMatrice()[i3][j3];
+					}
+				}
+				
+				int j4 = this.index;
+				for (int i4 = 0; i4<j4; i4++){
+					g.getMatrice()[i4][j4] = FonctionEval.distance(((Croix)g.getListe().get(i4)),((Croix)g.getListe().get(j4)));
+					if (g.getMatrice()[i4][j4] <= dminCC){
+						indexcc0 = i4;
+						indexcc1 = j4;
+						dminCC = g.getMatrice()[i4][j4];
+					}
+				}
+				
+				if (dminCC <= g.getdmin()){
+					g.setDmin(dminCC);
+					ArrayList<Integer> l = new ArrayList<Integer>(2);
+					l.add(indexcc0);
+					l.add(indexcc1);
+					g.setCriticalPoints(l);
+				} else {
+					g.findCriticalPoints();
+				}
 	}
 
 	public double calculerdeltaEp(Etat e) {
@@ -111,30 +171,8 @@ public class MutationLH extends IMutation {
 
 	@Override
 	public double calculerdeltaSpins(Probleme p, Etat e) {
-		double cpt = 0;
-		MutationLHElementaire m1 = (MutationLHElementaire) this.listeMutations.get(0);
-		MutationLHElementaire m2 = (MutationLHElementaire) this.listeMutations.get(1);
-		
-		Croix prev1 = ((Croix) e.getListe().get(m1.getIndice())).clone();
-		Croix prev2 = ((Croix) e.getListe().get(m2.getIndice())).clone();
-		
-		Croix next1 = (Croix) m1.getElement();
-		Croix next2 = (Croix) m2.getElement();
-		
-		Grille left = (Grille) e.getPrevious();
-		Grille right = (Grille) e.getNext();
-		
-		if (left.estCochee(prev1)) cpt-=1;
-		if (left.estCochee(prev2)) cpt-=1;
-		if (right.estCochee(prev1)) cpt-=1;
-		if (right.estCochee(prev2)) cpt-=1;
-		
-		if (left.estCochee(next1)) cpt+=1;
-		if (left.estCochee(next2)) cpt+=1;
-		if (right.estCochee(next1)) cpt+=1;
-		if (right.estCochee(next2)) cpt+=1;
-		
-		return cpt;
+		ParticuleLH pLH = (ParticuleLH) p;
+		return pLH.getEc().deltaSpins(pLH,(Grille)e,this);
 	}
 
 	@Override
@@ -162,5 +200,6 @@ public class MutationLH extends IMutation {
 		l.add(m2);
 		this.listeMutations = l;
 	}
+	
 
 }

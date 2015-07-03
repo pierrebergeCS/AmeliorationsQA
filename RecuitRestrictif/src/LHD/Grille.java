@@ -10,6 +10,7 @@ public class Grille extends Etat {
 	int taille;
 	ArrayList<Integer> criticalPoints = new ArrayList<Integer>(2);//Position points critiques
 	int dmin ;
+	int[][] matriceDistances;
 
 	public Grille(FonctionEval f, ArrayList<Element> liste, int n){
 		this.f = f;
@@ -65,6 +66,18 @@ public class Grille extends Etat {
 		return dmin;
 	}
 	
+	public int[][] getMatrice(){
+		return this.matriceDistances;
+	}
+	
+	public void setDmin(int k){
+		this.dmin = k;
+	}
+	
+	public void setCriticalPoints(ArrayList<Integer> l){
+		this.criticalPoints = l;
+	}
+	
 	@Override
 	public Etat clone() {
 		//clone les croix
@@ -88,22 +101,32 @@ public class Grille extends Etat {
 	}
 	
 	public ArrayList<Integer> findCriticalPoints(){
-		int dmin = this.f.distance(((Croix)this.getListe().get(0)),((Croix)this.getListe().get(1)));
-		int c1 = 0;
-		int c2 = 1;
+		ArrayList<Integer> minI = new ArrayList<Integer>();
+		ArrayList<Integer> minJ = new ArrayList<Integer>();
+		int[][] matriceDistances = new int[this.getTaille()][this.getTaille()];
+		int dmin = FonctionEval.distance(((Croix)this.getListe().get(0)),((Croix)this.getListe().get(1)));
 		for (int i = 0; i < this.getTaille(); i++){
 			for (int j = i+1; j < this.getTaille(); j++){
-				if (this.f.distance(((Croix)this.getListe().get(i)),((Croix)this.getListe().get(j))) < dmin){
-					dmin = this.f.distance(((Croix)this.getListe().get(i)),((Croix)this.getListe().get(j)));
-					c1 = i;
-					c2 = j;
+				int dist = FonctionEval.distance(((Croix)this.getListe().get(i)),((Croix)this.getListe().get(j)));
+				matriceDistances[i][j] = dist;
+				if (dist < dmin){
+					dmin = dist;
+					minI.clear();
+					minI.add(i);
+					minJ.clear();
+					minJ.add(j);
+				}
+				if (dist == dmin){
+					minI.add(i);
+					minJ.add(j);
 				}
 			}
 		}
 		ArrayList<Integer> l = new ArrayList<Integer>(2);
-		l.add(c1);
-		l.add(c2);
+		l.add(minI.get((int) (Math.random()*minI.size())));
+		l.add(minJ.get((int) (Math.random()*minJ.size())));
 		this.criticalPoints = l;
+		this.matriceDistances = matriceDistances;
 		this.dmin = dmin;
 		return l;
 	}

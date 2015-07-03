@@ -3,19 +3,18 @@ package LHD;
 public class DMin extends FonctionEval {
 
 	@Override
-	public int distance(Croix c1, Croix c2) {
-		return 0;
-	}
-
-	@Override
 	public double calculer(Grille g) {
-		return g.getdmin();
+		return -g.getdmin();
 	}
 
 	@Override
 	public double calculerdelta(Grille g, MutationLH m) {
-		g.findCriticalPoints();
-		return g.getdmin();
+		//Calcul de delta coûteux : on fait comme si la mutation s'exécutait, on en retire la différence de dmin
+		//On n'a pas trouvé beaucoup mieux pour l'instant.
+		int currentDmin = g.getdmin();
+		Grille gt = (Grille) g.clone();
+		m.faire(gt);
+		return (-(gt.getdmin()-currentDmin));
 	}
 
 }

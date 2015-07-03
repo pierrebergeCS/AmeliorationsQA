@@ -14,23 +14,26 @@ public class ParticuleLH extends Probleme {
 	int n;//taille
 	int d;//dimension
 	FonctionEval f;
+	EnergieCinetiqueLH Ec;
 	
-	public ParticuleLH(int n, int d, FonctionEval f, ArrayList<Etat> etat,Temperature T,int seed,ParametreGamma gamma, double freq){
+	public ParticuleLH(int n, int d, FonctionEval f, EnergieCinetiqueLH Ec, ArrayList<Etat> etat,Temperature T,int seed,ParametreGamma gamma, double freq){
 		super(etat,T,seed,gamma, freq);
 		this.n = n;
 		this.d = d;
 		this.f = f;
+		this.Ec = Ec;
 	}
 	
-	public ParticuleLH(int n, int d, FonctionEval f, ArrayList<Etat> l, double freq){
+	public ParticuleLH(int n, int d, FonctionEval f, EnergieCinetiqueLH Ec, ArrayList<Etat> l, double freq){
 		this.etat = l;
 		this.freq = freq;
 		this.n = n;
 		this.f = f;
 		this.d = d;
+		this.Ec = Ec;
 	}
 	
-	public static ParticuleLH initialise(int n, int d, FonctionEval f, int nombreEtat, double freq){
+	public static ParticuleLH initialise(int n, int d, FonctionEval f,EnergieCinetiqueLH Ec, int nombreEtat, double freq){
 		ArrayList<Etat> r = new ArrayList<Etat>(nombreEtat);
 		for(int indice=0; indice<nombreEtat; indice++){
 			r.add(new Grille(f,n,d));
@@ -43,7 +46,7 @@ public class ParticuleLH extends Probleme {
 		r.get(r.size()-1).setnext( r.get(0));
 		r.get(0).setprevious( r.get(r.size()-1));
 		r.get(0).setnext(r.get(1));
-		ParticuleLH p=new ParticuleLH(n,d,f,r,freq);
+		ParticuleLH p=new ParticuleLH(n,d,f,Ec,r,freq);
 		return p;
 	}
 	
@@ -58,6 +61,10 @@ public class ParticuleLH extends Probleme {
 	public FonctionEval getEval(){
 		return this.f;
 	}
+	
+	public EnergieCinetiqueLH getEc(){
+		return this.Ec;
+	}
 
 	@Override
 	public Probleme clone() {
@@ -66,20 +73,13 @@ public class ParticuleLH extends Probleme {
 		for(int i=0; i<n; i++){
 			r.add(((Grille) this.etat.get(i)).clone());
 		}
-		 ParticuleLH p = new ParticuleLH(this.n,this.d,this.f,r,this.getT(), this.getSeed(),this.getGamma(), this.getFreq()) ;
+		 ParticuleLH p = new ParticuleLH(this.n,this.d,this.f,this.Ec,r,this.getT(), this.getSeed(),this.getGamma(), this.getFreq()) ;
 		return p;
 	}
 
 	@Override
 	public double calculerEnergieCinetique() {
-		int nombreEtat = this.nombreEtat();
-		double cpt =0;
-		for (int k = 0; k < nombreEtat;k++){
-				Etat e1=this.getEtat().get(k);
-				Etat e2=e1.getNext();
-				cpt+=e1.distanceIsing(e2);
-		}
-		return cpt;
+		return this.Ec.calculerEc(this);
 	}
 
 	@Override

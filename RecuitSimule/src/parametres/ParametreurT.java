@@ -21,11 +21,11 @@ public class ParametreurT {
 	 * @return
 	 * Liste triée de 1000 deltaEpot
 	 */
-	public static List<Double> parametreurRecuit(Etat r1,IMutation m){
+	public static List<Double> parametreurRecuit(Etat r1,IMutation m, int nbEchantillons){
 		
 		double deltaE = -1;
 		List<Double> l = new LinkedList<Double>();
-		for (int i =0; i < 1000; i++){
+		for (int i =0; i < nbEchantillons; i++){
 			deltaE = -1;
 			while(deltaE<=0){
 		

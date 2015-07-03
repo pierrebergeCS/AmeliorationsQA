@@ -8,14 +8,6 @@ public class Phi extends FonctionEval {
 	}
 
 	@Override
-	public int distance(Croix c1, Croix c2){
-		int cpt = 0;
-		for (int k = 0; k < c1.getDimension(); k++){
-			cpt += (c1.getCoord()[k] - c2.getCoord()[k])*(c1.getCoord()[k] - c2.getCoord()[k]);
-		}
-		return cpt;
-	}
-	@Override
 	public double calculer(Grille g) {
 		double cpt = 0;
 		for(int i = 0; i < g.getTaille(); i++){
