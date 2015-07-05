@@ -3,9 +3,11 @@ package recuit;
 import modele.*;
 import parametres.*;
 import sat3.*;
+import tsp.parser.Writer;
 import mutation.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import LHD.Grille;
 
@@ -77,6 +79,8 @@ public class Recuit
 		
 		double deltapot  = 0;
 		double energieBest = E;
+		double dminBest = 0; // pour Latin Hypercube
+		Etat etatBest = e.clone();
 		
 		for(int i =0; i<nombreIterations;i++){
 	
@@ -96,6 +100,12 @@ public class Recuit
 						energieBest = E;
 					}
 					
+					//Pour l'instant, on laisse comme ça*
+					if (((Grille)e).getdmin()>dminBest){
+						etatBest = e.clone();
+						dminBest = ((Grille)e).getdmin();
+					}
+					
 					//System.out.println(E);
 					//System.out.println(energieBest);
 					if(E==0){
@@ -106,9 +116,9 @@ public class Recuit
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		//System.out.println("result :" + energieBest);
-		System.out.println("D :" + ((Grille)e).getdmin());  //Pour LatinHypercube
+		System.out.println("Dbest :" + ((Grille)etatBest).getdmin());  //Pour LatinHypercube
 		
-		return ((Grille)e).getdmin();
+		return ((Grille)etatBest).getdmin();
 
 	}
 	

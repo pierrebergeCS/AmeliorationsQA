@@ -1,9 +1,11 @@
 package LHD;
 
 public class DMin extends FonctionEval {
+	// Fonction d'évaluation dmin
 
 	@Override
 	public double calculer(Grille g) {
+		//On veut maximiser dmin donc minimiser -dmin
 		return -g.getdmin();
 	}
 

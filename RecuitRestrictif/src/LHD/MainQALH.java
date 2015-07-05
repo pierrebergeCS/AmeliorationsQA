@@ -22,14 +22,14 @@ public class MainQALH {
 		int d = 9;
 		Phi f = new Phi(5);
 		int nombreEtat = 10;
-		int nombreIterations = 10000*d;
-		EcDists ec = new EcDists();
+		int nombreIterations = 10000;
+		EcNull ec = new EcNull();
 		
 		double GammaDep = 2.0;
 		
 		 //       Test Recuit
 		
-		PrintWriter sortie = new PrintWriter("9_10_QA_Ecdists_10P_phi5.txt");
+		PrintWriter sortie = new PrintWriter("test.txt");
 		double sum = 0;
 		double var = 0;
 		
@@ -38,7 +38,7 @@ public class MainQALH {
 		try {
 			for (int i = 0; i < 200; i++){
 				ParticuleLH p = ParticuleLH.initialise(n,d,f,ec,nombreEtat,1.2);
-				MutationLH m = new MutationLH(new Grille(f,n,d));
+				ImprovedMutationLH m = new ImprovedMutationLH(new Grille(f,n,d));
 				RedondancesParticuleLH red = new RedondancesParticuleLH();
 				double temp = ParametreurT.parametreurRecuit(p,m,10000).get(20);
 				double result = Recuit.solution(p,m,red,nombreIterations,1,1,temp,GammaDep);
@@ -46,6 +46,7 @@ public class MainQALH {
 				var += result*result;
 				Writer.ecriture(i,result,sortie);
 			}
+			sortie.close();
 			System.out.println("result :" + (sum/200.0));
 			System.out.println("var :" + ((var/200.0)-(sum/200.0)*(sum/200.0)));
 		} catch (IOException e) {

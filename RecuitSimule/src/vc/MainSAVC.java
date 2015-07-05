@@ -3,6 +3,7 @@ package vc;
 import java.io.IOException;
 
 import parametres.Temperature;
+import parametres.TemperatureLin;
 import recuit.Recuit;
 
 public class MainSAVC {
@@ -20,7 +21,7 @@ public static void main(String[] args){
 		System.out.println(n);
 		int nombreIterations = 100*n*n;//on est des fous pas tarés non plus
 		int nbColors = 28;
-		Temperature temp = new Temperature(0.1,0.0);
+		Temperature temp = new TemperatureLin(0.1,0.0);
 
 		//       Test Recuit
 		

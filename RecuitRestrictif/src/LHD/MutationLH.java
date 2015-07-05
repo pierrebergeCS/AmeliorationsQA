@@ -37,10 +37,23 @@ public class MutationLH extends IMutation {
 		this.listeMutations = l;
 	}
 	
-	public MutationLH(int index, int criticalIndex, int dimension){
+	public MutationLH(Grille g,int index, int criticalIndex, int dimension){
 		this.index = index;
 		this.criticalIndex = criticalIndex;
 		this.dimension = dimension;
+		
+		Croix c1 = ((Croix)g.getListe().get(this.criticalIndex)).clone();
+		c1.getCoord()[this.dimension] = ((Croix)g.getListe().get(this.index)).getCoord()[this.dimension];
+		MutationLHElementaire m1 = new MutationLHElementaire(c1,this.criticalIndex);
+		
+		Croix c2 = ((Croix)g.getListe().get(this.index)).clone();
+		c2.getCoord()[this.dimension] = ((Croix)g.getListe().get(this.criticalIndex)).getCoord()[this.dimension];
+		MutationLHElementaire m2 = new MutationLHElementaire(c2,this.index);
+		
+		ArrayList<MutationElementaire> l = new ArrayList<MutationElementaire>();
+		l.add(m1);
+		l.add(m2);
+		this.listeMutations = l;
 	}
 	
 	public int getIndex(){

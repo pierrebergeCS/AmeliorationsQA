@@ -33,25 +33,37 @@ public class ImprovedMutationLH extends IMutation {
 		this.index = index;
 		
 		//Choix de dimension
+		ArrayList<Integer> lc0 = new ArrayList<Integer>();
+		ArrayList<Integer> lc1 = new ArrayList<Integer>();
+		ArrayList<Integer> bestDim = new ArrayList<Integer>();
 		int bestDist = 0;
-		int bestDim = -1;
-		int cc0 = -1;
-		int cc1 = -1;
 		for (int d = 0; d < g.getListe().get(0).getDimension(); d++){
+			int currentBest = bestDist;
 			Grille gt = (Grille) g.clone();
 			MutationLH m = new MutationLH(this.index,this.criticalIndex,d);
 			m.faire(gt);
-			if (gt.getdmin() > bestDist){
+			if (gt.getdmin() > currentBest){
 				bestDist = gt.getdmin();
-				bestDim = d;
-				cc0 = gt.getCriticalPoints().get(0);
-				cc1 = gt.getCriticalPoints().get(1);
+				lc0.clear();
+				lc0.add(gt.getCriticalPoints().get(0));
+				lc1.clear();
+				lc1.add(gt.getCriticalPoints().get(1));
+				bestDim.clear();
+				bestDim.add(d);
+			}
+			if (gt.getdmin() == currentBest){
+				lc0.add(gt.getCriticalPoints().get(0));
+				lc1.add(gt.getCriticalPoints().get(1));
+				bestDim.add(d);
 			}
 		}
-		this.dimension = bestDim;
+		this.dimension = bestDim.get((int) (Math.random()*bestDim.size()));
 		this.bestDist = bestDist;
-		this.criticalPoints.add(cc0);
-		this.criticalPoints.add(cc1);
+		int k = (int) (Math.random()*lc0.size());
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(lc0.get(k));
+		l.add(lc1.get(k));
+		this.criticalPoints = l;
 	}
 	
 	public int getIndex(){
@@ -103,27 +115,37 @@ public class ImprovedMutationLH extends IMutation {
 				this.index = index;
 				
 				//Choix de dimension
+				ArrayList<Integer> lc0 = new ArrayList<Integer>();
+				ArrayList<Integer> lc1 = new ArrayList<Integer>();
+				ArrayList<Integer> bestDim = new ArrayList<Integer>();
 				int bestDist = 0;
-				int bestDim = -1;
-				int cc0 = -1;
-				int cc1 = -1;
 				for (int d = 0; d < g.getListe().get(0).getDimension(); d++){
+					int currentBest = bestDist;
 					Grille gt = (Grille) g.clone();
 					MutationLH m = new MutationLH(this.index,this.criticalIndex,d);
 					m.faire(gt);
-					
-					if (gt.getdmin() > bestDist){
+					if (gt.getdmin() > currentBest){
 						bestDist = gt.getdmin();
-						bestDim = d;
-						cc0 = gt.getCriticalPoints().get(0);
-						cc1 = gt.getCriticalPoints().get(1);
-						
+						lc0.clear();
+						lc0.add(gt.getCriticalPoints().get(0));
+						lc1.clear();
+						lc1.add(gt.getCriticalPoints().get(1));
+						bestDim.clear();
+						bestDim.add(d);
+					}
+					if (gt.getdmin() == currentBest){
+						lc0.add(gt.getCriticalPoints().get(0));
+						lc1.add(gt.getCriticalPoints().get(1));
+						bestDim.add(d);
 					}
 				}
-				this.dimension = bestDim;
+				this.dimension = bestDim.get((int) (Math.random()*bestDim.size()));
 				this.bestDist = bestDist;
-				this.criticalPoints.add(cc0);
-				this.criticalPoints.add(cc1);
+				int k = (int) (Math.random()*lc0.size());
+				ArrayList<Integer> l = new ArrayList<Integer>();
+				l.add(lc0.get(k));
+				l.add(lc1.get(k));
+				this.criticalPoints = l;
 	}
 
 }

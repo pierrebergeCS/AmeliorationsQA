@@ -95,6 +95,8 @@ public class Recuit
 		double energieBest = energie;
 		double valueJ = 0;
 		
+		int bestdmin = 0;
+		
 		Etat etatBest = e.get(0).clone();
 		
 		
@@ -146,7 +148,6 @@ public class Recuit
 						}
 					
 						if (energie < energieBest){
-						etatBest = p.getEtat().get(j).clone();
 						energieBest = energie;
 						if(energie==0){
 							//System.out.println("result :" + energieBest);
@@ -154,6 +155,10 @@ public class Recuit
 							return 0;
 						}
 						
+						}
+						if( ((Grille)r2).getdmin() > bestdmin){
+							bestdmin = ((Grille)r2).getdmin();
+							etatBest = r2.clone();
 						}
 					
 				}
@@ -167,11 +172,11 @@ public class Recuit
 			
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-		System.out.println("result :" + energieBest);
+		//System.out.println("result :" + energieBest);
 		System.out.println("D :" + ((Grille)etatBest).getdmin());
 		System.out.println("refus mutations :"+MutationsRefusees);
 		
-		return energieBest;
+		return ((Grille)etatBest).getdmin();
 
 	}
 	

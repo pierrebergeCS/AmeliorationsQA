@@ -34,7 +34,7 @@ public class ParametreurT {
 			deltaE=m.calculerdeltaEp(r1);
 			m.maj(r1);
 			}
-			l.add((deltaE));
+			l.add(deltaE);
 			//On vient de générer une liste de 1000 échantillons deltaE du graphe g.
 		}
 		Collections.sort(l);

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import parametres.Temperature;
+import parametres.TemperatureLin;
 import recuit.Recuit;
 import tsp.parser.Writer;
 
@@ -29,7 +30,7 @@ public class MainSat {
 		int n = ins.getNbvar();
 		System.out.println(n);
 		int nombreIterations = 100*n*n;
-		Temperature temp = new Temperature(1.0,0.0);
+		Temperature temp = new TemperatureLin(1.0,0.0);
 		 //       Test Recuit
 
 		try {

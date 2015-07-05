@@ -9,6 +9,8 @@ import java.util.List;
 
 import parametres.ParametreurT;
 import parametres.Temperature;
+import parametres.TemperatureExp;
+import parametres.TemperatureLin;
 import recuit.Recuit;
 import tsp.parser.Writer;
 
@@ -16,9 +18,9 @@ public class MainSALH {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		int n = 10;
+		int n = 20;
 		Phi f = new Phi(5);
-		int dim = 9;
+		int dim = 8;
 		int nbIterations = 100000;
 		
 		
@@ -33,9 +35,9 @@ public class MainSALH {
 				Grille g = new Grille(f,n,dim);
 				ImprovedMutationLH m = new ImprovedMutationLH(g);
 				List<Double> l = ParametreurT.parametreurRecuit(g, m, 10000);
-				double dep = l.get(50);
-				System.out.println(dep);
-				Temperature temp = new Temperature(dep,0.0);
+				double dep = l.get(150);
+				double stop = l.get(5);
+				Temperature temp = new TemperatureExp(dep,stop);
 				Writer.ecriture(i,Recuit.solution(g,m,nbIterations,temp),sortie);
 			}
 			sortie.close();

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import parametres.ParametreurT;
 import parametres.Temperature;
+import parametres.TemperatureLin;
 import tsp.parser.TSPParser;
 import tsp.parser.Writer;
 import recuit.Recuit;
@@ -31,8 +32,8 @@ public class MainSA {
 			for (int i = 0; i < 10; i++){
 				Routage r = new Routage(g);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
-				double tempDepart = ParametreurT.parametreurRecuit(r,m).get(100);
-				Temperature temp = new Temperature(tempDepart,0.0);
+				double tempDepart = ParametreurT.parametreurRecuit(r,m,1000).get(100);
+				Temperature temp = new TemperatureLin(tempDepart,0.0);
 				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
 			}
 			sortie.close();

@@ -1,40 +1,9 @@
 package parametres;
 
-public class Temperature {
-	double value;
-	double start;
-	double end;
+public abstract class Temperature {
 	
-	/**
-	 * Construit un paramètre T
-	 * @param value
-	 * Valeur numérique le la température
-	 */
-	public Temperature(double start, double end){
-		this.start = start;
-		this.end = end;
-		this.value = start;
-	}
+	public abstract void maj(int currentIter, int nbIterations);
+	
+	public abstract double getValue();
 
-	/**
-	 * @return
-	 * Retourne la valeur numérique de la température
-	 */
-	public double getValue(){
-		return this.value;
-	}
-	
-	/**
-	 * Permet d'établir une nouvelle valeur numérique de T
-	 * @param value
-	 * Nouvelle valeur numérique de T
-	 */
-	public void setValue(double value){
-		this.value = value;
-	}
-	
-	public void maj(int currentIter, int nbIterations){
-		this.setValue(this.start - ((this.start-this.end)*currentIter)/nbIterations);
-	}
-	
 }
