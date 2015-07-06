@@ -21,16 +21,17 @@ public class ParametreurT {
 	 * @return
 	 * Liste triée de 1000 deltaEpot
 	 */
-	public static List<Double> parametreurRecuit(Probleme p,IMutation m,int nombreIterations){
+	public static List<Double> parametreurRecuit(Probleme p,IMutation m, int nbEchantillons){
 		
 		Etat r1;
 		double deltaE = -1;
 		List<Double> l = new LinkedList<Double>();
-		for (int i =0; i < 1000; i++){
+		for (int i =0; i < nbEchantillons; i++){
 			deltaE = -1;
 			while(deltaE<=0){
 		
 			r1=p.creeEtatAleatoire();
+			
 			
 			deltaE=m.calculerdeltaEp(p,r1);
 			m.maj(p,r1);

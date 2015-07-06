@@ -30,6 +30,16 @@ public class Couleur extends Element {
 		return this.noeuds.size();
 	}
 	
+	//Ajoute un noeud à la couleur
+	public void addNode(Integer k){
+		this.noeuds.add(k);
+	}
+	
+	//Retire un noeud de la couleur
+	public void removeNode(Integer k){
+		this.noeuds.remove(k);
+	}
+	
 	@Override
 	public boolean equals(Element autre) {
 		Couleur autrecouleur = (Couleur) autre;
@@ -38,7 +48,7 @@ public class Couleur extends Element {
 			boolean b2 = true;
 			int k = 0;
 			while(k < this.getTaille() && b2){
-				b2 = this.getNoeuds().get(k)==autrecouleur.getNoeuds().get(k);
+				b2 = autrecouleur.getNoeuds().indexOf(this.getNoeuds().get(k))!=-1;
 				k++;
 			}
 			b = b2;
@@ -53,6 +63,14 @@ public class Couleur extends Element {
 			liste.add(this.noeuds.get(i));
 		}
 		return new Couleur(this.index,liste);
+	}
+	
+	public void printNodes(){
+		int n = this.getTaille();
+		System.out.println(" ");
+		for (int i = 0; i < n; i++){
+			System.out.print(this.getNoeuds().get(i) + " ");
+		}
 	}
 
 }

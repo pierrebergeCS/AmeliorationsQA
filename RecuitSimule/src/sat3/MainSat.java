@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import parametres.Temperature;
+import parametres.TemperatureLin;
 import recuit.Recuit;
-import tsp.parser.TSPParser;
 import tsp.parser.Writer;
 
 public class MainSat {
@@ -25,6 +25,7 @@ public class MainSat {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+<<<<<<< HEAD
 		int n = ins.getNombreClauses() ;
 		System.out.println(n);
 		int nombreIterations = 500000*n;
@@ -33,6 +34,12 @@ public class MainSat {
 		
 		
 		Temperature temp = new Temperature(0.50,0.0);
+=======
+		int n = ins.getNbvar();
+		System.out.println(n);
+		int nombreIterations = 100*n*n;
+		Temperature temp = new TemperatureLin(1.0,0.0);
+>>>>>>> origin/master
 		 //       Test Recuit
 
 		try {

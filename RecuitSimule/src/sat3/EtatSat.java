@@ -63,6 +63,9 @@ public class EtatSat extends Etat {
 		return this.nbxi;
 	}
 	
+	public Instancesat getInstance(){
+		return this.instance;
+	}
 	
 	@Override
 	public Etat clone() {
@@ -96,6 +99,36 @@ public class EtatSat extends Etat {
 		return false;}
 		else{
 			return true;}
+	}
+	
+	public void maj(){
+		Instancesat ins = this.getInstance();
+		this.nbxi=ins.getNbvar();
+		ArrayList<ElementSat> l=new ArrayList<ElementSat>();
+		this.clauses=new ArrayList<Minterme>();
+		for(int i=1;i<=this.nbxi;i++){
+			boolean b;
+			b= Math.random()>0.5;
+			ElementSat elemi= new ElementSat(i,b);
+			l.add(elemi);
+		}
+		
+		this.setListe(l);
+		this.instance=ins;
+		int[][] representation=this.instance.getSat();
+		for(int i=0;i<this.instance.getNombreClauses();i++){
+			Minterme m = new Minterme(i);
+			for(int j=0;j<3;j++){
+				int xi=Math.abs(representation[i][j]);
+				int rienornot=(int) Math.signum(representation[i][j]);
+				ElementSat e= (ElementSat) l.get(xi-1);
+				m.addElem(e, j, rienornot);
+				e.ajouteClause(m);
+				
+			}
+			this.clauses.add(m);
+				
+		}
 	}
 
 }

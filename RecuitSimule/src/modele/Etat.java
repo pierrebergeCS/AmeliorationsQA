@@ -1,6 +1,5 @@
 package modele;
 
-import java.util.ArrayList;
 /**
  * Un etat a par défaut ses voisins definis a NULL, il doit etre modifié par l'utilisateur.
  * L'utilisateur se devra d'instancier Etat en une classe correspondant à son probleme.
@@ -24,5 +23,11 @@ public abstract class Etat {
 	 * L'energie potentielle de l'etat
 	 */
 	public abstract double getEnergie();
+	
+	/**
+	 * Met à jour un nouvel état. Equivalent au constructeur
+	 * Utilisé pour le paramétreur
+	 */
+	public abstract void maj();
 
 }

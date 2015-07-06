@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import parametres.ParametreurT;
 import parametres.Temperature;
+import parametres.TemperatureLin;
 import tsp.parser.TSPParser;
 import tsp.parser.Writer;
 import recuit.Recuit;
@@ -24,14 +26,20 @@ public class MainSA {
 		
 		PrintWriter sortie = new PrintWriter("test.txt");
 		int cpt = 0;
+<<<<<<< HEAD
 		double tempDepart = ParametreurT.parametreurRecuit(g, new TwoOptMove(new Routage(g))).get(100);
 		Temperature temp = new Temperature(2*tempDepart,0.0);
 		long cpte= System.currentTimeMillis();
+=======
+		
+>>>>>>> origin/master
 		try {
 	
 			for (int i = 0; i < 10; i++){
 				Routage r = new Routage(g);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
+				double tempDepart = ParametreurT.parametreurRecuit(r,m,1000).get(100);
+				Temperature temp = new TemperatureLin(tempDepart,0.0);
 				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
 			}
 			sortie.close();

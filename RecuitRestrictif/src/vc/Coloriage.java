@@ -24,16 +24,18 @@ public class Coloriage extends Etat {
 		for (int k = 0; k < nbColors; k++){
 			colors.add(new Couleur(k));
 		}
+		this.setListe(colors);
 		
 		//On met chaque noeud dans une couleur de manière aléatoire
 		
 		int nbNoeuds = this.g.getConnexions().length;
 		ArrayList<Noeud> listeNoeuds = new ArrayList<Noeud>();
 		for (int i = 0; i < nbNoeuds; i++){
-			int rand = (int) Math.random()*nbColors;
+			int rand = (int) (Math.random()*nbColors);
 			listeNoeuds.add(new Noeud(i,rand));
-			((Couleur)colors.get(rand)).getNoeuds().add(i);
+			((Couleur)this.getListe().get(rand)).getNoeuds().add(i);
 		}
+		this.listeNoeuds = listeNoeuds;
 	}
 	
 	public Graphe getGraphe(){
@@ -76,11 +78,11 @@ public class Coloriage extends Etat {
 
 	@Override
 	public int distanceIsing(Etat e) {
-		double cpt = 0;
+		int cpt = 0;
 		Coloriage autre = (Coloriage) e;
 		int n = this.listeNoeuds.size();
 		for (int i = 0; i < n; i++){
-			for (int j: this.g.getConnexions()[i]){
+			for (int j = i+1; j < n; j++){
 				Noeud n1 = this.listeNoeuds.get(i);
 				Noeud n2 = this.listeNoeuds.get(j);
 				Noeud othern1 = autre.listeNoeuds.get(i);
@@ -91,7 +93,29 @@ public class Coloriage extends Etat {
 				if ((n1.getCouleur() == n2.getCouleur()) && (othern1.getCouleur() != othern2.getCouleur())) cpt--;
 			}
 		}
-		return ((int) cpt/2);
+		return cpt;
+	}
+	
+	public String toString(){
+		String s = "";
+		int col = this.getListe().size();
+		for (int i = 0; i < col; i++){
+			s += "[";
+			Couleur c = (Couleur) this.getListe().get(i);
+			for(int k: c.getNoeuds()){
+				s += k + ",";
+			}
+			s+= "] ";
+		}
+		return s;
+	}
+	
+	public void afficheNoeuds(){
+		int nbNoeuds = this.getNoeuds().size();
+		for (int i = 0; i < nbNoeuds; i++){
+			System.out.print(" (" + this.getNoeuds().get(i).getInt() + "," + this.getNoeuds().get(i).getCouleur() + ")");
+		}
+		System.out.println("");
 	}
 
 }

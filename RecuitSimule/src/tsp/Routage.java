@@ -97,6 +97,9 @@ public class Routage extends Etat {
 		return this.g.nombreDeNoeuds();
 	}
 
+	public void maj(){
+		this.setListe(routeInitiale());
+	}
 
 
 }

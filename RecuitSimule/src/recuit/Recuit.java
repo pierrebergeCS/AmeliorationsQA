@@ -8,6 +8,11 @@ import mutation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+<<<<<<< HEAD
+=======
+
+import LHD.Grille;
+>>>>>>> origin/master
 
 
 
@@ -77,6 +82,8 @@ public class Recuit
 		
 		double deltapot  = 0;
 		double energieBest = E;
+		double dminBest = 0; // pour Latin Hypercube
+		Etat etatBest = e.clone();
 		
 		for(int i =0; i<nombreIterations;i++){
 	
@@ -95,18 +102,30 @@ public class Recuit
 					if (E < energieBest){
 						energieBest = E;
 					}
+<<<<<<< HEAD
 		
+=======
+					
+					//Pour l'instant, on laisse comme ça*
+					if (((Grille)e).getdmin()>dminBest){
+						etatBest = e.clone();
+						dminBest = ((Grille)e).getdmin();
+					}
+					
+					//System.out.println(E);
+					//System.out.println(energieBest);
+>>>>>>> origin/master
 					if(E==0){
 							System.out.println("result :" + energieBest);
 							return 0;
-					}
-					
+					}		
 			temp.maj(i,nombreIterations);
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-		System.out.println("result :" + energieBest);
+		//System.out.println("result :" + energieBest);
+		System.out.println("Dbest :" + ((Grille)etatBest).getdmin());  //Pour LatinHypercube
 		
-		return energieBest;
+		return ((Grille)etatBest).getdmin();
 
 	}
 

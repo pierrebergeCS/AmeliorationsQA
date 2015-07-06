@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import LHD.Grille;
+
 
 // Cette classe definit le probleme du recuit. Il se charge d'effectuer les mutations elementaires, de calculer l'energie et de diminuer T...
 
@@ -70,16 +72,19 @@ public class Recuit
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M) throws IOException, InterruptedException
+	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M, double temp, double GammaDep) throws IOException, InterruptedException
 	{	
-		
 		int nombreEtat=p.nombreEtat();
 		
 		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
+<<<<<<< HEAD
 		Temperature temperatureDepart = new Temperature(0.005);
+=======
+		Temperature temperatureDepart = new Temperature(temp/nombreEtat);
+>>>>>>> origin/master
 	
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
-		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
+		ParametreGamma gamma = new ParametreGamma(GammaDep,GammaDep/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
 		p.setGamma(gamma);
 		
@@ -94,6 +99,11 @@ public class Recuit
 		double energie = (e.get(0)).getEnergie();
 		double energieBest = energie;
 		double valueJ = 0;
+		
+		int bestdmin = 0;
+		
+		Etat etatBest = e.get(0).clone();
+		
 		
 		int MutationsRefusees = 0;
 		
@@ -111,7 +121,7 @@ public class Recuit
 					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
 					int nbTentatives = 0;
 					m.maj(p,r2);
-					while (!m.estAutorisee(p,r2, red) && nbTentatives < 100){
+					while (!m.estAutorisee(p,r2, red) && (nbTentatives < 10)){
 						m.maj(p,r2);
 						MutationsRefusees++;
 						nbTentatives++;
@@ -125,7 +135,6 @@ public class Recuit
 					double pr=probaAcceptation(delta,deltapot,p.getT());
 					
 					if(pr>Math.random()){
-						
 						m.majRedondance(p,red,r2);
 						energie = r2.getEnergie();
 						
@@ -152,6 +161,10 @@ public class Recuit
 						}
 						
 						}
+						if( ((Grille)r2).getdmin() > bestdmin){
+							bestdmin = ((Grille)r2).getdmin();
+							etatBest = r2.clone();
+						}
 					
 				}
 				
@@ -165,9 +178,10 @@ public class Recuit
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		//System.out.println("result :" + energieBest);
-		//System.out.println("refus mutations :"+MutationsRefusees);
+		System.out.println("D :" + ((Grille)etatBest).getdmin());
+		System.out.println("refus mutations :"+MutationsRefusees);
 		
-		return energieBest;
+		return ((Grille)etatBest).getdmin();
 
 	}
 
