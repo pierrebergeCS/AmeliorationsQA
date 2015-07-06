@@ -77,11 +77,11 @@ public class Recuit
 		int nombreEtat=p.nombreEtat();
 		
 		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-<<<<<<< HEAD
-		Temperature temperatureDepart = new Temperature(0.005);
-=======
+
+	
+
 		Temperature temperatureDepart = new Temperature(temp/nombreEtat);
->>>>>>> origin/master
+
 	
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
 		ParametreGamma gamma = new ParametreGamma(GammaDep,GammaDep/(nombreIterations+1),0.01);

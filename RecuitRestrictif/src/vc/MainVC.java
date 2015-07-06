@@ -47,7 +47,7 @@ public static void main(String[] args){
 				ParticuleVC p = ParticuleVC.initialise(nombreEtat,0.5,g,nbColors);
 				MutationVC m = new MutationVC((Coloriage)p.getEtat().get(0));
 				RedondancesParticuleVC red = new RedondancesParticuleVC(p);
-				Recuit.solution(p,m,red,nombreIterations,1,1);
+				Recuit.solution(p,m,red,nombreIterations,1,1,0.05,10);
 			}
 			System.out.println(cpt);
 		} catch (IOException e) {

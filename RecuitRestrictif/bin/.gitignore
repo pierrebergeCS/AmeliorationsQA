@@ -1,12 +1,10 @@
-<<<<<<< HEAD
-/sat3
-/recuit
-=======
+/LHD
 /knapsackP
+/latinHypercubeMaximin
 /modele
 /mutation
 /parametres
 /recuit
 /sat3
 /tsp
->>>>>>> origin/master
+/vc
