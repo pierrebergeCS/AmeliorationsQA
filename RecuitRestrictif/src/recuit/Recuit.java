@@ -3,6 +3,7 @@ package recuit;
 import modele.*;
 import parametres.*;
 import sat3.*;
+import tsp.parser.Writer;
 import mutation.*;
 
 import java.io.IOException;
@@ -75,7 +76,7 @@ public class Recuit
 		int nombreEtat=p.nombreEtat();
 		
 		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(0.010);
+		Temperature temperatureDepart = new Temperature(0.005);
 	
 		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
 		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
@@ -168,6 +169,120 @@ public class Recuit
 		
 		return energieBest;
 
+	}
+
+
+	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M,PrintWriter sortie) throws IOException {
+	
+		int it=0;
+		int nombreEtat=p.nombreEtat();
+		
+		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
+		Temperature temperatureDepart = new Temperature(0.010);
+	
+		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
+		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
+		p.setT(temperatureDepart.getValue());
+		p.setGamma(gamma);
+		
+		p.setT(temperatureDepart);
+		ArrayList<Etat> e = p.getEtat();
+		Ponderation J = new Ponderation(p.getGamma());
+		double Epot = p.calculerEnergiePotentielle();
+		
+		double compteurSpinique = p.calculerEnergieCinetique();
+		double E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
+		double deltapot  = 0;
+		double energie = (e.get(0)).getEnergie();
+		double energieBest = energie;
+		double valueJ = 0;
+		int MutationsRefusees = 0;
+		
+		for(int i =0; i<nombreIterations;i++){
+			
+			 valueJ = J.calcul(p.getT(), nombreEtat);
+			 
+			 E = Epot-valueJ*compteurSpinique;
+			 
+			 
+			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque particule avant de descendre gamma
+				
+				Etat r2 = e.get(j);
+				
+				for(int k=0; k<M; k++){
+					
+					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
+					int nbTentatives = 0;
+					m.maj(p,r2);
+					while (!m.estAutorisee(p,r2, red) && nbTentatives < 100){
+						m.maj(p,r2);
+						MutationsRefusees++;
+						nbTentatives++;
+					}
+					
+					
+					
+					deltapot =  m.calculerdeltaEp(p,r2);
+					
+					double deltaEp = deltapot/nombreEtat;
+					double deltaEc = -valueJ*m.calculerdeltaSpins(p,r2);
+					double delta = deltaEp + deltaEc;
+					double pr=probaAcceptation(delta,deltapot,p.getT());
+					
+					if(pr>Math.random()){
+						
+						m.majRedondance(p,red,r2);
+						energie = r2.getEnergie();
+						
+						m.faire(p,r2);
+						
+			
+						compteurSpinique += m.calculerdeltaSpins(p,r2);
+						
+						e.set(j, r2);
+						p.setEtat(e);
+						
+						Epot += deltapot/nombreEtat;
+						E += delta;// L'energie courante est modifiée
+						energie += deltapot;
+						
+						}
+					
+						if (energie < energieBest){
+						energieBest = energie;
+						
+						
+						
+					
+						if(energie==0){		
+	
+							Writer.ecriture(0,energieBest, sortie);
+							
+							
+							return 0;
+						}
+						
+						}
+						if(it%1000==0){
+
+						Writer.ecriture(0,energieBest, sortie);
+						}
+						it++;
+				}
+				
+				
+			}
+			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
+			p.majgamma();
+			J.setGamma(p.getGamma());
+			Collections.shuffle(p.getEtat());
+			
+		}
+		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
+
+		
+		return energieBest;
+		
 	}
 	
 	

@@ -3,9 +3,11 @@ package recuit;
 import modele.*;
 import parametres.*;
 import sat3.*;
+import tsp.parser.Writer;
 import mutation.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 
@@ -93,7 +95,7 @@ public class Recuit
 					if (E < energieBest){
 						energieBest = E;
 					}
-					System.out.println(energieBest);
+		
 					if(E==0){
 							System.out.println("result :" + energieBest);
 							return 0;
@@ -106,6 +108,53 @@ public class Recuit
 		
 		return energieBest;
 
+	}
+
+
+	public static double solution(Etat e,IMutation m,int nombreIterations,Temperature temp, PrintWriter sortie) throws IOException {
+		
+		
+		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
+		
+				double E = e.getEnergie();
+				
+				double deltapot  = 0;
+				double energieBest = E;
+				
+				for(int i =0; i<nombreIterations;i++){
+			
+							//Mise à jour de la mutation. 
+							m.maj(e);
+							
+							deltapot =  m.calculerdeltaEp(e);
+							
+							double pr=probaAcceptation(deltapot,temp);
+							
+							if(pr>Math.random()){
+								m.faire(e);
+								E =e.getEnergie();
+								}
+							
+							if (E < energieBest){
+								energieBest = E;
+							}
+							
+							if(E==0){
+									System.out.println("result :" + energieBest);
+									Writer.ecriture(0,energieBest, sortie);
+									return 0;
+							}
+							if(i%1000==0){
+							Writer.ecriture(0,energieBest, sortie);
+							}
+					temp.maj(i,nombreIterations);
+				}
+				
+				System.out.println("result :" + energieBest);
+				
+				return energieBest;
+
+		
 	}
 	
 	
