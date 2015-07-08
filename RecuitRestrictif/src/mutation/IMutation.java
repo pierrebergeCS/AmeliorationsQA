@@ -26,6 +26,8 @@ public abstract class IMutation {
 	/**
 	 * C'est la méthode qui effectue toutes les mutations élémentaires de la liste
 	 * L'utilisateur pourra overrider cette méthode s'il le souhaite
+	 * ATTENTION : C'est une mutation purement "mécanique" : l'argument energie ne doit pas être modifié ici.
+	 * Il faudra le faire par la suite (problèmes de récursivités avec le delta sinon).
 	 * @param e
 	 * Etat de la particule sur lequel on effectue les mutations
 	 */

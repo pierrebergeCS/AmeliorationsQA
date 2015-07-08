@@ -30,7 +30,7 @@ public class Stat extends FonctionEval {
 	public double calculerdelta(Grille g, MutationLH m) {
 		Grille gmut = (Grille)g.clone();
 		m.faire(gmut);
-		return gmut.getEnergie() - g.getEnergie();
+		return gmut.majEnergie() - g.getEnergie();
 	}
 
 }

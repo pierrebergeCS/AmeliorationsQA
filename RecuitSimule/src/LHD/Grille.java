@@ -12,11 +12,21 @@ public class Grille extends Etat {
 	int dmin ;
 	int[][] matriceDistances;
 
+	
+	public Grille(FonctionEval f, ArrayList<Croix> liste, int n, double energie){
+		this.f = f;
+		this.liste = liste;
+		this.taille = n;
+		findCriticalPoints();
+		this.setEnergie(energie);
+	}
+	
 	public Grille(FonctionEval f, ArrayList<Croix> liste, int n){
 		this.f = f;
 		this.liste = liste;
 		this.taille = n;
 		findCriticalPoints();
+		this.majEnergie();
 	}
 	
 	public Grille(FonctionEval f, int n, int dim){
@@ -48,6 +58,7 @@ public class Grille extends Etat {
 		this.liste = liste;
 		this.taille = n;
 		findCriticalPoints();
+		this.majEnergie();
 	}
 	
 	public int getTaille(){
@@ -89,12 +100,13 @@ public class Grille extends Etat {
 		for (Croix x : this.liste){
 			l.add(x.clone());
 		}
-		return new Grille(this.f,l,this.taille);
+		return new Grille(this.f,l,this.taille,this.energie);
 	}
 
 	@Override
-	public double getEnergie() {
-		return this.f.calculer(this);
+	public double majEnergie() {
+		this.energie = this.f.calculer(this);
+		return this.energie;
 	}
 	
 	public void afficheGrille(){
@@ -177,6 +189,12 @@ public class Grille extends Etat {
 		this.liste = liste;
 		this.taille = n;
 		findCriticalPoints();
+		this.majEnergie();
+	}
+
+	@Override
+	public double getResultat() {
+		return -this.dmin;
 	}
 
 }

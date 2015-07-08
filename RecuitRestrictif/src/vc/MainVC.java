@@ -20,6 +20,8 @@ public static void main(String[] args){
 		System.out.println(n);
 		int nombreIterations = n*n;//on est des fous pas tarés non plus
 		int nbColors = 28;
+		
+		double temperature = 0.1/nombreEtat ; 
 
 		//       Test Spins
 		
@@ -47,7 +49,7 @@ public static void main(String[] args){
 				ParticuleVC p = ParticuleVC.initialise(nombreEtat,0.5,g,nbColors);
 				MutationVC m = new MutationVC((Coloriage)p.getEtat().get(0));
 				RedondancesParticuleVC red = new RedondancesParticuleVC(p);
-				Recuit.solution(p,m,red,nombreIterations,1,1,0.05,10);
+				Recuit.solution(p,m,red,nombreIterations,1,1,temperature,10.0);
 			}
 			System.out.println(cpt);
 		} catch (IOException e) {

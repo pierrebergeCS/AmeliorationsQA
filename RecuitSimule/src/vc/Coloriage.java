@@ -1,6 +1,7 @@
 package vc;
 
 import java.util.ArrayList;
+
 import modele.Etat;
 
 public class Coloriage extends Etat {
@@ -12,6 +13,7 @@ public class Coloriage extends Etat {
 		this.g = g;
 		this.listeNoeuds = listeNoeuds;
 		this.listeCouleurs = l;
+		this.majEnergie();
 	}
 
 	public Coloriage(Graphe g, int nbColors){
@@ -35,6 +37,7 @@ public class Coloriage extends Etat {
 			this.getListe().get(rand).getNoeuds().add(i);
 		}
 		this.listeNoeuds = listeNoeuds;
+		this.majEnergie();
 	}
 	
 	public ArrayList<Couleur> getListe(){
@@ -66,7 +69,7 @@ public class Coloriage extends Etat {
 	}
 
 	@Override
-	public double getEnergie() {
+	public double majEnergie() {
 		double cpt = 0;
 		int n = this.listeNoeuds.size();
 		for (int i = 0; i < n; i++){
@@ -76,7 +79,8 @@ public class Coloriage extends Etat {
 				if (n1.getCouleur() == n2.getCouleur()) cpt++;
 			}
 		}
-		return cpt/2;
+		this.setEnergie(cpt/2);
+		return this.getEnergie();
 	}
 
 	public void maj(){
@@ -100,5 +104,11 @@ public class Coloriage extends Etat {
 			this.getListe().get(rand).getNoeuds().add(i);
 		}
 		this.listeNoeuds = listeNoeuds;
+		this.majEnergie();
+	}
+	
+	@Override
+	public double getResultat() {
+		return this.getEnergie();
 	}
 }

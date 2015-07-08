@@ -34,4 +34,7 @@ public class Ponderation {
 		return - t/2*Math.log(Math.tanh(this.gamma.getGamma()/(p*t))) ;
 	}
 
+	public double calcul(double t, int p) {
+		return - t/2*Math.log(Math.tanh(this.gamma.getGamma()/(p*t))) ;
+	}
 }

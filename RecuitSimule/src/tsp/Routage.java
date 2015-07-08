@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 import modele.Etat;
 
 
@@ -15,6 +16,7 @@ public class Routage extends Etat {
 	public Routage (Graphe g){
 		this.g = g;
 		this.setListe(routeInitiale());
+		this.majEnergie();
 	}
 	
 	public ArrayList<Integer> getListe(){
@@ -28,6 +30,7 @@ public class Routage extends Etat {
 	public Routage (Graphe g, ArrayList<Integer> liste){
 		this.g=g;
 		this.setListe(liste);
+		this.majEnergie();
 	}
 	
 	public ArrayList<Integer> routeInitiale() {
@@ -82,13 +85,14 @@ public class Routage extends Etat {
 		return s;
 	}
 
-	public double getEnergie(){
+	public double majEnergie(){
 		double cpt=0.0;
 		int L = this.g.nombreDeNoeuds();
 		for(int i=0;i<L-1;i++){
 			cpt+=this.g.longueurEntre(this.getListe().get(i),this.getListe().get(i+1));
 		}
 		cpt+=this.g.longueurEntre(this.getListe().get(L-1),this.getListe().get(0));
+		this.energie = cpt;
 		return cpt;
 	}
 
@@ -99,7 +103,12 @@ public class Routage extends Etat {
 
 	public void maj(){
 		this.setListe(routeInitiale());
+		this.majEnergie();
 	}
 
+	@Override
+	public double getResultat() {
+		return this.getEnergie();
+	}
 
 }

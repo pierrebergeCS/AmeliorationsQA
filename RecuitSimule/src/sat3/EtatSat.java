@@ -24,6 +24,7 @@ public class EtatSat extends Etat {
 			b= Math.random()>0.5;
 			ElementSat elemi= new ElementSat(i,b);
 			l.add(elemi);
+			this.majEnergie();
 		}
 		
 		this.setListe(l);
@@ -47,6 +48,7 @@ public class EtatSat extends Etat {
 	public EtatSat(){
 		this.setListe(new ArrayList<ElementSat>());
 		this.clauses=new ArrayList<Minterme>();
+		this.majEnergie();
 	}
 	
 
@@ -79,11 +81,13 @@ public class EtatSat extends Etat {
 			int j = c.getxi();
 			ElementSat elemi= new ElementSat(j,b);
 			e.getListe().add(elemi);
-		}		return e;
+		}	
+		e.setEnergie(this.energie);
+		return e;
 	}
 
 	@Override
-	public double getEnergie() {
+	public double majEnergie() {
 		double cpt=0;
 		for(Minterme m :this.clauses){
 			if(!m.is()){
@@ -91,6 +95,7 @@ public class EtatSat extends Etat {
 			}
 			
 		}
+		this.energie = cpt;
 		return cpt;
 	}
 
@@ -127,8 +132,13 @@ public class EtatSat extends Etat {
 				
 			}
 			this.clauses.add(m);
-				
+			this.majEnergie();	
 		}
+	}
+
+	@Override
+	public double getResultat() {
+		return this.getEnergie();
 	}
 
 }

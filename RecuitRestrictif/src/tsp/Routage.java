@@ -24,6 +24,7 @@ public class Routage extends Etat {
 			ord.add(i);
 		}
 		this.ordre = ord;
+		this.majEnergie();
 	}
 	public void setIsing(int[][] ising){
 		this.ising =ising ;
@@ -46,6 +47,7 @@ public class Routage extends Etat {
 		this.setListe(liste);
 		this.updateIsing();
 		this.ordre = ord;
+		this.majEnergie();
 	}
 	
 	public ArrayList<Element> routeInitiale() {
@@ -112,13 +114,14 @@ public class Routage extends Etat {
 		return s;
 	}
 
-	public double getEnergie(){
+	public double majEnergie(){
 		double cpt=0.0;
 		int L = this.g.nombreDeNoeuds();
 		for(int i=0;i<L;i++){
 			Arete a = (Arete) this.getListe().get(i);
 			cpt+=a.longueur(this.g);
 		}
+		this.setEnergie(cpt);
 		return cpt;
 	}
 
@@ -214,6 +217,9 @@ public class Routage extends Etat {
 		return this.g.nombreDeNoeuds();
 	}
 
-
+	@Override
+	public double getResultat() {
+		return this.getEnergie();
+	}
 
 }

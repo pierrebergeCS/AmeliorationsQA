@@ -18,10 +18,10 @@ public class MainSALH {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		int n = 20;
+		int n = 10;
 		Phi f = new Phi(5);
-		int dim = 8;
-		int nbIterations = 100000;
+		int dim = 9;
+		int nbIterations = 900000;
 		
 		
 		//Test Recuit
@@ -33,7 +33,7 @@ public class MainSALH {
 			
 			for(int i = 0; i < 10; i++){
 				Grille g = new Grille(f,n,dim);
-				ImprovedMutationLH m = new ImprovedMutationLH(g);
+				MutationLH m = new MutationLH(g);
 				List<Double> l = ParametreurT.parametreurRecuit(g, m, 10000);
 				double dep = l.get(150);
 				double stop = l.get(5);

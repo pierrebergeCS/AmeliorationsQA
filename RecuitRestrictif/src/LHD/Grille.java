@@ -17,6 +17,7 @@ public class Grille extends Etat {
 		this.listeElements = liste;
 		this.taille = n;
 		findCriticalPoints();
+		this.majEnergie();
 	}
 	
 	public Grille(FonctionEval f, int n, int dim){
@@ -48,6 +49,7 @@ public class Grille extends Etat {
 		this.listeElements = liste;
 		this.taille = n;
 		findCriticalPoints();
+		this.majEnergie();
 	}
 	
 	public int getTaille(){
@@ -89,8 +91,9 @@ public class Grille extends Etat {
 	}
 
 	@Override
-	public double getEnergie() {
-		return this.f.calculer(this);
+	public double majEnergie() {
+		this.setEnergie(this.f.calculer(this));
+		return this.getEnergie();
 	}
 	
 	public void afficheGrille(){
@@ -150,6 +153,11 @@ public class Grille extends Etat {
 			if (this.getListe().get(i).equals(c)) return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public double getResultat() {
+		return -this.dmin;
 	}
 
 }

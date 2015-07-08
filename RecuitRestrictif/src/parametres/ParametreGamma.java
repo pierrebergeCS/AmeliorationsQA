@@ -1,13 +1,13 @@
 package parametres;
 
-public class ParametreGamma {
+public abstract class ParametreGamma {
 
 	/**
 	 * Gamma début
 	 */
-	private double gamma;
-	private double facteur;
-	private double gammafin;
+	protected double gamma;
+	protected double facteur;
+	protected double gammafin;
 	
 	/**
 	 * Construit un paramètre Gamma
@@ -59,19 +59,7 @@ public class ParametreGamma {
 		this.gammafin = gammafin;
 	}
 //Get et Set du refroidissement, refroidissement de la temperature Recuit en exponentiel et lineaire
-	/**
-	 * Diminue la valeur de Gamma de manière exponentielle grâce au facteur associé.
-	 */
-	public void refroidissementExp(){
-		this.gamma *= 1-this.facteur;
-	}
-	
-	/**
-	 * Diminue la valeur de Gamma de manière linéaire grâce au facteur associé. Inutilisé pour le recuit.
-	 */
-	public void refroidissementLin(){
-		this.gamma -= this.facteur;
-	}
+	public  abstract void refroidissement();
 
 	/**
 	 * @return

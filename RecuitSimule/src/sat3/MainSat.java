@@ -11,54 +11,53 @@ import tsp.parser.Writer;
 
 public class MainSat {
 
-	public static void main(String[] args) throws FileNotFoundException, InterruptedException{
+	public static void main(String[] args) throws FileNotFoundException{
 		
+		int cpt=0;
+		double rescum=0;
 		Instancesat ins = null;
 		PrintWriter sortie = null;
 		for(int inst=0;inst<1;inst++){
 			int cptlocal=0;
 			System.out.println("Instance n° "+ inst);
 		try {
-			ins = Translator.donneInstance("C:/Users/Baptiste/Desktop/uf200-010.cnf");
-			
+			ins = Translator.donneInstance("C:/Users/Pierre/Desktop/benchmark/sat/uf200-010.cnf");
+			sortie = new PrintWriter("test.txt");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-<<<<<<< HEAD
-		int n = ins.getNombreClauses() ;
-		System.out.println(n);
-		int nombreIterations = 500000*n;
-		for(int i =0;i<1;i++){
-		
-		
-		
-		Temperature temp = new Temperature(0.50,0.0);
-=======
 		int n = ins.getNbvar();
 		System.out.println(n);
 		int nombreIterations = 100*n*n;
 		Temperature temp = new TemperatureLin(1.0,0.0);
->>>>>>> origin/master
 		 //       Test Recuit
 
 		try {
+			for (int i = 0; i < 1; i++){
 				EtatSat esat = new EtatSat(ins);
 				MutationSat m = new MutationSat(new EtatSat(ins));
 				double s=Recuit.solution(esat,m,nombreIterations,temp);
+				Writer.ecriture(i,s,sortie);
 				if(s!=0){
 					cptlocal++;
-			
+				cpt++;	
+				rescum+=s;
 				}
 				
-			
+			}
 			sortie.close();
+			System.out.println("taux d'erreur local :"+((double) cptlocal)/100);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}
-		}
+		System.out.println("taux d'erreur :"+((double) cpt)/100/1000);
+		System.out.println("erreurs moyenne :"+rescum/100/1000);	
 	
 	
 	}

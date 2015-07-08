@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import LHD.Grille;
+import LHD_1fixed.Grille;
+import LHD_1fixed.MutationLH;
+import LHD_1fixed.ParticuleLH;
 
 
 // Cette classe definit le probleme du recuit. Il se charge d'effectuer les mutations elementaires, de calculer l'energie et de diminuer T...
@@ -72,19 +74,12 @@ public class Recuit
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M, double temp, double GammaDep) throws IOException, InterruptedException
+	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M, double temp, ParametreGamma gamma) throws IOException, InterruptedException
 	{	
 		int nombreEtat=p.nombreEtat();
-		
-		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-
-	
 
 		Temperature temperatureDepart = new Temperature(temp/nombreEtat);
 
-	
-		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
-		ParametreGamma gamma = new ParametreGamma(GammaDep,GammaDep/(nombreIterations+1),0.01);
 		p.setT(temperatureDepart.getValue());
 		p.setGamma(gamma);
 		
@@ -100,7 +95,7 @@ public class Recuit
 		double energieBest = energie;
 		double valueJ = 0;
 		
-		int bestdmin = 0;
+		double bestResult = (e.get(0)).getResultat();;
 		
 		Etat etatBest = e.get(0).clone();
 		
@@ -127,10 +122,12 @@ public class Recuit
 						nbTentatives++;
 					}
 					
-					deltapot =  m.calculerdeltaEp(p,r2);
+
 					
+					deltapot =  m.calculerdeltaEp(p,r2);
 					double deltaEp = deltapot/nombreEtat;
-					double deltaEc = -valueJ*m.calculerdeltaSpins(p,r2);
+					double deltaCptSpin = m.calculerdeltaSpins(p,r2);
+					double deltaEc = -valueJ*deltaCptSpin;
 					double delta = deltaEp + deltaEc;
 					double pr=probaAcceptation(delta,deltapot,p.getT());
 					
@@ -139,9 +136,9 @@ public class Recuit
 						energie = r2.getEnergie();
 						
 						m.faire(p,r2);
-						
+						r2.setDeltapot(deltapot);
 			
-						compteurSpinique += m.calculerdeltaSpins(p,r2);
+						compteurSpinique += deltaCptSpin;
 						
 						e.set(j, r2);
 						p.setEtat(e);
@@ -161,142 +158,29 @@ public class Recuit
 						}
 						
 						}
-						if( ((Grille)r2).getdmin() > bestdmin){
-							bestdmin = ((Grille)r2).getdmin();
+						if( r2.getResultat() < bestResult){
+							bestResult = r2.getResultat();
 							etatBest = r2.clone();
 						}
-					
 				}
 				
 				
 			}
+			
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
 			p.majgamma();
 			J.setGamma(p.getGamma());
 			Collections.shuffle(p.getEtat());
+			
 			
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		//System.out.println("result :" + energieBest);
-		System.out.println("D :" + ((Grille)etatBest).getdmin());
-		System.out.println("refus mutations :"+MutationsRefusees);
+		System.out.println("D :" + (-etatBest.getResultat()));
+		//System.out.println("refus mutations :"+MutationsRefusees);
 		
-		return ((Grille)etatBest).getdmin();
+		return (-etatBest.getResultat());
 
-	}
-
-
-	public static double solution(Probleme p,IMutation m,RedondancesParticuleGeneral red,int nombreIterations, int seed, int M,PrintWriter sortie) throws IOException {
-	
-		int it=0;
-		int nombreEtat=p.nombreEtat();
-		
-		//List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m, nombreIterations);
-		Temperature temperatureDepart = new Temperature(0.010);
-	
-		//ParametreGamma gamma = ParametreurGamma.parametrageGamma(nombreIterations,nombreEtat,temperatureDepart,listeDelta.get(200));// Rappel : 1000 echantillons
-		ParametreGamma gamma = new ParametreGamma(10.0,10.0/(nombreIterations+1),0.01);
-		p.setT(temperatureDepart.getValue());
-		p.setGamma(gamma);
-		
-		p.setT(temperatureDepart);
-		ArrayList<Etat> e = p.getEtat();
-		Ponderation J = new Ponderation(p.getGamma());
-		double Epot = p.calculerEnergiePotentielle();
-		
-		double compteurSpinique = p.calculerEnergieCinetique();
-		double E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
-		double deltapot  = 0;
-		double energie = (e.get(0)).getEnergie();
-		double energieBest = energie;
-		double valueJ = 0;
-		int MutationsRefusees = 0;
-		
-		for(int i =0; i<nombreIterations;i++){
-			
-			 valueJ = J.calcul(p.getT(), nombreEtat);
-			 
-			 E = Epot-valueJ*compteurSpinique;
-			 
-			 
-			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque particule avant de descendre gamma
-				
-				Etat r2 = e.get(j);
-				
-				for(int k=0; k<M; k++){
-					
-					//Mise à jour de la mutation. Tant qu'elle n'est pas autorisée, on recommence.
-					int nbTentatives = 0;
-					m.maj(p,r2);
-					while (!m.estAutorisee(p,r2, red) && nbTentatives < 100){
-						m.maj(p,r2);
-						MutationsRefusees++;
-						nbTentatives++;
-					}
-					
-					
-					
-					deltapot =  m.calculerdeltaEp(p,r2);
-					
-					double deltaEp = deltapot/nombreEtat;
-					double deltaEc = -valueJ*m.calculerdeltaSpins(p,r2);
-					double delta = deltaEp + deltaEc;
-					double pr=probaAcceptation(delta,deltapot,p.getT());
-					
-					if(pr>Math.random()){
-						
-						m.majRedondance(p,red,r2);
-						energie = r2.getEnergie();
-						
-						m.faire(p,r2);
-						
-			
-						compteurSpinique += m.calculerdeltaSpins(p,r2);
-						
-						e.set(j, r2);
-						p.setEtat(e);
-						
-						Epot += deltapot/nombreEtat;
-						E += delta;// L'energie courante est modifiée
-						energie += deltapot;
-						
-						}
-					
-						if (energie < energieBest){
-						energieBest = energie;
-						
-						
-						
-					
-						if(energie==0){		
-	
-							Writer.ecriture(0,energieBest, sortie);
-							
-							
-							return 0;
-						}
-						
-						}
-						if(it%1000==0){
-
-						Writer.ecriture(0,energieBest, sortie);
-						}
-						it++;
-				}
-				
-				
-			}
-			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
-			p.majgamma();
-			J.setGamma(p.getGamma());
-			Collections.shuffle(p.getEtat());
-			
-		}
-		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-
-		
-		return energieBest;
-		
 	}
 	
 	

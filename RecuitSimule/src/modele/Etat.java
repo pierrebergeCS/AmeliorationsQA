@@ -8,7 +8,19 @@ package modele;
  */
 public abstract class Etat {
 	
+	public double energie;
 	
+	public double getEnergie(){
+		return this.energie;
+	}
+	
+	public void setEnergie(double energie){
+		this.energie = energie;
+	}
+	
+	public void setDeltapot(double deltapot){
+		this.energie += deltapot;
+	}
 	/**
 	 * Clone l'etat
 	 * L'utilisateur devra implémenter cette méthode de manière à cloner son Etat.
@@ -22,12 +34,14 @@ public abstract class Etat {
 	 * @return
 	 * L'energie potentielle de l'etat
 	 */
-	public abstract double getEnergie();
+	public abstract double majEnergie();
 	
 	/**
 	 * Met à jour un nouvel état. Equivalent au constructeur
 	 * Utilisé pour le paramétreur
 	 */
 	public abstract void maj();
+	
+	public abstract double getResultat();
 
 }

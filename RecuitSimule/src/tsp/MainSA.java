@@ -17,7 +17,7 @@ public class MainSA {
 	
 	public static void main(String[] args) throws FileNotFoundException{
 		
-		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/Baptiste/Desktop/RecuitQuantique/benchmark/brazil58.tsp"));
+		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/stagiaire/Desktop/benchmark/tsp/brazil58.tsp"));
 		int n = g.nombreDeNoeuds();
 		int nombreIterations = 100*n*n;
 		
@@ -26,13 +26,7 @@ public class MainSA {
 		
 		PrintWriter sortie = new PrintWriter("test.txt");
 		int cpt = 0;
-<<<<<<< HEAD
-		double tempDepart = ParametreurT.parametreurRecuit(g, new TwoOptMove(new Routage(g))).get(100);
-		Temperature temp = new Temperature(2*tempDepart,0.0);
-		long cpte= System.currentTimeMillis();
-=======
 		
->>>>>>> origin/master
 		try {
 	
 			for (int i = 0; i < 10; i++){
@@ -43,7 +37,7 @@ public class MainSA {
 				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
 			}
 			sortie.close();
-			System.out.println(cpte-System.currentTimeMillis());
+			System.out.println(cpt);
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block

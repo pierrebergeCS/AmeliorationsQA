@@ -3,7 +3,11 @@ package LHD;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
+import parametres.ParametreGamma;
+import parametres.ParametreGammaExp;
+import parametres.ParametreurGamma;
 import parametres.ParametreurT;
 import recuit.Recuit;
 import tsp.Graphe;
@@ -18,18 +22,16 @@ public class MainQALH {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		int n = 10;
-		int d = 9;
-		Phi f = new Phi(5);
+		int n = 20;
+		int d = 8;
+		Phi f = new Phi(10);
 		int nombreEtat = 10;
 		int nombreIterations = 10000;
-		EcNull ec = new EcNull();
-		
-		double GammaDep = 2.0;
+		EcDists ec = new EcDists();
 		
 		 //       Test Recuit
 		
-		PrintWriter sortie = new PrintWriter("test.txt");
+		PrintWriter sortie = new PrintWriter("8_20_QA_10P_Phi10.txt");
 		double sum = 0;
 		double var = 0;
 		
@@ -40,8 +42,13 @@ public class MainQALH {
 				ParticuleLH p = ParticuleLH.initialise(n,d,f,ec,nombreEtat,1.2);
 				ImprovedMutationLH m = new ImprovedMutationLH(new Grille(f,n,d));
 				RedondancesParticuleLH red = new RedondancesParticuleLH();
-				double temp = ParametreurT.parametreurRecuit(p,m,10000).get(20);
-				double result = Recuit.solution(p,m,red,nombreIterations,1,1,temp,GammaDep);
+				List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m,10000);
+				double temp = listeDelta.get(20);
+				double Gammafin = listeDelta.get(200)*0.01;
+				double GammaDep = listeDelta.get(500);
+				double facteur = Math.pow(Gammafin/GammaDep,1.0/nombreIterations);
+				ParametreGamma gamma = new ParametreGammaExp(GammaDep,facteur,Gammafin);
+				double result = Recuit.solution(p,m,red,nombreIterations,1,1,temp,gamma);
 				sum +=result;
 				var += result*result;
 				Writer.ecriture(i,result,sortie);
