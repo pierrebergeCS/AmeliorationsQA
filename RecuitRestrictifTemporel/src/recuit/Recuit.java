@@ -161,10 +161,7 @@ public class Recuit
 						}
 						
 						}
-						if( ((Grille)r2).getdmin() > bestdmin){
-							bestdmin = ((Grille)r2).getdmin();
-							etatBest = r2.clone();
-						}
+						
 					
 				}
 				
@@ -178,10 +175,10 @@ public class Recuit
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		//System.out.println("result :" + energieBest);
-		System.out.println("D :" + ((Grille)etatBest).getdmin());
+
 		System.out.println("refus mutations :"+MutationsRefusees);
-		
-		return ((Grille)etatBest).getdmin();
+		System.out.println("energie :" +etatBest.getEnergie());
+		return etatBest.getEnergie();
 
 	}
 

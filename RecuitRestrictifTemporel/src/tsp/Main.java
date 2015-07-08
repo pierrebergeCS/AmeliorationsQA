@@ -32,7 +32,7 @@ public class Main {
 				ParticuleTSP p = ParticuleTSP.initialise(nombreEtat,g,0.8);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
 				RedondancesParticuleTSP red = new RedondancesParticuleTSP(p);
-				Recuit.solution(p,m,red,nombreIterations,1,1,0.05,10,dureeBlock);
+				Recuit.solution(p,m,red,nombreIterations,1,1,5,10,dureeBlock);
 			}
 			System.out.println(cpte-System.currentTimeMillis());
 			System.out.println(cpt);
