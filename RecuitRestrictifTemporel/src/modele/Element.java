@@ -36,7 +36,7 @@ public abstract class Element {
 	
 	public void resetBlock(int cpt){
 		this.timetoblock=cpt;
-		this.timetolive=2*cpt;
+		this.timetolive=6*cpt;
 	}
 	
 	public boolean lives(){

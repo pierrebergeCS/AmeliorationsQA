@@ -12,6 +12,19 @@ public abstract class Etat {
 	Etat previous;
 	Etat next;
 	public ArrayList<Element> listeElements;
+	double energie;
+	
+	public double getEnergie(){
+		return this.energie;
+	}
+	
+	public void setEnergie(double energie){
+		this.energie = energie;
+	}
+	
+	public void setDeltapot(double deltapot){
+		this.energie += deltapot;
+	}
 	
 	
 	public ArrayList<Element> getListe(){
@@ -57,7 +70,7 @@ public abstract class Etat {
 	 * @return
 	 * L'energie potentielle de l'etat
 	 */
-	public abstract double getEnergie();
+	public abstract double majEnergie();
 	
 	/**
 	 * L'utilisateur devra implementer la methode appropriée a son "type" d'etat
@@ -69,5 +82,14 @@ public abstract class Etat {
 	 * l'entier de la somme de spin
 	 */
 	public abstract int distanceIsing(Etat e);
+	
+	/**
+	 * L'utilisateur devra implémenter cette méthode
+	 * Renvoie le résultat si différent de Ep (Latin Hypercube)
+	 * Le meilleur état rencontré lors du recuit est celui ayant le meilleur résultat
+	 * @return
+	 * Le resultat lié à un état
+	 */
+	public abstract double getResultat();
 
 }

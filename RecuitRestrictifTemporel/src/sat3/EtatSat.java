@@ -44,11 +44,13 @@ public class EtatSat extends Etat {
 			this.clauses.add(m);
 				
 		}
+		this.majEnergie();
 	}
 	
 	public EtatSat(){
 		this.setListe(new ArrayList<Element>());
 		this.clauses=new ArrayList<Minterme>();
+		this.majEnergie();
 	}
 	
 	public EtatSat(Instancesat ins) {
@@ -80,6 +82,7 @@ public class EtatSat extends Etat {
 			}
 			this.clauses.add(m);	
 		}
+		this.majEnergie();
 	}
 
 	public int getNbxi(){
@@ -102,11 +105,13 @@ public class EtatSat extends Etat {
 			int j = c.getxi();
 			ElementSat elemi= new ElementSat(j,b);
 			e.getListe().add(elemi);
-		}		return e;
+		}
+		this.majEnergie();
+		return e;
 	}
 
 	@Override
-	public double getEnergie() {
+	public double majEnergie() {
 		double cpt=0;
 		for(Minterme m :this.clauses){
 			if(!m.is()){
@@ -114,6 +119,7 @@ public class EtatSat extends Etat {
 			}
 			
 		}
+		this.setEnergie(cpt);
 		return cpt;
 	}
 
@@ -146,6 +152,11 @@ public class EtatSat extends Etat {
 		
 		
 		return cpt;
+	}
+	
+	@Override
+	public double getResultat() {
+		return this.getEnergie();
 	}
 
 }

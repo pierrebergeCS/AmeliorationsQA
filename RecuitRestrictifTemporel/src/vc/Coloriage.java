@@ -13,6 +13,7 @@ public class Coloriage extends Etat {
 		this.g = g;
 		this.listeNoeuds = listeNoeuds;
 		this.setListe(l);
+		this.majEnergie();
 	}
 
 	public Coloriage(Graphe g, int nbColors){
@@ -36,6 +37,7 @@ public class Coloriage extends Etat {
 			((Couleur)this.getListe().get(rand)).getNoeuds().add(i);
 		}
 		this.listeNoeuds = listeNoeuds;
+		this.majEnergie();
 	}
 	
 	public Graphe getGraphe(){
@@ -63,7 +65,7 @@ public class Coloriage extends Etat {
 	}
 
 	@Override
-	public double getEnergie() {
+	public double majEnergie() {
 		double cpt = 0;
 		int n = this.listeNoeuds.size();
 		for (int i = 0; i < n; i++){
@@ -73,6 +75,7 @@ public class Coloriage extends Etat {
 				if (n1.getCouleur() == n2.getCouleur()) cpt++;
 			}
 		}
+		this.setEnergie(cpt/2);
 		return cpt/2;
 	}
 
@@ -116,6 +119,11 @@ public class Coloriage extends Etat {
 			System.out.print(" (" + this.getNoeuds().get(i).getInt() + "," + this.getNoeuds().get(i).getCouleur() + ")");
 		}
 		System.out.println("");
+	}
+	
+	@Override
+	public double getResultat() {
+		return this.getEnergie();
 	}
 
 }

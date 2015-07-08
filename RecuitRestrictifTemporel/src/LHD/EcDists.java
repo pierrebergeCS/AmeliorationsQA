@@ -36,7 +36,7 @@ public class EcDists extends EnergieCinetiqueLH {
 				Etat e2=e1.getNext();// Etat suivant dans la chaîne
 				cpt+=distanceIsing((Grille)e1,(Grille)e2);//On calcule la distance d'Ising
 		}
-		return cpt;
+		return 1000*cpt;
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class EcDists extends EnergieCinetiqueLH {
 			cpt += (1.0/(1.0+distL) + 1.0/(1.0+distR));
 		}
 		
-		return cpt;
+		return 1000*cpt;
 	}
 
 }

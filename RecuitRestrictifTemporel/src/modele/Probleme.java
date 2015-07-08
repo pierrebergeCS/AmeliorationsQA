@@ -117,7 +117,7 @@ public abstract class Probleme extends Particule{
 		return this.gamma;
 	}
 	public void majgamma(){
-		this.gamma.refroidissementLin();
+		this.gamma.refroidissement();
 	}
 	public void setGamma(ParametreGamma gamma){
 		this.gamma=gamma;

@@ -24,17 +24,15 @@ public class MutationLHElementaire extends MutationElementaire {
 			}
 			else{ return true;}
 		}
-		
-		
 		for (int k = 0; k < p.nombreEtat(); k++){
 			if (((Grille)p.getEtat().get(k)).estCochee(c)) cpt++;
 		}
-		boolean estAutorisee=!(cpt > p.getFreq()*p.nombreEtat());
-		if(!estAutorisee){
+		if (cpt > p.getFreq()*p.nombreEtat()){
 			c.resetBlock(dureeBlock);
+			return false;
+			
 		}
-		return estAutorisee;
-		
+		return true;
 	}
 	
 	@Override

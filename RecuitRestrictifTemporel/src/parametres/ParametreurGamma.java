@@ -37,7 +37,14 @@ public class ParametreurGamma {
 		double t = temp.getValue();
 		double finGamma = nombreEtat*t*argth(Math.exp(-deltaE/(2*t*nombreEtat)));
 		double facteur = 1.0-Math.pow(0.01,1.0/nombreIterations);
-		ParametreGamma gamma = new ParametreGamma(100*finGamma,facteur,finGamma);
+		ParametreGamma gamma = new ParametreGammaExp(100*finGamma,facteur,finGamma);
+		return gamma;
+	}
+	
+	public static ParametreGamma parametrageGamma( int nombreIterations,int nombreEtat,double t, double deltaE){
+		double finGamma = nombreEtat*t*argth(Math.exp(-deltaE/(2*t*nombreEtat)));
+		double facteur = 1.0-Math.pow(0.01,1.0/nombreIterations);
+		ParametreGamma gamma = new ParametreGammaExp(100*finGamma,facteur,finGamma);
 		return gamma;
 	}
 }

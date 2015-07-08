@@ -35,6 +35,7 @@ public class MutationVCElementaire extends MutationElementaire {
 					c.resetBlock(dureeBlock);
 					return false;
 				}
+		
 		}
 		return true;
 	}
