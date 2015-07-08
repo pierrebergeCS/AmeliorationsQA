@@ -167,8 +167,9 @@ public class Grille extends Etat {
 			}
 		}
 		ArrayList<Integer> l = new ArrayList<Integer>(2);
-		l.add(minI.get((int) (Math.random()*minI.size())));
-		l.add(minJ.get((int) (Math.random()*minJ.size())));
+		int k = (int) (Math.random()*minI.size());
+		l.add(minI.get(k));
+		l.add(minJ.get(k));
 		this.criticalPoints = l;
 		this.matriceDistances = matriceDistances;
 		this.dmin = dmin;

@@ -22,30 +22,30 @@ public class MainQALH {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		int n = 20;
-		int d = 8;
-		Phi f = new Phi(10);
+		int n = 10;
+		int d = 9;
+		Phi f = new Phi(5);
 		int nombreEtat = 10;
 		int nombreIterations = 10000;
 		EcDists ec = new EcDists();
 		
 		 //       Test Recuit
 		
-		PrintWriter sortie = new PrintWriter("8_20_QA_10P_Phi10.txt");
+		PrintWriter sortie = new PrintWriter("test.txt");
 		double sum = 0;
 		double var = 0;
 		
 		System.out.println("taille " + n + " dim " + d);
 		
 		try {
-			for (int i = 0; i < 200; i++){
+			for (int i = 0; i < 1; i++){
 				ParticuleLH p = ParticuleLH.initialise(n,d,f,ec,nombreEtat,1.2);
 				ImprovedMutationLH m = new ImprovedMutationLH(new Grille(f,n,d));
 				RedondancesParticuleLH red = new RedondancesParticuleLH();
 				List<Double> listeDelta = ParametreurT.parametreurRecuit(p,m,10000);
 				double temp = listeDelta.get(20);
 				double Gammafin = listeDelta.get(200)*0.01;
-				double GammaDep = listeDelta.get(500);
+				double GammaDep = listeDelta.get(200);
 				double facteur = Math.pow(Gammafin/GammaDep,1.0/nombreIterations);
 				ParametreGamma gamma = new ParametreGammaExp(GammaDep,facteur,Gammafin);
 				double result = Recuit.solution(p,m,red,nombreIterations,1,1,temp,gamma);

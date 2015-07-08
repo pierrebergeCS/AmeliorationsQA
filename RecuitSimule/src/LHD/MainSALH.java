@@ -18,9 +18,9 @@ public class MainSALH {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		int n = 10;
+		int n = 20;
 		Phi f = new Phi(5);
-		int dim = 9;
+		int dim = 8;
 		int nbIterations = 900000;
 		
 		

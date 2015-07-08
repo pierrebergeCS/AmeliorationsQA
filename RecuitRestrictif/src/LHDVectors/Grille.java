@@ -138,6 +138,7 @@ public class Grille extends Etat {
 		for (int i = 0; i < n-1; i++){
 			System.out.print(" -> " + this.getListe().get(i).toString());
 		}
+		System.out.println("");
 	}
 	
 	public ArrayList<Integer> findCriticalPoints(){
@@ -163,8 +164,9 @@ public class Grille extends Etat {
 			}
 		}
 		ArrayList<Integer> l = new ArrayList<Integer>(2);
-		l.add(minI.get((int) (Math.random()*minI.size())));
-		l.add(minJ.get((int) (Math.random()*minJ.size())));
+		int k = (int) (Math.random()*minI.size());
+		l.add(minI.get(k));
+		l.add(minJ.get(k));
 		this.criticalPoints = l;
 		this.matriceDistances = matriceDistances;
 		this.dmin = dmin;

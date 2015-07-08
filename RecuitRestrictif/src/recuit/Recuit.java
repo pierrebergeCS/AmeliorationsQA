@@ -122,9 +122,8 @@ public class Recuit
 						nbTentatives++;
 					}
 					
-
+					deltapot = m.calculerdeltaEp(p,r2);
 					
-					deltapot =  m.calculerdeltaEp(p,r2);
 					double deltaEp = deltapot/nombreEtat;
 					double deltaCptSpin = m.calculerdeltaSpins(p,r2);
 					double deltaEc = -valueJ*deltaCptSpin;
@@ -166,7 +165,6 @@ public class Recuit
 				
 				
 			}
-			
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
 			p.majgamma();
 			J.setGamma(p.getGamma());
@@ -177,7 +175,7 @@ public class Recuit
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		//System.out.println("result :" + energieBest);
 		System.out.println("D :" + (-etatBest.getResultat()));
-		//System.out.println("refus mutations :"+MutationsRefusees);
+		System.out.println("refus mutations :"+MutationsRefusees);
 		
 		return (-etatBest.getResultat());
 

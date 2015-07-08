@@ -80,8 +80,6 @@ public class Recuit
 		double bestResult = e.getResultat();
 		Etat etatBest = e.clone();
 		
-		System.out.println("c :" + ((Grille)e).getListe().get(0).toString());
-		
 		for(int i =0; i<nombreIterations;i++){
 	
 					//Mise à jour de la mutation. 
@@ -110,8 +108,6 @@ public class Recuit
 					}		
 			temp.maj(i,nombreIterations);
 		}
-		
-		System.out.println("c fin :" + ((Grille)e).getListe().get(0).toString());
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
 		//System.out.println("result :" + energieBest);
 		System.out.println("Dbest :" + (-etatBest.getResultat()));  //Pour LatinHypercube
