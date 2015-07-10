@@ -17,32 +17,31 @@ public class MainSA {
 	
 	public static void main(String[] args) throws FileNotFoundException{
 		
-		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/stagiaire/Desktop/benchmark/tsp/brazil58.tsp"));
+		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/Baptiste/Desktop/a280.tsp"));
 		int n = g.nombreDeNoeuds();
 		int nombreIterations = 100*n*n;
 		
 		
 		 //       Test Recuit
 		
-		PrintWriter sortie = new PrintWriter("test.txt");
+
 		int cpt = 0;
 		
 		try {
 	
-			for (int i = 0; i < 10; i++){
+			for (int i = 0; i < 1000; i++){
+				PrintWriter sortie = new PrintWriter("C:/Users/Baptiste/Desktop/ResultatsVM/SA_a280_"+(i)+".txt");
 				Routage r = new Routage(g);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
 				double tempDepart = ParametreurT.parametreurRecuit(r,m,1000).get(100);
 				Temperature temp = new TemperatureLin(tempDepart,0.0);
-				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
+				Recuit.solution(r,m,nombreIterations,temp,sortie);
+				sortie.close();
 			}
-			sortie.close();
+			
 			System.out.println(cpt);
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

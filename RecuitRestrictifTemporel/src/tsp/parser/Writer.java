@@ -9,7 +9,7 @@ public class Writer {
 	public static PrintWriter energie;
 	public static PrintWriter proba;
 	
-	public static void ecriture (int compteur, double nombre, PrintWriter printWriter) throws IOException{
+	public static void ecriture (double d, double nombre, PrintWriter printWriter) throws IOException{
 		
 		printWriter.print(nombre);
 		printWriter.println();

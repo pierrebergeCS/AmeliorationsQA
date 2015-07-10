@@ -15,6 +15,7 @@ public abstract class Etat {
 	double energie;
 	
 	public double getEnergie(){
+		this.majEnergie();
 		return this.energie;
 	}
 	

@@ -156,6 +156,7 @@ public class EtatSat extends Etat {
 	
 	@Override
 	public double getResultat() {
+		this.majEnergie();
 		return this.getEnergie();
 	}
 
