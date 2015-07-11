@@ -4,9 +4,9 @@ import modele.Element;
 
 public class ElementMKP extends Element {
 	Objet o;
-	int[] appartenance;// taille = nombre de sacs
+	boolean appartenance;// true = est Dedans
 	
-	public ElementMKP(Objet o, int[] appartenance){
+	public ElementMKP(Objet o, boolean appartenance){
 		this.o = o;
 		this.appartenance = appartenance;
 	}
@@ -15,12 +15,17 @@ public class ElementMKP extends Element {
 		return this.o;
 	}
 	
-	public int[] getAppartenance(){
+	public boolean getAppartenance(){
 		return this.appartenance;
 	}
-
-	public int getAppartenance(int k){
-		return this.appartenance[k];
+	
+	public void setAppartenance(boolean b){
+		this.appartenance = b;
+	}
+	
+	public void changeAppartenance(){
+		boolean b = !this.appartenance;
+		this.appartenance = b;
 	}
 
 	@Override
@@ -38,22 +43,14 @@ public class ElementMKP extends Element {
 		boolean b2 = index==this.o.getWeight().length;
 		
 		//Egalité sur l'appartenance
-		index = 0;
-		while ((this.appartenance[index] == elt.getAppartenance(index)) && (index < this.appartenance.length)){
-			index++;
-		}
-		boolean b3 = index==this.appartenance.length;
+		boolean b3 = (this.appartenance && elt.getAppartenance()) || (!this.appartenance && !elt.getAppartenance());
 		
 		return b1 && b2 && b3;
 	}
 	
 	public ElementMKP clone(){
 		Objet o2 = this.o; //Comme un objet est jamais touché, pas la peine de cloner ce qu'il y a dedans
-		int[] appartenance2 = new int[this.appartenance.length];
-		for(int i = 0; i < this.appartenance.length; i++){
-			appartenance2[i] = this.appartenance[i];
-		}
-		return new ElementMKP(o2,appartenance2);
+		return new ElementMKP(o2,this.appartenance);
 	}
 	
 	
