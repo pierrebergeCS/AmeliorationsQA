@@ -17,7 +17,7 @@ public class MainSA {
 	
 	public static void main(String[] args) throws FileNotFoundException{
 		
-		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/Baptiste/Desktop/a280.tsp"));
+		Graphe g = new Graphe(TSPParser.donneMatrice("C:/Users/Baptiste/Desktop/uf200-010.tsp"));
 		int n = g.nombreDeNoeuds();
 		int nombreIterations = 100*n*n;
 		
@@ -30,7 +30,7 @@ public class MainSA {
 		try {
 	
 			for (int i = 0; i < 1000; i++){
-				PrintWriter sortie = new PrintWriter("C:/Users/Baptiste/Desktop/ResultatsVM/SA_a280_"+(i)+".txt");
+				PrintWriter sortie = new PrintWriter("C:/Users/Baptiste/Desktop/ResultatsVM/SA_uf200-010_"+(i)+".txt");
 				Routage r = new Routage(g);
 				TwoOptMove m = new TwoOptMove(new Routage(g));
 				double tempDepart = ParametreurT.parametreurRecuit(r,m,1000).get(100);
