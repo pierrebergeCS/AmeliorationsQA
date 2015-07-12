@@ -1,6 +1,6 @@
 package MKP;
 
-import modele.Element;
+
 import modele.Etat;
 import modele.Probleme;
 import modele.RedondancesParticuleGeneral;
@@ -26,12 +26,22 @@ public class MutationElementaireMKP extends MutationElementaire {
 	
 	@Override
 	public boolean estAutorisee(Probleme p, Etat e, RedondancesParticuleGeneral red){
-		return true;//On verra le blocage plus tard
+		ElementMKP a = (ElementMKP) e.getListe().get(this.getIndice());
+		RedondancesParticuleMKP r = (RedondancesParticuleMKP) red;
+		int i = a.getObjet().getNumero();
+		return (r.getTab()[i] <= p.getFreq()*p.nombreEtat());
 	}
 	
 	@Override
 	public void majRedondance(Probleme p, RedondancesParticuleGeneral red, Etat e){
-		//On verra le blocage plus tard
+		Remplissage re = (Remplissage) e;
+		RedondancesParticuleMKP r = (RedondancesParticuleMKP) red;
+		ElementMKP old = (ElementMKP) re.getListe().get(this.getIndice());
+		ElementMKP next = (ElementMKP) this.getElement();
+		int old1 = old.getObjet().getNumero();
+		int next2 = next.getObjet().getNumero();
+		r.getTab()[old1]--;
+		r.getTab()[next2]++;
 	}
 
 }
