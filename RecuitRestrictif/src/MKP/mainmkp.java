@@ -27,10 +27,10 @@ public class mainmkp {
 		try {
 	
 			for (int i = 0; i < 1; i++){
-				ParticuleMKP p = ParticuleMKP.initialise(nombreEtat,ins,1.2);
+				ParticuleMKP p = ParticuleMKP.initialise(nombreEtat,ins,0.9);
 				MutationMKP m = new MutationMKP(new Remplissage(ins));
 				RedondancesParticuleMKP red = new RedondancesParticuleMKP(p);
-				double temp = 10.0;
+				double temp = 5.0;
 				ParametreGammaLin gamma = new ParametreGammaLin(10.0,10.0/nombreIterations,0.0);
 				Writer.ecriture(0,Recuit.solution(p,m,red,nombreIterations,1,1,temp,gamma),sortie);
 			}
