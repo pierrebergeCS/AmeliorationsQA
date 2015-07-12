@@ -179,26 +179,16 @@ public class MutationMKP extends IMutation {
 	public double calculerdeltaSpins(Probleme p, Etat e) {
 		double cpt=0;
 		Remplissage r = (Remplissage) e;
-		int n = r.getListe().size();
 		Remplissage preced=(Remplissage) e.getPrevious();
 		Remplissage next=(Remplissage) e.getNext();
 		if (this.typeOfMut == 1){//cas ou on ajoute juste le obj[indice] au sac
-			
-			int num = ((ElementMKP)r.getListe().get(this.indice)).getObjet().getNumero();
-			int index = 0;
-			while(index < n && ((ElementMKP)next.getListe().get(index)).getObjet().getNumero() != num){
-				index++;
-			}
-			if(((ElementMKP)next.getListe().get(index)).getAppartenance()){
+
+			if(((ElementMKP)next.getListe().get(this.indice)).getAppartenance()){
 				cpt++;
 			} else {
 				cpt--;
 			}
-			index = 0;
-			while(index < n && ((ElementMKP)preced.getListe().get(index)).getObjet().getNumero() != num){
-				index++;
-			}
-			if(((ElementMKP)preced.getListe().get(index)).getAppartenance()){
+			if(((ElementMKP)preced.getListe().get(this.indice)).getAppartenance()){
 				cpt++;
 			} else {
 				cpt--;
@@ -207,21 +197,12 @@ public class MutationMKP extends IMutation {
 		} 
 		if (this.typeOfMut == -1){//on enleve obj[indice2] du sac
 			
-			int num = ((ElementMKP)r.getListe().get(this.indice2)).getObjet().getNumero();
-			int index = 0;
-			while(index < n && ((ElementMKP)next.getListe().get(index)).getObjet().getNumero() != num){
-				index++;
-			}
-			if(((ElementMKP)next.getListe().get(index)).getAppartenance()){
+			if(((ElementMKP)next.getListe().get(this.indice2)).getAppartenance()){
 				cpt--;
 			} else {
 				cpt++;
 			}
-			index = 0;
-			while(index < n && ((ElementMKP)preced.getListe().get(index)).getObjet().getNumero() != num){
-				index++;
-			}
-			if(((ElementMKP)preced.getListe().get(index)).getAppartenance()){
+			if(((ElementMKP)preced.getListe().get(this.indice2)).getAppartenance()){
 				cpt--;
 			} else {
 				cpt++;
@@ -230,40 +211,22 @@ public class MutationMKP extends IMutation {
 		}
 		if (this.typeOfMut == 0){//cas ou on ajoute le obj[indice] au sac et on enleve obj[indice2]
 			
-			int num1 = ((ElementMKP)r.getListe().get(this.indice)).getObjet().getNumero();
-			int num2 = ((ElementMKP)r.getListe().get(this.indice2)).getObjet().getNumero();
-			int index1 = 0;
-			while(index1 < n && ((ElementMKP)next.getListe().get(index1)).getObjet().getNumero() != num1){
-				index1++;
-			}
-			if(((ElementMKP)next.getListe().get(index1)).getAppartenance()){
+			if(((ElementMKP)next.getListe().get(this.indice)).getAppartenance()){
 				cpt++;
 			} else {
 				cpt--;
 			}
-			int index2 = 0;
-			while(index2 < n && ((ElementMKP)preced.getListe().get(index2)).getObjet().getNumero() != num1){
-				index2++;
-			}
-			if(((ElementMKP)preced.getListe().get(index2)).getAppartenance()){
+			if(((ElementMKP)preced.getListe().get(this.indice)).getAppartenance()){
 				cpt++;
 			} else {
 				cpt--;
 			}
-			int index3 = 0;
-			while(index3 < n && ((ElementMKP)next.getListe().get(index3)).getObjet().getNumero() != num2){
-				index3++;
-			}
-			if(((ElementMKP)next.getListe().get(index3)).getAppartenance()){
+			if(((ElementMKP)next.getListe().get(this.indice2)).getAppartenance()){
 				cpt--;
 			} else {
 				cpt++;
 			}
-			int index4 = 0;
-			while(index4 < n && ((ElementMKP)next.getListe().get(index4)).getObjet().getNumero() != num2){
-				index4++;
-			}
-			if(((ElementMKP)preced.getListe().get(index4)).getAppartenance()){
+			if(((ElementMKP)preced.getListe().get(this.indice2)).getAppartenance()){
 				cpt--;
 			} else {
 				cpt++;
