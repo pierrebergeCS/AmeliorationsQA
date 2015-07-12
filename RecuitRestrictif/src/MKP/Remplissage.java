@@ -29,6 +29,18 @@ public class Remplissage extends Etat {
 		this.setListe(l);
 	}
 	
+	public Remplissage(ParticuleMKP particuleMKP) {
+		this.ins=particuleMKP.getIns();
+		int n = ins.getNombreObjets();
+		ArrayList<Element> l = new ArrayList<Element>();
+		for (int i = 0; i < n; i++){
+			l.add(new ElementMKP(ins.getObj()[i],false));
+		}
+		this.poids = new int[ins.getNombreSacs()];
+		this.setListe(l);
+		
+	}
+
 	public Instance getInstance(){
 		return this.ins;
 	}
