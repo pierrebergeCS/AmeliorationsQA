@@ -83,10 +83,10 @@ public class Remplissage extends Etat {
 		int n = ins.getNombreObjets();
 		int cpt = 0;
 		for (int i = 0; i < n; i++){
+			ElementMKP elt1 = (ElementMKP) this.getListe().get(i);
 			for (int j = 0; j < n; j++){
-				ElementMKP elt1 = (ElementMKP) this.getListe().get(i);
 				ElementMKP elt2 = (ElementMKP) e.getListe().get(j);
-				if(elt1.equals(elt2) && elt1.getAppartenance() == elt2.getAppartenance()) cpt++;
+				if(elt1.getObjet().getNumero() == elt2.getObjet().getNumero()  && elt1.getAppartenance() == elt2.getAppartenance()) cpt++;
 			}
 		}
 		return cpt;

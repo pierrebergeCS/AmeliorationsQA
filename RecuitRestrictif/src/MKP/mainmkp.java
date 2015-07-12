@@ -31,7 +31,7 @@ public class mainmkp {
 				MutationMKP m = new MutationMKP(new Remplissage(ins));
 				RedondancesParticuleMKP red = new RedondancesParticuleMKP(p);
 				double temp = 5.0;
-				ParametreGammaLin gamma = new ParametreGammaLin(10.0,10.0/nombreIterations,0.0);
+				ParametreGammaLin gamma = new ParametreGammaLin(1.0,1.0/nombreIterations,0.0);
 				Writer.ecriture(0,Recuit.solution(p,m,red,nombreIterations,1,1,temp,gamma),sortie);
 			}
 			sortie.close();

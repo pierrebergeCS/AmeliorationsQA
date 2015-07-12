@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 import parametres.ParametreGamma;
 import parametres.Temperature;
-import sat3.EtatSat;
-import sat3.Instancesat;
-import sat3.Particulesat;
 import modele.Etat;
 import modele.Probleme;
 

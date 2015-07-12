@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import LHD_1fixed.Grille;
-import LHD_1fixed.MutationLH;
-import LHD_1fixed.ParticuleLH;
+import LHD.ChemindeVecteurs;
+import LHD.EcVector;
+import LHD.Grille;
+import LHD.ParticuleLH;
 
 
 // Cette classe definit le probleme du recuit. Il se charge d'effectuer les mutations elementaires, de calculer l'energie et de diminuer T...
@@ -165,6 +166,8 @@ public class Recuit
 				
 				
 			}
+			System.out.println("pot :" + Epot);
+			System.out.println("cin :" + valueJ*compteurSpinique);
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
 			p.majgamma();
 			J.setGamma(p.getGamma());
