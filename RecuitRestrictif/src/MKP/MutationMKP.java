@@ -12,6 +12,7 @@ public class MutationMKP extends IMutation {
 	int indice2;//indice de ce qu'on enleve
 	int typeOfMut; //+1 si on ajoute, 0 si on échange, -1 si on retire
 	public MutationMKP(Remplissage r){
+		ArrayList<MutationElementaire> liste = new ArrayList<MutationElementaire>();
 		int n = r.getListe().size();//nombre d'objets
 		boolean b = false;
 		//On essaie d'abord d'ajouter
@@ -29,6 +30,7 @@ public class MutationMKP extends IMutation {
 		if (b){
 			this.indice = k;
 			this.typeOfMut = 1;
+			liste.add(new MutationElementaireMKP(new ElementMKP(elt.getObjet(),true),k));
 		} else {
 			//si on y arrive pas, on tente d'échanger avec un autre
 			boolean b2 = false;
@@ -46,12 +48,16 @@ public class MutationMKP extends IMutation {
 				this.indice = k;
 				this.indice2 = k2;
 				this.typeOfMut = 0;
+				liste.add(new MutationElementaireMKP(new ElementMKP(elt.getObjet(),true),k));
+				liste.add(new MutationElementaireMKP(new ElementMKP(elt2.getObjet(),false),k2));
 			} else {
 				//et enfin, si c'est pas possible on va tenter de retirer k2 (nécessaire si on souhaite réduire le nb d'objets dans le sac)
 				this.indice2 = k2;
 				this.typeOfMut = -1;
+				liste.add(new MutationElementaireMKP(new ElementMKP(elt2.getObjet(),false),k2));
 			}
 		}
+		this.listeMutations = liste;
 	}
 	
 	public int getType(){
@@ -67,6 +73,7 @@ public class MutationMKP extends IMutation {
 	}
 	
 
+	@Override
 	public void faire(Probleme p,Etat e) {
 		Remplissage r = (Remplissage) e;
 		int m = r.getInstance().getNombreSacs();
@@ -118,6 +125,7 @@ public class MutationMKP extends IMutation {
 
 	public void maj(Probleme p,Etat e) {
 		Remplissage r = (Remplissage) e;
+		ArrayList<MutationElementaire> liste = new ArrayList<MutationElementaire>();
 		int n = r.getListe().size();//nombre d'objets
 		boolean b = false;
 		//On essaie d'abord d'ajouter
@@ -135,6 +143,7 @@ public class MutationMKP extends IMutation {
 		if (b){
 			this.indice = k;
 			this.typeOfMut = 1;
+			liste.add(new MutationElementaireMKP(new ElementMKP(elt.getObjet(),true),k));
 		} else {
 			//si on y arrive pas, on tente d'échanger avec un autre
 			boolean b2 = false;
@@ -152,12 +161,16 @@ public class MutationMKP extends IMutation {
 				this.indice = k;
 				this.indice2 = k2;
 				this.typeOfMut = 0;
+				liste.add(new MutationElementaireMKP(new ElementMKP(elt.getObjet(),true),k));
+				liste.add(new MutationElementaireMKP(new ElementMKP(elt2.getObjet(),false),k2));
 			} else {
 				//et enfin, si c'est pas possible on va tenter de retirer k2 (nécessaire si on souhaite réduire le nb d'objets dans le sac)
 				this.indice2 = k2;
 				this.typeOfMut = -1;
+				liste.add(new MutationElementaireMKP(new ElementMKP(elt2.getObjet(),false),k2));
 			}
 		}
+		this.listeMutations = liste;
 	}
 
 

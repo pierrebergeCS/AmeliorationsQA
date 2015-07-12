@@ -7,7 +7,7 @@ import modele.RedondancesParticuleGeneral;
 
 public class RedondancesParticuleMKP extends RedondancesParticuleGeneral {
 
-	int[] m;
+	int[] m;// nombre d'apparitions de l'objet numéro i
 	public RedondancesParticuleMKP(ArrayList<Element> elementsParticule,
 			ArrayList<Element> elementsFrequents) {
 		super(elementsParticule, elementsFrequents);
@@ -16,7 +16,7 @@ public class RedondancesParticuleMKP extends RedondancesParticuleGeneral {
 	public RedondancesParticuleMKP(ParticuleMKP p){
 		super(null,null);
 		int n = p.getIns().getNombreObjets();
-		int[]m = new int[n];
+		int[] m = new int[n];
 		int nombreEtat = p.nombreEtat();
 		for (int k = 0; k < nombreEtat; k++){
 			ArrayList<Element> l = p.getEtat().get(k).getListe();

@@ -60,7 +60,9 @@ public class Remplissage extends Etat {
 		for (int j = 0; j < this.ins.getNombreSacs(); j++){
 			poids[j] = this.poids[j];
 		}
-		return new Remplissage(this.ins,poids,lC);
+		Remplissage r = new Remplissage(this.ins,poids,lC);
+		r.setEnergie(this.getEnergie());
+		return r;
 	}
 
 	@Override

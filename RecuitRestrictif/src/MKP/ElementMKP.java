@@ -37,7 +37,7 @@ public class ElementMKP extends Element {
 		
 		//Egalité sur les poids
 		int index = 0;
-		while ((this.o.getWeight()[index] == elt.getObjet().getWeight()[index]) && (index < this.o.getWeight().length)){
+		while ((index < this.o.getWeight().length) && (this.o.getWeight()[index] == elt.getObjet().getWeight()[index])){
 			index++;
 		}
 		boolean b2 = index==this.o.getWeight().length;
