@@ -1,6 +1,7 @@
 package LHD;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import modele.Etat;
 
@@ -9,8 +10,7 @@ public class Grille extends Etat {
 	ArrayList<Croix> liste;
 	int taille;
 	ArrayList<Integer> criticalPoints = new ArrayList<Integer>(2);//Position points critiques
-	int dmin ;
-	int[][] matriceDistances;
+	ArrayList<Distance> distributionDistances;
 
 	
 	public Grille(FonctionEval f, ArrayList<Croix> liste, int n, double energie){
@@ -78,15 +78,11 @@ public class Grille extends Etat {
 	}
 	
 	public int getdmin(){
-		return dmin;
+		return distributionDistances.get(0).getValue();
 	}
 	
-	public int[][] getMatrice(){
-		return this.matriceDistances;
-	}
-	
-	public void setDmin(int k){
-		this.dmin = k;
+	public ArrayList<Distance> getDistances(){
+		return this.distributionDistances;
 	}
 	
 	public void setCriticalPoints(ArrayList<Integer> l){
@@ -117,25 +113,59 @@ public class Grille extends Etat {
 		System.out.println("");
 	}
 	
-	//Met à jour tous les points critiques, matriceDistances et dmin. Renvoie les points critiques de la grille
+	//Ajoute une distance à la distribution pour qu'elle reste triée
+	public void addDistance(Distance dist){
+		int length = this.distributionDistances.size();
+		this.distributionDistances.add(dist);
+		if (length > 0){
+			int index = length;
+			int value = this.distributionDistances.get(index-1).getValue();
+			while (value > dist.getValue() && index > 0){
+				Collections.swap(this.distributionDistances,index-1,index);
+				if (index == 1){
+					value = -1;
+				} else {
+					value = this.distributionDistances.get(index-2).getValue();
+				}
+				index--;
+			}
+		}
+		
+	}
+	
+	//enleve cette distance de la distribution
+	public void removeDistance(int value){
+		int index = 0;
+		int limit = this.distributionDistances.size();
+		while ((index < limit) &&(this.distributionDistances.get(index).getValue() != value)){
+			index++;
+		}
+		if (index < limit) {
+			this.distributionDistances.remove(index);
+		} else {
+			//
+		}
+	}
+	
+	//Met à jour tous les points critiques, distributionDistances et dmin. Renvoie les points critiques de la grille
 	public ArrayList<Integer> findCriticalPoints(){
 		ArrayList<Integer> minI = new ArrayList<Integer>();
 		ArrayList<Integer> minJ = new ArrayList<Integer>();
 		//Recherche de dmin et points critiques
-		int[][] matriceDistances = new int[this.getTaille()][this.getTaille()];
+		this.distributionDistances = new ArrayList<Distance>();
 		int dmin = this.f.distance(this.getListe().get(0),this.getListe().get(1));
 		for (int i = 0; i < this.getTaille(); i++){
 			for (int j = i+1; j < this.getTaille(); j++){
-				int dist = this.f.distance(this.getListe().get(i),this.getListe().get(j));
-				matriceDistances[i][j] = dist;
-				if (dist < dmin){
-					dmin = dist;
+				Distance dist = new Distance(this,i,j);
+				this.addDistance(dist);
+				if (dist.getValue() < dmin){
+					dmin = dist.getValue();
 					minI.clear();
 					minI.add(i);
 					minJ.clear();
 					minJ.add(j);
 				}
-				if (dist == dmin){
+				if (dist.getValue() == dmin){
 					minI.add(i);
 					minJ.add(j);
 				}
@@ -145,9 +175,7 @@ public class Grille extends Etat {
 		int k = (int) (Math.random()*minI.size());
 		l.add(minI.get(k));
 		l.add(minJ.get(k));
-		this.matriceDistances = matriceDistances;
 		this.criticalPoints = l;
-		this.dmin = dmin;
 		
 		return l;
 	}
@@ -195,7 +223,7 @@ public class Grille extends Etat {
 
 	@Override
 	public double getResultat() {
-		return -this.dmin;
+		return -this.distributionDistances.get(0).getValue();
 	}
 
 }

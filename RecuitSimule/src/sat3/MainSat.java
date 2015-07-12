@@ -21,7 +21,7 @@ public class MainSat {
 			int cptlocal=0;
 			System.out.println("Instance n° "+ inst);
 		try {
-			ins = Translator.donneInstance("C:/Users/Baptiste/Desktop/uf200-010.cnf");
+			ins = Translator.donneInstance("C:/Users/Pierre/Desktop/benchmark/sat/uf200-010.cnf");
 			sortie = new PrintWriter("test.txt");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -30,7 +30,7 @@ public class MainSat {
 		int n = ins.getNbvar();
 		System.out.println(n);
 		int nombreIterations = 100*n*n;
-		Temperature temp = new TemperatureLin(0.1,0.0);
+		Temperature temp = new TemperatureLin(1.0,0.0);
 		 //       Test Recuit
 
 		try {

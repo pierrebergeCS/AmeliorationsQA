@@ -1,12 +1,49 @@
 package MKP;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import parametres.ParametreurT;
+import parametres.Temperature;
+import parametres.TemperatureLin;
+import recuit.Recuit;
+import tsp.parser.Writer;
+
+//----------------------RECUIT-SIMULE--------------------------//
 
 public class mainmkp {
 
 	public static void main(String[] args) throws IOException {
-		Instance i= TransposeLator.traduit("C:/Users/Baptiste/Desktop/RecuitQuantique/sac94/weish/weish01.dat");
-		System.out.println(i.getObj()[2].getWeight()[1]);
+		Instance ins = TransposeLator.traduit("C:/Users/Pierre/Desktop/benchmark/kp/weish01.dat");
+		int n = ins.getNombreObjets();
+		int nombreIterations = 100*n*n;
+		
+		
+		 //       Test Recuit
+		
+		PrintWriter sortie = new PrintWriter("test.txt");
+		int cpt = 0;
+		
+		try {
+	
+			for (int i = 0; i < 1; i++){
+				Remplissage r = new Remplissage(ins);
+				MutationMKP m = new MutationMKP(r);
+				double tempDepart = /*ParametreurT.parametreurRecuit(r,m,1000).get(100);*/1.0;
+				Temperature temp = new TemperatureLin(tempDepart,0.0);
+				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
+			}
+			sortie.close();
+			System.out.println(cpt);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 
 }

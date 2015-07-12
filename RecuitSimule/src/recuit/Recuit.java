@@ -3,15 +3,13 @@ package recuit;
 import modele.*;
 import parametres.*;
 import sat3.*;
-import tsp.Routage;
-import tsp.TwoOptMove;
 import tsp.parser.Writer;
 import mutation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import LHD_1fixed.Grille;
+import LHD.Grille;
 
 
 
@@ -94,7 +92,8 @@ public class Recuit
 					if(pr>Math.random()){
 						m.faire(e);
 						e.setDeltapot(deltapot);
-						}
+						E = e.getEnergie();
+					}
 					
 					if (E < energieBest){
 						energieBest = E;
@@ -108,6 +107,7 @@ public class Recuit
 							System.out.println("result :" + energieBest);
 							return 0;
 					}		
+					System.out.println(E);
 			temp.maj(i,nombreIterations);
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
@@ -116,56 +116,6 @@ public class Recuit
 		
 		return (-etatBest.getResultat());
 
-	}
-
-
-	public static double solution(Etat e,IMutation m,int nombreIterations,Temperature temp, PrintWriter sortie) throws IOException {
-		double E = e.getEnergie();
-		
-		double deltapot  = 0;
-		double energieBest = E;
-		double bestResult = e.getResultat();
-		Etat etatBest = e.clone();
-		
-		for(int i =0; i<nombreIterations;i++){
-	
-					//Mise à jour de la mutation. 
-					m.maj(e);
-					E = e.getEnergie();
-					deltapot =  m.calculerdeltaEp(e);
-					
-					double pr=probaAcceptation(deltapot,temp);
-					
-					if(pr>Math.random()){
-						m.faire(e);
-						e.setDeltapot(deltapot);
-						}
-					
-					if (E < energieBest){
-						energieBest = E;
-					}
-					
-					if (e.getResultat()<bestResult){
-						etatBest = e.clone();
-						bestResult = e.getResultat();
-					}
-					if(E==0){
-						Writer.ecriture(0,energieBest,sortie);	
-						System.out.println("result :" + energieBest);
-							return 0;
-					}		
-			temp.maj(i,nombreIterations);
-			if(i%1000==0){
-				Writer.ecriture(0,energieBest,sortie);
-			}
-		}
-		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);
-		//System.out.println("result :" + energieBest);
-		System.out.println("Dbest :" + (-etatBest.getResultat()));  //Pour LatinHypercube
-		
-		return (-etatBest.getResultat());
-
-		
 	}
 	
 	
