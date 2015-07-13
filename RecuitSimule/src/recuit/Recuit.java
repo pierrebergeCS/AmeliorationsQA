@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import LHD.Grille;
+import MKP.MutationMKP;
 
 
 
@@ -107,7 +108,7 @@ public class Recuit
 							System.out.println("result :" + energieBest);
 							return 0;
 					}		
-					System.out.println(E);
+					//System.out.println(E);
 			temp.maj(i,nombreIterations);
 		}
 		//Writer.ecriture(compteurpourlasortie,energieBest, sortie);

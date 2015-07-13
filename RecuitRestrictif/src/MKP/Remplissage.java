@@ -40,6 +40,28 @@ public class Remplissage extends Etat {
 		this.setListe(l);
 		
 	}
+	
+	public static Remplissage glouton(Instance ins){
+		int n = ins.getNombreObjets();
+		Remplissage r = new Remplissage(ins);
+		boolean estPlein = false;
+		int cpt = 0;
+		int k = -1;
+		while (!estPlein && cpt < n){
+			while (k < 0 || ((ElementMKP)r.getListe().get(k)).getAppartenance()){
+				k = (int) (Math.random()*n);
+			}
+			for (int i = 0; i < ins.getNombreSacs(); i++){
+				if (r.getPoids()[i] + ((ElementMKP)r.getListe().get(k)).getObjet().getWeight()[i] > ins.getCapacite()[i]){
+					return r;
+				}
+				r.getPoids()[i]+=((ElementMKP)r.getListe().get(k)).getObjet().getWeight()[i];
+			}
+			((ElementMKP)r.getListe().get(k)).changeAppartenance();
+			cpt++;
+		}
+		return r;
+	}
 
 	public Instance getInstance(){
 		return this.ins;

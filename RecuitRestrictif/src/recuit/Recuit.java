@@ -166,8 +166,8 @@ public class Recuit
 				
 				
 			}
-			System.out.println("pot :" + Epot);
-			System.out.println("cin :" + compteurSpinique);
+			//System.out.println("pot :" + Epot);
+			//System.out.println("cin :" + compteurSpinique);
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
 			p.majgamma();
 			J.setGamma(p.getGamma());

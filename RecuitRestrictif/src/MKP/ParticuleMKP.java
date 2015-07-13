@@ -68,7 +68,7 @@ public class ParticuleMKP extends Probleme {
 
 	@Override
 	public Etat creeEtatAleatoire() {
-		return new Remplissage(this);
+		return Remplissage.glouton(this.instance);
 	}
 	
 	public Instance getIns(){

@@ -29,7 +29,6 @@ public class ParametreurT {
 		for (int i =0; i < nbEchantillons; i++){
 			deltaE = -1;
 			while(deltaE<=0){
-		
 			r1=p.creeEtatAleatoire();
 			
 			

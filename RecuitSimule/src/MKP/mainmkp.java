@@ -14,9 +14,9 @@ import tsp.parser.Writer;
 public class mainmkp {
 
 	public static void main(String[] args) throws IOException {
-		Instance ins = TransposeLator.traduit("C:/Users/Pierre/Desktop/benchmark/kp/weish01.dat");
+		Instance ins = TransposeLator.traduit("C:/Users/Pierre/Desktop/benchmark/kp/weish21.dat");
 		int n = ins.getNombreObjets();
-		int nombreIterations = 100*n*n;
+		int nombreIterations = 10*n*n;
 		
 		
 		 //       Test Recuit
@@ -26,10 +26,10 @@ public class mainmkp {
 		
 		try {
 	
-			for (int i = 0; i < 1; i++){
+			for (int i = 0; i < 100; i++){
 				Remplissage r = new Remplissage(ins);
 				MutationMKP m = new MutationMKP(r);
-				double tempDepart = /*ParametreurT.parametreurRecuit(r,m,1000).get(100);*/1.0;
+				double tempDepart = 50.0;
 				Temperature temp = new TemperatureLin(tempDepart,0.0);
 				Writer.ecriture(0,Recuit.solution(r,m,nombreIterations,temp),sortie);
 			}
