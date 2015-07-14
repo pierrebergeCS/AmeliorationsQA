@@ -14,10 +14,10 @@ import tsp.parser.Writer;
 public class mainmkp {
 
 	public static void main(String[] args) throws IOException {
-		Instance ins = TransposeLator.traduit("C:/Users/Pierre/Desktop/benchmark/kp/weish21.dat");
+		Instance ins = TransposeLator.traduit("C:/Users/Pierre/Desktop/benchmark/kp/OR30x500-0.75_1.dat");
 		int n = ins.getNombreObjets();
 		int nombreEtat = 10;
-		int nombreIterations = n*n;
+		int nombreIterations = 10*n*n;
 		
 		
 		 //       Test Recuit
@@ -28,7 +28,7 @@ public class mainmkp {
 		
 		try {
 	
-			for (int i = 0; i < 10; i++){
+			for (int i = 0; i < 100; i++){
 				ParticuleMKP p = ParticuleMKP.initialise(nombreEtat,ins,0.99);
 				MutationMKP m = new MutationMKP(new Remplissage(ins));
 				RedondancesParticuleMKP red = new RedondancesParticuleMKP(p);
