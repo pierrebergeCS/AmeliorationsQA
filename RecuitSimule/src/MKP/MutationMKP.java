@@ -98,7 +98,7 @@ public class MutationMKP extends IMutation {
 	}
 
 	@Override
-	public double calculerdeltaEp(Etat e) {
+	public double calculerdeltaEp(Etat e, int k) {
 		Remplissage r = (Remplissage) e;
 		if (this.typeOfMut == 1){
 			ElementMKP elt = r.getListe().get(this.indice);

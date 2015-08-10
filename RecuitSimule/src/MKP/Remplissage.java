@@ -23,6 +23,33 @@ public class Remplissage extends Etat {
 		this.setListe(l);
 	}
 	
+	//Remplit jusqu'à plus pouvoir, puis remove un nombre random d'objets
+	public static ArrayList<ElementMKP> random(Instance ins){
+		int n = ins.getNombreObjets();
+		int d = ins.getNombreSacs();
+		int[] poids =  new int[d];
+		boolean b = false;
+		ArrayList<ElementMKP> result = new ArrayList<ElementMKP>();
+		while (!b){
+			ArrayList<ElementMKP> l = new ArrayList<ElementMKP>();
+			for (int i = 0; i < n; i++){
+				l.add(new ElementMKP(ins.getObj()[i],(Math.random() < 0.5)));
+			}
+			result = l;
+			b = true;
+			for (int j = 0; j < d; j++){
+				int weight = 0;
+				for (int i = 0; i < n; i++){
+					if (l.get(i).getAppartenance()) weight += l.get(i).getObjet().getWeight()[j];
+				}
+				boolean respectConstraints = weight < ins.getCapacite()[j];
+				b = b && respectConstraints;
+			}
+		}
+		return result;
+		
+	}
+	
 	public Remplissage(Instance ins, int[] poids,  ArrayList<ElementMKP> l){
 		this.ins = ins;
 		this.poids = poids;

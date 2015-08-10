@@ -12,6 +12,12 @@ public Objet(int numero,int utility,int m){
 	this.weight=new int[m];
 }
 
+public Objet(int numero, int utility, int[] weight){
+	this.numeroObjet=numero;
+	this.utility=utility;
+	this.weight=weight;
+}
+
 public void assign(int i,int valeur){
 	this.weight[i]=valeur;
 }
