@@ -30,9 +30,15 @@ public class ElementNodeCoverage extends Element{
 		return b1&b2;
 	}
 	public ElementNodeCoverage clone(){
-		Anchor a= this.anchor.clone();
-		Set s= this.set.clone();
+		Anchor a= (Anchor) this.anchor.clone();
+		Set s= (Set) this.set.clone();
 		return new ElementNodeCoverage(a,s);
+	}
+	public void changeAppartenance(Set sPrime) {
+		this.set.remove(this.anchor.identifier);
+		this.set=sPrime;
+		sPrime.add(this.anchor);
+	
 	}
 
 

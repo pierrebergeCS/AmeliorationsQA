@@ -13,4 +13,9 @@ public class RedondancesParticuleNodeCoverage extends RedondancesParticuleGenera
 		// TODO Auto-generated constructor stub
 	}
 
+	public RedondancesParticuleNodeCoverage(ParticuleNodeCoverage p) {
+		super(null, null);
+		// TODO Auto-generated constructor stub
+		A coder avec les Hash
+	}
 }

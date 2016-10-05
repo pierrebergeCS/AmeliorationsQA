@@ -30,19 +30,19 @@ public class MutationElementaireNodeCoverage extends MutationElementaire {
 		if (p.getFreq() > 1) return true;
 		ElementNodeCoverage a = (ElementNodeCoverage) e.getListe().get(this.getIndice());
 		RedondancesParticuleNodeCoverage r = (RedondancesParticuleNodeCoverage) red;
-		int i = a.getObjet().getNumero();
+		int i = a.getAnchor().identifier; 
+		//systeme de Hashcode via les noeuds dans un set
 		return (r.getTab()[i] <= p.getFreq()*p.nombreEtat());
 	}
 	@Override
 	public void majRedondance(Probleme p, RedondancesParticuleGeneral red, Etat e){
-		Remplissage re = (Remplissage) e;
-		RedondancesParticuleMKP r = (RedondancesParticuleMKP) red;
-		ElementMKP elt = (ElementMKP) this.getElement();
-		if (elt.getAppartenance()){
-			r.getTab()[elt.getObjet().getNumero()]++;
-		} else {
-			r.getTab()[elt.getObjet().getNumero()]--;
-		}
+		Coverage re = (Coverage) e;
+		RedondancesParticuleNodeCoverage r = (RedondancesParticuleNodeCoverage) red;
+		ElementNodeCoverage elt = (ElementNodeCoverage) this.getElement();
+		//systeme de Hashcode via les noeuds dans un set
+		
+		
+		A CODER
 	}
 	
 	

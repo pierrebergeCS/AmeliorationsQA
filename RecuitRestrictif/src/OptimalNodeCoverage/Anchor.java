@@ -5,24 +5,7 @@ public class Anchor {
 	public double x;
 	public double y;
 	public double z;
-	private Set set;
-	
-	
-	public void setSet(Set s){
-		this.set=s;
-	}
-	
-	
-	public void changeSet(Set d){
-		this.set.remove(this.identifier);
-		d.add(this);
-		this.set=d;
-		
-	}
-	
-	public Set getSet(){
-		return this.set;
-	}
+
 
 	public Anchor(int id, double d,double e,double z){
 		this.identifier=id;
@@ -34,6 +17,12 @@ public class Anchor {
 	public Point2D map2D(){
 		return new Point2D(x,y);
 	}
-
+	public boolean equals(Anchor a){
+		return this.identifier==a.identifier&&this.x==a.x&&this.y==a.y&&this.z==a.z;
+		
+	}
+	public Anchor clone(){
+		return new Anchor(identifier,x,y,z);
+	}
 
 }
